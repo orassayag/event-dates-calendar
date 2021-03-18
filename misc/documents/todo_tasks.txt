@@ -1,0 +1,36 @@
+=========
+REMEMBER!
+=========
+Each time you change the logic / update NPM package version, do the following steps:
+1. Perform a backup before any change has been made, by running on terminal 'npm run backup' or manually to the backups directory.
+2. After the change, check that everything works OK.
+3. Keep the maintenance - Every change you do - Make sure to update in this document if needed.
+4. Do commit + push on Git project repository.
+5. Keep the backup update - Every change you do - Update in iOmega (each couple of days do backup there).
+=================================
+
+ToDo tasks:
+===========
+-Based on existing file, do a copy of the events dates.
+-Rename the file 'EventsDates-2021.txt' to 'EventDates-2021.txt'.
+-Edit the 'EventsDates-2021.txt' to have symbols of start and end of contracts, birthdays, and all other texts,
+up to the start of the event dates.
+-Clear the dist directory each run.
+-Validates the sources directory (not included in all git and backup settings).
+-Validate the given year, the source to copy, that the internet is working, and that the site is working. 
+-Add all events by getting html content of 'https://calendar.2net.co.il/annual-calendar.aspx?year=2021'.
+-Add for each day end of contract, or birthday, if year of birth is included.
+-Create a new file based on a given year with all days.
+-Log each day with static lines that repeat itself every day.
+-Place an example of structure 'EventDates-2021.txt' file in the misc/examples directory.
+-Remove all comments.
+-Re-format error numbers + error_index.txt file.
+-Fix all spell mistakes via Gmail (including settings.js without _ character).
+-Test to see if it creates a TXT file as expected.
+-Format all files.
+-Upload to GitHub.
+-Backup iOmega.
+-Clear complete tasks.
+
+Completed + canceled tasks:
+===========================
