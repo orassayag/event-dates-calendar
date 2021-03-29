@@ -1,0 +1,47 @@
+{
+  "name": "event-dates-calendar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "license": "UNLICENSED",
+  "author": "Or Assayag <orassayag@gmail.com>",
+  "contributors": [
+    {
+      "name": "Or Assayag",
+      "email": "orassayag@gmail.com",
+      "url": "https://github.com/orassayag"
+    }
+  ],
+  "main": "src/scripts/create.script.js",
+  "files": [
+    "src",
+    ".eslintignore",
+    ".eslintrc",
+    ".gitignore",
+    ".jsbeautifyrc",
+    ".npmignore",
+    "INSTRUCTIONS.md",
+    "package-lock.json",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "backup": "node src/scripts/backup.script.js",
+    "sand": "node src/tests/sandbox.test.js",
+    "start": "node src/scripts/create.script.js",
+    "stop": "taskkill -f -im node.exe"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "dependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.23.0",
+    "fs-extra": "^9.1.0",
+    "is-reachable": "^5.0.0"
+  }
+}

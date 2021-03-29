@@ -11,26 +11,49 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
--Based on existing file, do a copy of the events dates.
--Rename the file 'EventsDates-2021.txt' to 'EventDates-2021.txt'.
--Edit the 'EventsDates-2021.txt' to have symbols of start and end of contracts, birthdays, and all other texts,
-up to the start of the event dates.
+-Rename the file 'EventsDates-2021.txt' to 'event-dates-2021.txt'. *
+-Backup and rearrange the original document. *
+-Edit the 'event-dates-2021.txt' TXT file to have symbols of start and end of *
+contracts, birthdays, and all other texts up to the start of the event dates. *
+-Take the structure from the 'file-spell-checker' project. *
+-Clear the unneeded code.
+-Based on existing TXT file, do a copy of the event dates TXT file to the sources directory.
 -Clear the dist directory each run.
 -Validates the sources directory (not included in all git and backup settings).
--Validate the given year, the source to copy, that the internet is working, and that the site is working. 
+-Validate the given year, the source to copy, that the internet is working, and that the site is working.
 -Add all events by getting html content of 'https://calendar.2net.co.il/annual-calendar.aspx?year=2021'.
 -Add for each day end of contract, or birthday, if year of birth is included.
 -Create a new file based on a given year with all days.
 -Log each day with static lines that repeat itself every day.
--Place an example of structure 'EventDates-2021.txt' file in the misc/examples directory.
--Remove all comments.
--Re-format error numbers + error_index.txt file.
--Fix all spell mistakes via Gmail (including settings.js without _ character).
--Test to see if it creates a TXT file as expected.
--Format all files.
+-Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory.
+-Edit the following files: README.md, INSTRUCTIONS.md, package.json.
+-Update packages + Recreate package-lock.json.
+-Remove code comments to a backup TXT file.
+-Convert " to ' in the relevant places.
+-Remove all 'debugger' keywords.
+-Recheck error numbers in error_index.txt.
+-Check 'let' needs to be converted to 'const'.
+-Make sure all comments '//' have: 1. space 2. ends with a dot.
+-Make sure 'id' => 'Id', 'url' => 'URL', 'api' => 'API'.
+-Make sure spaces in all files between bottom, need to fix cases like this:
+}
+module.exports
+}
+export default
+-Remove duplicate import/require (convert to index.js if possible).
+-Sort alphabetically all the imports/requires by https://alphabetizer.flap.tv/.
+-Sort alphabetically all the imports/requires: external packages, settings, (containers, components, store, assert) data, models, enums, services, utils.
+-File extensions should be upper case: JSON, TXT, etc.
+-Remove duplicate empty lines: \n\s*\n\s*\n
+-Remove last empty line: \n\s*$(?!\n)
+-Detect all comments without a dot at the end: ^// .*(?<!\.)$
+-Do all the 'ToDo' tasks.
+-Format all documents.
+-Verify all works well.
+-Fix TXT files spell mistakes via Gmail.
+-Move all complete tasks from here to complete_tasks.txt.
 -Upload to GitHub.
--Backup iOmega.
--Clear complete tasks.
+-Backup to iOmega.
 
 Completed + canceled tasks:
 ===========================

@@ -1,0 +1,37 @@
+{
+    "cSpell.words": [
+        "Assayag",
+        "backuped",
+        "cpell",
+        "dirents",
+        "jsbeautifyrc",
+        "orassayag"
+    ],
+    "search.exclude": {
+        "**/.vscode": true,
+        "**/dist": true,
+        "**/misc": true,
+        "**/dictionaries": true,
+        "**/misc/documents": true,
+        "**/misc/backup": true,
+        "**/misc/": true,
+        "**/dictionaries/": true,
+        "/misc/": true,
+        "/dictionaries/": true,
+        "misc/**": true,
+        "dictionaries/**": true,
+        "**/misc/**": true,
+        "**/dictionaries/**": true,
+        "**/misc/documents/**": true,
+        "**/misc/backup/**": true,
+        "**/node_modules": true
+    },
+    "eslint.validate": [
+        "javascript"
+    ],
+    "http.proxy": "",
+    "http.proxyAuthorization": null,
+    "http.proxyStrictSSL": false,
+    "editor.renderWhitespace": "none",
+    "formatFiles.excludePattern": "**/node_modules,**/.vscode,**/dist,**/dist/**,**/.chrome,**/misc,**/misc/**,**/sources,**/sources/**,**/dictionaries,**/dictionaries/**"
+}
