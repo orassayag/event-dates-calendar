@@ -16,7 +16,9 @@ ToDo tasks:
 -Edit the 'event-dates-2021.txt' TXT file to have symbols of start and end of *
 contracts, birthdays, and all other texts up to the start of the event dates. *
 -Take the structure from the 'file-spell-checker' project. *
--Clear the unneeded code.
+-Clear the unneeded code. *
+-Generate all the days in the year.
+-Go to the website and get all the holidays.
 -Based on existing TXT file, do a copy of the event dates TXT file to the sources directory.
 -Clear the dist directory each run.
 -Validates the sources directory (not included in all git and backup settings).
@@ -26,7 +28,9 @@ contracts, birthdays, and all other texts up to the start of the event dates. *
 -Create a new file based on a given year with all days.
 -Log each day with static lines that repeat itself every day.
 -Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory.
+-Add validation of the holidays calendar website.
 -Edit the following files: README.md, INSTRUCTIONS.md, package.json.
+-Add example TXT file to the 'misc/examples' directory.
 -Update packages + Recreate package-lock.json.
 -Remove code comments to a backup TXT file.
 -Convert " to ' in the relevant places.

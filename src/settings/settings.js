@@ -2,6 +2,10 @@ const pathUtils = require('../utils/files/path.utils');
 
 const settings = {
     // ===GENERAL=== //
+    // Determine the year to create the event dates calendar for.
+    YEAR: 2022,
+    // Determine the name of the resulted event dates new TXT file in the 'dist' directory.
+    DIST_FILE_NAME: 'event-dates',
 
     // ===LOG=== //
 
@@ -12,6 +16,14 @@ const settings = {
     MAXIMUM_URL_VALIDATION_COUNT: 5,
     // Determine the milliseconds count timeout to wait between URL validation retry.
     MILLISECONDS_TIMEOUT_URL_VALIDATION: 1000,
+
+    // ===SOURCE === //
+    // Determine the path of the event dates source. This file contain all the birthdays, expiration services dates,
+    // and other data to be included in the new TXT file.
+    SOURCE_PATH: pathUtils.getJoinPath({
+        targetPath: __dirname,
+        targetName: '../../sources/event-dates-2021.txt'
+    }),
 
     // ===ROOT PATH=== //
     // Determine the application name used for some of the calculated paths.

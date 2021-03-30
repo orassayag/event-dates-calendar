@@ -80,9 +80,11 @@ class InitiateService {
 
 	validatePositiveNumbers() {
 		[
+			// ===GENERAL=== //
+			'YEAR',
 			// ===LOG=== //
 			// ===COUNT & LIMIT=== //
-			 'MILLISECONDS_END_DELAY_COUNT', 'MAXIMUM_URL_VALIDATION_COUNT', 'MILLISECONDS_TIMEOUT_URL_VALIDATION',
+			'MILLISECONDS_END_DELAY_COUNT', 'MAXIMUM_URL_VALIDATION_COUNT', 'MILLISECONDS_TIMEOUT_URL_VALIDATION',
 			// ===BACKUP=== //
 			'MILLISECONDS_DELAY_VERIFY_BACKUP_COUNT', 'BACKUP_MAXIMUM_DIRECTORY_VERSIONS_COUNT'
 		].map(key => {
@@ -98,6 +100,9 @@ class InitiateService {
 		[
 			...keys,
 			// ===GENERAL=== //
+			'DIST_FILE_NAME',
+			// ===SOURCE=== //
+			'SOURCE_PATH',
 			// ===ROOT PATH=== //
 			'APPLICATION_NAME', 'OUTER_APPLICATION_PATH', 'INNER_APPLICATION_PATH',
 			// ===DYNAMIC PATH=== //
@@ -137,8 +142,11 @@ class InitiateService {
 	}
 
 	validateSpecial() {
-		const { VALIDATION_CONNECTION_LINK } = settings;
+		const { YEAR, VALIDATION_CONNECTION_LINK } = settings;
 		// ===GENERAL=== //
+		if (YEAR < 1900 || YEAR > 2100) {
+			throw new Error('Invalid YEAR parameter was found (1000012)');
+		}
 		// ===VALIDATION=== //
 		if (!validationUtils.isValidLink(VALIDATION_CONNECTION_LINK)) {
 			throw new Error('No VALIDATION_CONNECTION_LINK parameter was found (1000012)');

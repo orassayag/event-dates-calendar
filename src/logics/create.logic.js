@@ -1,6 +1,7 @@
 const settings = require('../settings/settings');
 const { Status } = require('../core/enums');
-const { applicationService, countLimitService, logService, pathService, validationService } = require('../services');
+const { applicationService, countLimitService, eventService, logService, pathService,
+    validationService } = require('../services');
 const { logUtils } = require('../utils');
 const globalUtils = require('../utils/files/global.utils');
 
@@ -36,6 +37,7 @@ class CreateLogic {
     async startSession() {
         // Initiate.
         applicationService.applicationData.startDateTime = new Date();
+        //await eventService.getSourceEvents();
         await this.exit(Status.FINISH);
     }
 

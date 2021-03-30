@@ -21,6 +21,10 @@ class PathUtils {
         return path.basename(source);
     }
 
+    getExtname(filePath) {
+        return path.extname(filePath);
+    }
+
 /*
     getFileName(filePath) {
         return path.parse(filePath).name;
@@ -41,10 +45,7 @@ class PathUtils {
     resolve(directory, direntName) {
         return path.resolve(directory, direntName);
     }
-
-    getExtname(filePath) {
-        return path.extname(filePath).slice(1);
-    } */
+ */
 }
 
 module.exports = new PathUtils();
