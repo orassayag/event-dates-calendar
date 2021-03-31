@@ -31,13 +31,14 @@ class CreateLogic {
         // Validate that the internet connection works.
         countLimitService.initiate(settings);
         applicationService.initiate(settings, Status.INITIATE);
-        await validationService.validateInternetConnection();
+        // Validate that the internet connection works.
+        await validationService.validateURLs();
     }
 
     async startSession() {
         // Initiate.
         applicationService.applicationData.startDateTime = new Date();
-        //await eventService.getSourceEvents();
+        await eventService.getEvents();
         await this.exit(Status.FINISH);
     }
 
@@ -69,6 +70,10 @@ class CreateLogic {
 }
 
 module.exports = CreateLogic;
+/* calendarService,  */
+        //await validationService.validateInternetConnection();
+/*         //calenderService.createCalendar();
+        //eventService.getSourceEvents(); */
 /*         if (applicationService.applicationData.mode === Mode.STANDARD) {
             logService.startLogProgress();
         }

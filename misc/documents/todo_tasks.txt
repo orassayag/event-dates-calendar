@@ -24,11 +24,13 @@ contracts, birthdays, and all other texts up to the start of the event dates. *
 -Validates the sources directory (not included in all git and backup settings).
 -Validate the given year, the source to copy, that the internet is working, and that the site is working.
 -Add all events by getting html content of 'https://calendar.2net.co.il/annual-calendar.aspx?year=2021'.
--Add for each day end of contract, or birthday, if year of birth is included.
+-Add for each day of expiration date, or birthday, if year of birth is included.
 -Create a new file based on a given year with all days.
 -Log each day with static lines that repeat itself every day.
 -Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory.
 -Add validation of the holidays calendar website.
+-Add static events from OSR calender.
+-Add script to validate and mark a TXT file - Each task must end with a * symbole.
 -Edit the following files: README.md, INSTRUCTIONS.md, package.json.
 -Add example TXT file to the 'misc/examples' directory.
 -Update packages + Recreate package-lock.json.

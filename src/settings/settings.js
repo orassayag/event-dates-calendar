@@ -3,11 +3,13 @@ const pathUtils = require('../utils/files/path.utils');
 const settings = {
     // ===GENERAL=== //
     // Determine the year to create the event dates calendar for.
-    YEAR: 2022,
-    // Determine the name of the resulted event dates new TXT file in the 'dist' directory.
-    DIST_FILE_NAME: 'event-dates',
+    YEAR: 2021,
+    // Determine the URL of which to take the calendar Hebrew events and holidays.
+    CALENDAR_LINK: 'https://calendar.2net.co.il/annual-calendar.aspx?year=',
 
     // ===LOG=== //
+    // Determine the name of the resulted event dates new TXT file in the 'dist' directory.
+    DIST_FILE_NAME: 'event-dates',
 
     // ===COUNT & LIMIT=== //
     // Determine the delay in milliseconds to pause before exiting the application in the end.

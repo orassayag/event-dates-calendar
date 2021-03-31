@@ -35,6 +35,10 @@ class ValidationUtils {
         return Object.values(data.enum).indexOf(data.value) > -1;
     }
 
+    isValidDate(dateTime) {
+        return dateTime instanceof Date;
+    }
+
     isValidLink(link) {
         return regexUtils.validateLinkRegex.test(link);
     }
@@ -45,10 +49,7 @@ class ValidationUtils {
         isValidBoolean(boolean) {
             return typeof boolean == typeof true;
         }
-
-        isValidDate(dateTime) {
-            return dateTime instanceof Date;
-        } */
+ */
 }
 
 module.exports = new ValidationUtils();

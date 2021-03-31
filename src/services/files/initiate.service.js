@@ -82,7 +82,6 @@ class InitiateService {
 		[
 			// ===GENERAL=== //
 			'YEAR',
-			// ===LOG=== //
 			// ===COUNT & LIMIT=== //
 			'MILLISECONDS_END_DELAY_COUNT', 'MAXIMUM_URL_VALIDATION_COUNT', 'MILLISECONDS_TIMEOUT_URL_VALIDATION',
 			// ===BACKUP=== //
@@ -100,6 +99,8 @@ class InitiateService {
 		[
 			...keys,
 			// ===GENERAL=== //
+			'CALENDAR_LINK',
+			// ===LOG=== //
 			'DIST_FILE_NAME',
 			// ===SOURCE=== //
 			'SOURCE_PATH',
@@ -142,22 +143,28 @@ class InitiateService {
 	}
 
 	validateSpecial() {
-		const { YEAR, VALIDATION_CONNECTION_LINK } = settings;
+		const { YEAR } = settings;
 		// ===GENERAL=== //
 		if (YEAR < 1900 || YEAR > 2100) {
 			throw new Error('Invalid YEAR parameter was found (1000012)');
 		}
-		// ===VALIDATION=== //
-		if (!validationUtils.isValidLink(VALIDATION_CONNECTION_LINK)) {
-			throw new Error('No VALIDATION_CONNECTION_LINK parameter was found (1000012)');
-		}
+		[
+			// === GENERAL === //
+			'CALENDAR_LINK',
+			// ===VALIDATION=== //
+			'VALIDATION_CONNECTION_LINK'
+		].map(key => {
+			const value = settings[key];
+			if (!validationUtils.isValidLink(value)) {
+				throw new Error(`Invalid or no ${key} parameter was found: Expected a valid URL but received: ${value} (1000008)`);
+			}
+		});
 	}
 
 	validateDirectories() {
 		const keys = this.scriptType === ScriptType.BACKUP ? ['BACKUPS_PATH'] : [];
 		[
 			...keys,
-			// ===GENERAL=== //
 			// ===ROOT PATH=== //
 			'OUTER_APPLICATION_PATH', 'INNER_APPLICATION_PATH',
 			// ===DYNAMIC PATH=== //
@@ -195,3 +202,8 @@ class InitiateService {
 }
 
 module.exports = new InitiateService();
+			// ===GENERAL=== //
+/* 		if (!validationUtils.isValidLink(VALIDATION_CONNECTION_LINK)) {
+			throw new Error('No VALIDATION_CONNECTION_LINK parameter was found (1000012)');
+		} */
+					// ===LOG=== //
