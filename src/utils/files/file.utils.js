@@ -1,11 +1,7 @@
 const readline = require('readline');
 const fs = require('fs-extra');
-const globalUtils = require('./global.utils');
-
-
-/*
 const pathUtils = require('./path.utils');
-const textUtils = require('./text.utils'); */
+const globalUtils = require('./global.utils');
 
 class FileUtils {
 
@@ -76,6 +72,27 @@ class FileUtils {
         });
     }
 
+    async appendFile(data) {
+        const { targetPath, message } = data;
+        if (!targetPath) {
+            throw new Error(`targetPath not found: ${targetPath} (1000016)`);
+        }
+        if (!message) {
+            throw new Error(`message not found: ${message} (1000017)`);
+        }
+        if (!await this.isPathExists(targetPath)) {
+            await fs.promises.mkdir(pathUtils.getDirectoryPath(targetPath), { recursive: true }).catch(console.error);
+        }
+        // Append the message to the file.
+        await fs.appendFile(targetPath, message);
+    }
+}
+
+module.exports = new FileUtils();
+/*
+const pathUtils = require('./path.utils');
+const textUtils = require('./text.utils'); */
+
     /*     async read(targetPath) {
             return await fs.readFile(targetPath, 'utf-8');
         }
@@ -139,21 +156,6 @@ class FileUtils {
             };
         }
 
-        async appendFile(data) {
-            const { targetPath, message } = data;
-            if (!targetPath) {
-                throw new Error(`targetPath not found: ${targetPath} (1000016)`);
-            }
-            if (!message) {
-                throw new Error(`message not found: ${message} (1000017)`);
-            }
-            if (!await this.isPathExists(targetPath)) {
-                await fs.promises.mkdir(pathUtils.getDirectoryPath(targetPath), { recursive: true }).catch(console.error);
-            }
-            // Append the message to the file.
-            await fs.appendFile(targetPath, message);
-        }
-
         getFileType(targetPath) {
             if (!targetPath) {
                 throw new Error(`targetPath not found: ${targetPath} (1000018)`);
@@ -171,6 +173,3 @@ class FileUtils {
         createWriteStream(targetPath) {
             return fs.createWriteStream(targetPath, { encoding: 'utf8' });
         } */
-}
-
-module.exports = new FileUtils();

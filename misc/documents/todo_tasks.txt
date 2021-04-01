@@ -11,26 +11,8 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
--Rename the file 'EventsDates-2021.txt' to 'event-dates-2021.txt'. *
--Backup and rearrange the original document. *
--Edit the 'event-dates-2021.txt' TXT file to have symbols of start and end of *
-contracts, birthdays, and all other texts up to the start of the event dates. *
--Take the structure from the 'file-spell-checker' project. *
--Clear the unneeded code. *
--Generate all the days in the year.
--Go to the website and get all the holidays.
--Based on existing TXT file, do a copy of the event dates TXT file to the sources directory.
--Clear the dist directory each run.
--Validates the sources directory (not included in all git and backup settings).
--Validate the given year, the source to copy, that the internet is working, and that the site is working.
--Add all events by getting html content of 'https://calendar.2net.co.il/annual-calendar.aspx?year=2021'.
--Add for each day of expiration date, or birthday, if year of birth is included.
--Create a new file based on a given year with all days.
--Log each day with static lines that repeat itself every day.
--Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory.
--Add validation of the holidays calendar website.
--Add static events from OSR calender.
 -Add script to validate and mark a TXT file - Each task must end with a * symbole.
+-Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory.
 -Edit the following files: README.md, INSTRUCTIONS.md, package.json.
 -Add example TXT file to the 'misc/examples' directory.
 -Update packages + Recreate package-lock.json.
@@ -63,3 +45,21 @@ export default
 
 Completed + canceled tasks:
 ===========================
+-Rename the file 'EventsDates-2021.txt' to 'event-dates-2021.txt'. *
+-Backup and rearrange the original document. *
+-Edit the 'event-dates-2021.txt' TXT file to have symbols of start and end of *
+contracts, birthdays, and all other texts up to the start of the event dates. *
+-Take the structure from the 'file-spell-checker' project. *
+-Clear the unneeded code. *
+-Generate all the days in the year. *
+-Go to the website and get all the holidays. *
+-Based on existing TXT file, do a copy of the event dates TXT file to the sources directory. *
+-Clear the dist directory each run. *
+-Validates the sources directory (not included in all git and backup settings). *
+-Validate the given year, the source to copy, that the internet is working, and that the site is working. *
+-Add all events by getting html content of 'https://calendar.2net.co.il/annual-calendar.aspx?year=2021'. *
+-Add for each day of expiration date, or birthday, if year of birth is included. *
+-Create a new file based on a given year with all days. *
+-Log each day with static lines that repeat itself every day. *
+-Add validation of the holidays calendar website. *
+-Add static events from OSR calender. *

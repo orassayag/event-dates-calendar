@@ -6,8 +6,10 @@ const EventType = enumUtils.createEnum([
     ['BIRTHDAY', 'birthday'],
     ['CALENDAR', 'calendar'],
     ['STATIC', 'static'],
-    ['DAILY_TASK', 'daily_task'],
-    ['DATA', 'data']
+    ['DAILY_TASK', 'dailyTask'],
+    ['COMPLETE_CANCEL_TASK', 'completeCancelTask'],
+    ['DATA', 'data'],
+    ['END', 'end']
 ]);
 
 module.exports = { EventType };

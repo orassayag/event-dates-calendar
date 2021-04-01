@@ -64,36 +64,42 @@ class EventCulture {
             new MissingEventDate({
                 id: 1,
                 includeText: 'אילנות',
+                excludeText: null,
                 displayText: null,
                 isDayBefore: true
             }),
             new MissingEventDate({
                 id: 2,
                 includeText: 'שביעי של פסח',
+                excludeText: null,
                 displayText: 'מימונה',
                 isDayBefore: false
             }),
             new MissingEventDate({
                 id: 3,
                 includeText: 'שואה',
+                excludeText: null,
                 displayText: null,
                 isDayBefore: true
             }),
             new MissingEventDate({
                 id: 4,
                 includeText: 'זכרון',
+                excludeText: 'שואה',
                 displayText: null,
                 isDayBefore: true
             }),
             new MissingEventDate({
                 id: 5,
                 includeText: 'עצמאות',
+                excludeText: null,
                 displayText: null,
                 isDayBefore: true
             }),
             new MissingEventDate({
                 id: 6,
                 includeText: 'ט"ו באב',
+                excludeText: null,
                 displayText: null,
                 isDayBefore: true
             })

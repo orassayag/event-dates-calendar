@@ -2,13 +2,18 @@ const { dictionaryCulture, eventCulture } = require('../../culture');
 const { CalendarDay, EventDate, SourceEventResult } = require('../../core/models');
 const { EventType } = require('../../core/enums');
 const applicationService = require('./application.service');
+const logService = require('./log.service');
 const pathService = require('./path.service');
-const { domUtils, fileUtils, pathUtils, timeUtils, validationUtils } = require('../../utils');
+const { domUtils, eventUtils, fileUtils, pathUtils, timeUtils,
+    validationUtils } = require('../../utils');
 
 class EventService {
 
     constructor() {
         this.lastEventId = 0;
+        this.eventTypeSeperator = '=';
+        this.completeCancelTasksSeperator = '#@';
+        this.dailyTasksSeperator = '!@';
     }
 
     async createEventDates() {
@@ -19,11 +24,16 @@ class EventService {
         // Third, get all the static events from a event culture file.
         const staticEventDates = this.createStaticEventDates();
         // Next, get all the events from the source event dates TXT file.
-        const sourceEventResult = await this.createSourceEventDates();
+        const { sourceEventDates, dataLines, dailyTasks } = await this.createSourceEventDates();
         // Next, create the calendar days to log.
         const calendarDaysList = this.createCalendarDays([...calendarEventDates, ...missingCalendarEventDates,
-        ...staticEventDates, ...sourceEventResult.sourceEventDates]);
+        ...staticEventDates, ...sourceEventDates]);
         // Finally, log all the days into a new TXT file in the 'dist' directory.
+        await logService.logEventDates({
+            calendarDaysList: calendarDaysList,
+            dataLines: dataLines,
+            dailyTasks: dailyTasks
+        });
     }
 
     createEventDate(data) {
@@ -61,7 +71,7 @@ class EventService {
                         month: month,
                         year: year,
                         eventType: EventType.CALENDAR,
-                        text: spansDOMList[y].textContent
+                        text: eventUtils.createEventTemplate(spansDOMList[y].textContent)
                     }));
                 }
             }
@@ -73,8 +83,10 @@ class EventService {
         const missingCalendarEventDates = eventCulture.createMissingEventDates();
         const resultMissingCalendarEventDates = [];
         for (let i = 0; i < missingCalendarEventDates.length; i++) {
-            const { includeText, displayText, isDayBefore } = missingCalendarEventDates[i];
-            const calendarEventDate = calendarEventDates.find(e => e.text.indexOf(includeText) > -1);
+            const { includeText, excludeText, displayText, isDayBefore } = missingCalendarEventDates[i];
+            const calendarEventDate = calendarEventDates.find(e => {
+                return e.text.indexOf(includeText) > -1 && e.text.indexOf(excludeText ? excludeText : '^') === -1;
+            });
             if (calendarEventDate) {
                 const { day, month, year, text } = calendarEventDate;
                 resultMissingCalendarEventDates.push(this.createEventDate({
@@ -82,7 +94,8 @@ class EventService {
                     month: month,
                     year: year,
                     eventType: EventType.CALENDAR,
-                    text: `-${displayText ? displayText : `${dictionaryCulture.eveNight} ${text}`}`
+                    text: displayText ? eventUtils.createEventTemplate(displayText) :
+                        eventUtils.completeEventTemplate(dictionaryCulture.eveNight, text)
                 }));
             }
         }
@@ -99,7 +112,7 @@ class EventService {
                 month: month,
                 year: year,
                 eventType: eventType,
-                text: `-${text}`
+                text: eventUtils.createEventTemplate(text)
             }));
         }
         return resultStaticEventDates;
@@ -124,52 +137,89 @@ class EventService {
                     line: line,
                     eventType: eventType
                 });
+                if (!handleLineResult) {
+                    return;
+                }
                 if (handleLineResult.returnValue) {
-                    /*                     debugger; */
                     switch (handleLineResult.eventType) {
                         case EventType.SERVICE:
                         case EventType.BIRTHDAY:
                             sourceEventResult.sourceEventDates.push(handleLineResult.returnValue);
                             break;
                         case EventType.DAILY_TASK:
-                            sourceEventResult.dailyTasks.push(handleLineResult.returnValue);
+                            if (!handleLineResult.isSymbole) {
+                                sourceEventResult.dailyTasks.push(handleLineResult.returnValue);
+                            }
                             break;
                     }
                 }
-                if (handleLineResult.line) {
-                    sourceEventResult.dataLines.push(line);
-                }
                 eventType = handleLineResult.eventType;
+                if (handleLineResult.line && eventType && (handleLineResult.isSymbole ||
+                    eventType !== EventType.COMPLETE_CANCEL_TASK)) {
+                    sourceEventResult.dataLines.push(handleLineResult.line);
+                }
             });
-            lineReader.on('close', () => { resolve(sourceEventResult); });
+            lineReader.on('close', () => {
+                sourceEventResult.dailyTasks.splice(-1, 1);
+                resolve(sourceEventResult);
+            });
         });
     }
 
     validateSourceEventType(data) {
         const { line } = data;
         let { eventType } = data;
+        let isBreakLine, isSymbole = false;
         if (!line) {
-            return eventType;
+            isBreakLine = true;
+            return {
+                eventType: eventType,
+                isBreakLine: isBreakLine,
+                isSymbole: isSymbole
+            };
         }
-        if (line[0] === '=') {
+        if (eventType === EventType.END) {
+            return null;
+        }
+        if (line[0] === this.eventTypeSeperator) {
+            isBreakLine = true;
             switch (eventType) {
                 case EventType.INITIATE: eventType = EventType.SERVICE; break;
                 case EventType.SERVICE: eventType = EventType.BIRTHDAY; break;
                 case EventType.BIRTHDAY: eventType = EventType.DATA; break;
-                case EventType.DAILY_TASK: eventType = null; break;
+                case EventType.DAILY_TASK: eventType = EventType.END; isSymbole = true; break;
             }
         }
-        else if (line === '!@#$%') {
+        else if (line === this.completeCancelTasksSeperator) {
+            isBreakLine = true;
+            isSymbole = true;
+            eventType = EventType.COMPLETE_CANCEL_TASK;
+        }
+        else if (line === this.dailyTasksSeperator) {
+            isBreakLine = true;
+            isSymbole = true;
             eventType = EventType.DAILY_TASK;
         }
-        return eventType;
+        return {
+            eventType: eventType,
+            isBreakLine: isBreakLine,
+            isSymbole: isSymbole
+        };
     }
 
     handleLine(data) {
         let returnValue = null;
-        const { lineReader, line } = data;
+        let { line } = data;
+        const { lineReader } = data;
         // Check if to add the line to the lines list, in order to include them in the new TXT file.
-        const eventType = this.validateSourceEventType(data);
+        const validateEventResult = this.validateSourceEventType(data);
+        // When there is no event type result, the readline process is no longer necessary - Close it.
+        if (!validateEventResult) {
+            lineReader.close();
+            return null;
+        }
+        const { eventType, isBreakLine, isSymbole } = validateEventResult;
+        line = isBreakLine ? `${line}\r` : line;
         switch (eventType) {
             case EventType.SERVICE:
             case EventType.BIRTHDAY:
@@ -178,24 +228,29 @@ class EventService {
                     eventType: eventType
                 });
                 break;
+            case EventType.COMPLETE_CANCEL_TASK:
+                line = isSymbole ? `${line}\n` : line;
+                break;
             case EventType.DAILY_TASK:
                 returnValue = line;
                 break;
-            default:
-                // When there is no event type, the readline process is no longer necessary - Close it.
-                lineReader.close();
+            case EventType.END:
+                if (!isSymbole) {
+                    line = null;
+                }
                 break;
         }
         return {
             eventType: eventType,
             line: line,
-            returnValue: returnValue
+            returnValue: returnValue,
+            isSymbole: isSymbole
         };
     }
 
     createSourceEvent(data) {
         const { line, eventType } = data;
-        // Check if the line include a date. If so, it's a service / birthday / calendar event.
+        // Check if the line include a date. If so, it's a service / birthday event.
         const date = timeUtils.getDatePartsFromText(line);
         if (!date) {
             return;
@@ -204,6 +259,9 @@ class EventService {
         const day = parseInt(dateParts[0]);
         const month = parseInt(dateParts[1]);
         const year = typeof dateParts[2] !== 'undefined' ? parseInt(dateParts[2]) : null;
+        if (eventType === EventType.SERVICE && year !== applicationService.applicationData.year) {
+            return;
+        }
         return this.createEventDate({
             day: day,
             month: month,
@@ -212,21 +270,22 @@ class EventService {
             text: this.createSourceEventText({
                 date: date,
                 birthYear: year,
-                line: line
+                line: line,
+                eventType: eventType
             })
         });
     }
 
     // If the event is of 'birthday' type, replace the birthdate with the future age.
     createSourceEventText(data) {
-        const { date, birthYear, line } = data;
+        const { date, birthYear, line, eventType } = data;
         let result = line;
-        if (this.eventType === EventType.BIRTHDAY) {
+        if (eventType === EventType.BIRTHDAY) {
             const age = result.replace(date, `(${timeUtils.getAge({
                 year: applicationService.applicationData.year,
                 birthYear: birthYear
             })})`);
-            result = `-${dictionaryCulture.hebrewBirthDay}${age}`;
+            result = eventUtils.birthDayEventTemplate(dictionaryCulture.hebrewBirthDay, age);
         }
         return result;
     }
@@ -260,12 +319,12 @@ class EventService {
                 dayInWeek: englishDay,
                 displayDayInWeek: hebrewDay,
                 eventDatesList: allEvents.filter(e => {
-                    return e.day === date.getDate() &&
-                        e.month === date.getMonth() + 1;
+                    return e.day === date.getDate() && e.month === date.getMonth() + 1;
                 })
             }));
             date.setDate(date.getDate() + 1);
         }
+        calendarDaysList.reverse();
         return calendarDaysList;
     }
 
@@ -282,13 +341,43 @@ class EventService {
 }
 
 module.exports = new EventService();
+            //debugger;
+/*             isBreakLine = true;
+return {
+eventType: eventType,
+isBreakLine: isBreakLine,
+isSymbole: isSymbole
+}; */
+/*         if (eventType === EventType.END)
+        {
+
+        } */
+/*                 case EventType.END: eventType = null; break; */
+
+/*             default:
+            // When there is no event type, the readline process is no longer necessary - Close it.
+            lineReader.close();
+            break; */
+/*                     if (handleLineResult.isSymbole)
+                    {
+                        debugger;
+                    } */
+/*  break; */
+/*                 case EventType.COMPLETE_CANCEL_TASK: break; */
+/*         this.completeCancelTasksSeperator = '#@';
+        this.dailyTasksSeperator = '!@'; */
 /*         debugger; */
-        /*         const calendarDaysList = this.createCalendarDays({
-            calendarEventDates: calendarEventDates,
-            missingCalendarEventDates: missingCalendarEventDates,
-            staticEventDates: staticEventDates,
-            sourceEventResult: sourceEventResult
-        }); */
+/*     this.eventTypeSeperator = '=';
+this.dailyTasksSeperator = '!@#$%'; */
+/*                     debugger; */
+        //const sourceEventResult = await this.createSourceEventDates();
+/*         debugger; */
+/*         const calendarDaysList = this.createCalendarDays({
+    calendarEventDates: calendarEventDates,
+    missingCalendarEventDates: missingCalendarEventDates,
+    staticEventDates: staticEventDates,
+    sourceEventResult: sourceEventResult
+}); */
         //const sourceEventDates = [];
         //this.createEvent
 /*         const resultStaticEventDates = [];

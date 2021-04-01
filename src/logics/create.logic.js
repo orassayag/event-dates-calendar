@@ -36,7 +36,7 @@ class CreateLogic {
     }
 
     async startSession() {
-        // Initiate.
+        this.updateStatus('CREATE TEXT FILE', Status.CREATE);
         applicationService.applicationData.startDateTime = new Date();
         await eventService.createEventDates();
         await this.exit(Status.FINISH);

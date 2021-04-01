@@ -9,6 +9,7 @@ const ScriptType = enumUtils.createEnum([
 const Status = enumUtils.createEnum([
     ['INITIATE', 'INITIATE'],
     ['VALIDATE', 'VALIDATE'],
+    ['CREATE', 'CREATE'],
     ['FINISH', 'FINISH']
 ]);
 

@@ -25,6 +25,12 @@ class PathUtils {
         return path.extname(filePath);
     }
 
+    getDirectoryPath(filePath) {
+        return path.dirname(filePath);
+    }
+}
+
+module.exports = new PathUtils();
 /*
     getFileName(filePath) {
         return path.parse(filePath).name;
@@ -32,10 +38,6 @@ class PathUtils {
 
     getFullFileName(filePath) {
         return path.parse(filePath).base;
-    }
-
-    getDirectoryPath(filePath) {
-        return path.dirname(filePath);
     }
 
     getDirectoryName(directoryPath) {
@@ -46,6 +48,3 @@ class PathUtils {
         return path.resolve(directory, direntName);
     }
  */
-}
-
-module.exports = new PathUtils();
