@@ -7,7 +7,7 @@ class ApplicationData {
 		const { settings, status } = data;
 		const { YEAR, CALENDAR_LINK, VALIDATION_CONNECTION_LINK } = settings;
 		this.year = YEAR;
-		this.calendarURL = CALENDAR_LINK;
+		this.calendarLink = `${CALENDAR_LINK}${YEAR}`;
 		this.validationConnectionLink = VALIDATION_CONNECTION_LINK;
 		this.status = status;
 		this.startDateTime = null;

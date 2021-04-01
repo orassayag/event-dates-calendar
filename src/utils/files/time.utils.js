@@ -1,4 +1,3 @@
-const culture = require('../../culture/culture');
 const textUtils = require('./text.utils');
 const regexUtils = require('./regex.utils');
 const validationUtils = require('./validation.utils');
@@ -6,18 +5,7 @@ const validationUtils = require('./validation.utils');
 class TimeUtils {
 
     constructor() { }
-
-    getDayInWeek(date) {
-        if (!validationUtils.isValidDate(date)) {
-            return null;
-        }
-        const day = date.getDay();
-        return {
-            englishDay: culture.englishDaysList[day],
-            hebrewDay: culture.hebrewDaysList[day]
-        };
-    }
-
+    
     getDisplayDate(date) {
         if (!validationUtils.isValidDate(date)) {
             return null;

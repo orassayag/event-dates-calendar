@@ -38,7 +38,7 @@ class CreateLogic {
     async startSession() {
         // Initiate.
         applicationService.applicationData.startDateTime = new Date();
-        await eventService.getEvents();
+        await eventService.createEventDates();
         await this.exit(Status.FINISH);
     }
 

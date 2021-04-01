@@ -19,7 +19,7 @@ class DOMUtils {
 module.exports = new DOMUtils();
         /*         const jsdom = require('jsdom');
 const { JSDOM } = jsdom; */
-/*         console.log(dom.window.document.getElementsByClassName('holhamoed')[0].textContent); */
+/*         console.log(dom.window.document.getElementsByClassName('')[0].textContent); */
 /*         let dom = null;
         try {
             const res = await axios.get(url);

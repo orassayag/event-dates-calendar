@@ -8,7 +8,7 @@ class ValidationService {
     constructor() { }
 
     async validateURLs() {
-        const urls = [applicationService.applicationData.validationConnectionLink, applicationService.applicationData.calendarURL];
+        const urls = [applicationService.applicationData.validationConnectionLink, applicationService.applicationData.calendarLink];
         for (let i = 0; i < urls.length; i++) {
             await this.validateURL(urls[i]);
         }

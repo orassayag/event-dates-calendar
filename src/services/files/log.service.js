@@ -1,12 +1,4 @@
-/* const { LogData } = require('../../core/models');
-const { Color, Placeholder, StatusIcon } = require('../../core/enums');
-const { ignorePaths, ignoreWords } = require('../../configurations');
-const applicationService = require('./application.service');
-const countLimitService = require('./countLimit.service');
-const itemService = require('./item.service');
-const pathService = require('./path.service');
-const { fileUtils, logUtils, pathUtils, textUtils, timeUtils, validationUtils } = require('../../utils'); */
-
+const { LogData } = require('../../core/models');
 const pathService = require('./path.service');
 const { fileUtils } = require('../../utils');
 
@@ -18,7 +10,8 @@ class LogService {
 		this.logSeparator = '==========';
 	}
 
-	async initiate() {
+	async initiate(settings) {
+		this.logData = new LogData(settings);
 		await this.initiateDirectories();
 	}
 
@@ -28,6 +21,51 @@ class LogService {
 		await fileUtils.emptyDirectory(this.baseSessionPath);
 		fileUtils.createDirectory(this.baseSessionPath);
 	}
+
+	async logEventDate() {
+		// Log the event date.
+		const lines = [];
+		lines.push(`Time: ${time} | Id: ${id} | Post Id: ${postId ? postId : this.emptyValue} | Creation Date Time: ${displayCreationDateTime}`);
+		lines.push(`Publish Date: ${publishDate} | Price Number: ${displayPriceNumber} | Price Display: ${displayPriceDisplay} | Coupon Key: ${couponKey}`);
+		lines.push(`Status: ${displayStatus} | Page Number: ${pageNumber} | Index Page Number: ${indexPageNumber} | Type: ${type} | Is Free: ${isFree}`);
+		lines.push(`Name: ${name}`);
+		lines.push(`Course URL: ${displayCourseURL}`);
+		lines.push(`Udemy URL: ${displayUdemyURL}`);
+		lines.push(`Result Details: ${displayResultDetails}`);
+		lines.push(`${this.logSeparator}${isLog ? '\n' : ''}`);
+		lines.join('\n');
+		await fileUtils.appendFile({
+			targetPath: path,
+			message: message
+		});
+	}
+}
+
+module.exports = new LogService();
+/* 	createEventDates() {
+		const { itemPath, resultsList } = checkResults;
+		const lines = [];
+		lines.push(itemPath);
+		for (let i = 0; i < resultsList.length; i++) {
+			const { fix, suggestions } = resultsList[i];
+			if (!fix || !validationUtils.isExists(suggestions)) {
+				continue;
+			}
+			lines.push(`${fix} => ${suggestions.join(', ')}`);
+		}
+		lines.push(`${this.logSeparator}\n`);
+		return lines.join('\n');
+	} */
+
+/* const { LogData } = require('../../core/models');
+const { Color, Placeholder, StatusIcon } = require('../../core/enums');
+const { ignorePaths, ignoreWords } = require('../../configurations');
+const applicationService = require('./application.service');
+const countLimitService = require('./countLimit.service');
+const itemService = require('./item.service');
+const pathService = require('./path.service');
+const { fileUtils, logUtils, pathUtils, textUtils, timeUtils, validationUtils } = require('../../utils'); */
+
 
 	/* 	constructor() {
 			this.logData = null;
@@ -219,6 +257,3 @@ class LogService {
 				clearInterval(this.logInterval);
 			}
 		} */
-}
-
-module.exports = new LogService();
