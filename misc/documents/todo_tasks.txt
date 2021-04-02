@@ -11,6 +11,8 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
+-Add weekend tasks + toggle option.
+-Add functions for '\n' and '\r' keywords.
 -Add script to validate and mark a TXT file - Each task must end with a * symbole.
 -Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory.
 -Edit the following files: README.md, INSTRUCTIONS.md, package.json.
