@@ -48,14 +48,14 @@ class InitiateService {
 			enum: ScriptType,
 			value: this.scriptType
 		})) {
-			throw new Error('Invalid or no ScriptType parameter was found (1000003)');
+			throw new Error('Invalid or no ScriptType parameter was found (1000006)');
 		}
 	}
 
 	validateSettings() {
 		// Validate the settings object existence.
 		if (!settings) {
-			throw new Error('Invalid or no settings object was found (1000004)');
+			throw new Error('Invalid or no settings object was found (1000007)');
 		}
 		this.validatePositiveNumbers();
 		this.validateStrings();
@@ -89,7 +89,7 @@ class InitiateService {
 		].map(key => {
 			const value = settings[key];
 			if (!validationUtils.isPositiveNumber(value)) {
-				throw new Error(`Invalid or no ${key} parameter was found: Expected a number but received: ${value} (10000005)`);
+				throw new Error(`Invalid or no ${key} parameter was found: Expected a number but received: ${value} (10000008)`);
 			}
 		});
 	}
@@ -114,7 +114,7 @@ class InitiateService {
 		].map(key => {
 			const value = settings[key];
 			if (!validationUtils.isExists(value)) {
-				throw new Error(`Invalid or no ${key} parameter was found: Expected a string but received: ${value} (1000006)`);
+				throw new Error(`Invalid or no ${key} parameter was found: Expected a string but received: ${value} (1000009)`);
 			}
 		});
 	}
@@ -125,7 +125,7 @@ class InitiateService {
 		].map(key => {
 			const value = settings[key];
 			if (!validationUtils.isValidBoolean(value)) {
-				throw new Error(`Invalid or no ${key} parameter was found: Expected a boolean but received: ${value} (1000007)`);
+				throw new Error(`Invalid or no ${key} parameter was found: Expected a boolean but received: ${value} (1000010)`);
 			}
 		});
 	}
@@ -137,7 +137,7 @@ class InitiateService {
 		].map(key => {
 			const value = settings[key];
 			if (!validationUtils.isValidArray(value)) {
-				throw new Error(`Invalid or no ${key} parameter was found: Expected a array but received: ${value} (1000008)`);
+				throw new Error(`Invalid or no ${key} parameter was found: Expected a array but received: ${value} (1000011)`);
 			}
 		});
 	}
@@ -156,7 +156,7 @@ class InitiateService {
 		].map(key => {
 			const value = settings[key];
 			if (!validationUtils.isValidLink(value)) {
-				throw new Error(`Invalid or no ${key} parameter was found: Expected a valid URL but received: ${value} (1000008)`);
+				throw new Error(`Invalid or no ${key} parameter was found: Expected a valid URL but received: ${value} (1000013)`);
 			}
 		});
 	}
@@ -184,7 +184,7 @@ class InitiateService {
 			const value = settings[key];
 			// Verify that the paths are of directory and not a file.
 			if (!fileUtils.isDirectoryPath(value)) {
-				throw new Error(`The parameter path ${key} marked as directory but it's a path of a file: ${value} (1000013)`);
+				throw new Error(`The parameter path ${key} marked as directory but it's a path of a file: ${value} (1000014)`);
 			}
 		});
 	}
@@ -202,8 +202,3 @@ class InitiateService {
 }
 
 module.exports = new InitiateService();
-			// ===GENERAL=== //
-/* 		if (!validationUtils.isValidLink(VALIDATION_CONNECTION_LINK)) {
-			throw new Error('No VALIDATION_CONNECTION_LINK parameter was found (1000012)');
-		} */
-					// ===LOG=== //

@@ -7,14 +7,11 @@ const EventType = enumUtils.createEnum([
     ['CALENDAR', 'calendar'],
     ['STATIC', 'static'],
     ['DAILY_TASK', 'dailyTask'],
+    ['WEEKEND_TASK', 'weekendTask'],
+    ['WEEKEND_TOGGLE_TASK', 'weekendToggleTask'],
     ['COMPLETE_CANCEL_TASK', 'completeCancelTask'],
     ['DATA', 'data'],
     ['END', 'end']
 ]);
 
 module.exports = { EventType };
-/* , LineType */
-/* const LineType = enumUtils.createEnum([
-    ['DATA', 'data'],
-    ['EVENTS', 'events']
-]); */

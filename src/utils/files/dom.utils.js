@@ -17,15 +17,3 @@ class DOMUtils {
 }
 
 module.exports = new DOMUtils();
-        /*         const jsdom = require('jsdom');
-const { JSDOM } = jsdom; */
-/*         console.log(dom.window.document.getElementsByClassName('')[0].textContent); */
-/*         let dom = null;
-        try {
-            const res = await axios.get(url);
-            dom = new JSDOM(res.data);
-        }
-        catch (error) { }
-        return dom; */
-/* const axios = require('axios'); */
-/*             console.log(resp.data); */

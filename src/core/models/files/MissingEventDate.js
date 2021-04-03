@@ -11,5 +11,3 @@ class MissingEventDate {
 }
 
 module.exports = MissingEventDate;
-/*         this.isSameDay = isSameDay; */
-/* , isSameDay */

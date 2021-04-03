@@ -2,7 +2,7 @@
   "name": "event-dates-calendar",
   "version": "1.0.0",
   "private": true,
-  "description": "",
+  "description": "A Node.js application to create a notepad TXT file calendar by combining a few elements.",
   "keywords": [],
   "license": "UNLICENSED",
   "author": "Or Assayag <orassayag@gmail.com>",
@@ -29,6 +29,7 @@
   "scripts": {
     "backup": "node src/scripts/backup.script.js",
     "sand": "node src/tests/sandbox.test.js",
+    "scan": "node src/scripts/scan.script.js",
     "start": "node src/scripts/create.script.js",
     "stop": "taskkill -f -im node.exe"
   },

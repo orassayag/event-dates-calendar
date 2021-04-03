@@ -43,13 +43,9 @@ class ValidationUtils {
         return regexUtils.validateLinkRegex.test(link);
     }
 
-    /*
-
-        // This method validates if a given variable is a valid boolean and returns the result.
-        isValidBoolean(boolean) {
-            return typeof boolean == typeof true;
-        }
- */
+    isIndexExists(list, index) {
+        return typeof list[index] !== 'undefined';
+    }
 }
 
 module.exports = new ValidationUtils();

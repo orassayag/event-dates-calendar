@@ -108,15 +108,3 @@ class EventCulture {
 }
 
 module.exports = new EventCulture();
-/* ,
-                isSameDay: false */
-                /* ,
-                isSameDay: false */
-                /* ,
-                isSameDay: false */
-                /* ,
-                isSameDay: false */
-                /* ,
-                isSameDay: true */
-                /* ,
-                isSameDay: false */

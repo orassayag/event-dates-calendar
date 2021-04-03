@@ -11,17 +11,7 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
--Add weekend tasks + toggle option.
--Add functions for '\n' and '\r' keywords.
--Add script to validate and mark a TXT file - Each task must end with a * symbole.
--Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory.
--Edit the following files: README.md, INSTRUCTIONS.md, package.json.
--Add example TXT file to the 'misc/examples' directory.
--Update packages + Recreate package-lock.json.
--Remove code comments to a backup TXT file.
--Convert " to ' in the relevant places.
--Remove all 'debugger' keywords.
--Recheck error numbers in error_index.txt.
+-Recheck error numbers in error_index.txt. *
 -Check 'let' needs to be converted to 'const'.
 -Make sure all comments '//' have: 1. space 2. ends with a dot.
 -Make sure 'id' => 'Id', 'url' => 'URL', 'api' => 'API'.
@@ -47,6 +37,19 @@ export default
 
 Completed + canceled tasks:
 ===========================
+-Remove code comments to a backup TXT file. *
+-Convert " to ' in the relevant places. *
+-Remove all 'debugger' keywords. *
+-Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory. *
+-Edit the following files: README.md, INSTRUCTIONS.md, package.json. *
+-Add example TXT file to the 'misc/examples' directory. *
+-Update packages + Recreate package-lock.json. *
+-Add script to validate and mark a TXT file - Each task must starts with a '-' character and ends with a * character. *
+-The script will log to the console the tasks that failed to be validated. *
+-Convert the daily tasks to a model with a toggle option and task type (DAILY/WEEKEND) fields. *
+-Add weekend tasks + toggle option. *
+-Add functions for '\n' and '\r' keywords. *
+-Move all separator characters to a seperate service. *
 -Rename the file 'EventsDates-2021.txt' to 'event-dates-2021.txt'. *
 -Backup and rearrange the original document. *
 -Edit the 'event-dates-2021.txt' TXT file to have symbols of start and end of *

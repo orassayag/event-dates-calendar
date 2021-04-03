@@ -1,6 +1,6 @@
 # Event Dates Calendar
 
-
+Built in March 2021. A Node.js application to create a notepad TXT file calendar by combining a few elements: copying old data from a previous event dates TXT file and create expiration events, birthdays events, and common events that repeats each day and each weekend / each second weekend. Another element is to import all the Jewish holidays and events from online website, and finally, take a static events to be included in the calendar. All theses will be combined into one new event dates TXT file. Also included - A script to scan the unmarked tasks.
 
 ## Getting Started
 

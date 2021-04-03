@@ -12,5 +12,3 @@ class CalendarDay {
 }
 
 module.exports = CalendarDay;
-/*  = eventDatesList; */
-/* , eventDatesList */

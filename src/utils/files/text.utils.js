@@ -1,9 +1,5 @@
 const validationUtils = require('./validation.utils');
 
-/* const colorUtils = require('./color.utils');
-const regexUtils = require('./regex.utils');
- */
-
 class TextUtils {
 
     constructor() {
@@ -51,123 +47,16 @@ class TextUtils {
         return `${text}/`;
     }
 
-    /*
-    
-    
-        getSplitWords(name) {
-            if (!name) {
-                return name;
-            }
-            return name.split(regexUtils.splitWords);
+    removeLastCharacter(text) {
+        if (!text) {
+            return '';
         }
-    
-        replaceNoneAlphabets(name, character) {
-            if (!name) {
-                return name;
-            }
-            return name.replace(regexUtils.clearNoneAlphabets, character);
-        }
-    
-        calculatePercentageDisplay(data) {
-            const { partialValue, totalValue } = data;
-            if (!validationUtils.isValidNumber(partialValue) || !validationUtils.isValidNumber(totalValue)) {
-                return '';
-            }
-            return `${this.addLeadingZero(((100 * partialValue) / totalValue).toFixed(2))}%`;
-        }
-    
-        removeLastCharacters(data) {
-            const { value, charactersCount } = data;
-            if (!value || !validationUtils.isValidNumber(charactersCount)) {
-                return '';
-            }
-            return value.substring(0, value.length - charactersCount);
-        }
-    
-        setLogStatusColored(status, color) {
-            if (!status || !color) {
-                return '';
-            }
-            const delimiter = colorUtils.createColorMessage({
-                message: this.b,
-                color: color
-            });
-            return `${delimiter}${status}${delimiter}`;
-        }
-    
-        // This method converts a given number to display comma number.
-        getNumberWithCommas(number) {
-            if (number <= -1 || !validationUtils.isValidNumber(number)) {
-                return '';
-            }
-            return number.toString().replace(regexUtils.numberCommasRegex, ',');
-        }
-    
-        getSplitNumber(text) {
-            if (!text) {
-                return -1;
-            }
-            return Number(text.split('_')[0]);
-        }
-    
-        getPositiveNumber(number) {
-            if (!validationUtils.isValidNumber(number)) {
-                return -1;
-            }
-            return Math.abs(number);
-        }
-    
-        getFloorPositiveNumber(number) {
-            return this.addLeadingZero(this.getFloorNumber(number));
-        }
-    
-        getFloorNumber(number) {
-            if (!validationUtils.isValidNumber(number)) {
-                return -1;
-            }
-            return Math.floor(number);
-        }
-    
-        getNumberOfNumber(data) {
-            const { number1, number2 } = data;
-            if (!validationUtils.isValidNumber(number1) || !validationUtils.isValidNumber(number2)) {
-                return '';
-            }
-            return `${this.getNumberWithCommas(number1)}/${this.getNumberWithCommas(number2)}`;
-        }
-    
-        cutText(data) {
-            const { text, count } = data;
-            if (!text) {
-                return '';
-            }
-            if (text.length > count) {
-                return text.substring(0, count);
-            }
-            return text;
-        }
-    
-        addBreakLine(text) {
-            return `${text}\r\n`;
-        }
-    
-        removeLastCharacter(text) {
-            if (!text) {
-                return '';
-            }
-            return text.substring(0, text.length - 1);
-        }
-    
-        capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-        }
-    
-        lowerCaseList(list) {
-            if (!validationUtils.isExists(list)) {
-                return list;
-            }
-            return list.map(i => this.toLowerCase(i));
-        } */
+        return text.substring(0, text.length - 1);
+    }
+
+    addBreakLine(text) {
+        return `${text}\r\n`;
+    }
 }
 
 module.exports = new TextUtils();
