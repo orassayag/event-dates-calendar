@@ -1,7 +1,7 @@
-const readline = require('readline');
 const fs = require('fs-extra');
-const pathUtils = require('./path.utils');
+const readline = require('readline');
 const globalUtils = require('./global.utils');
+const pathUtils = require('./path.utils');
 
 class FileUtils {
 

@@ -5,13 +5,13 @@ class DOMUtils {
 
     constructor() { }
 
-    async getDOMfromURL(url) {
+    async getDOMFromURL(url) {
         let dom = null;
         try {
             dom = await JSDOM.fromURL(url);
             dom.serialize();
         }
-        catch (error) {}
+        catch (error) { }
         return dom;
     }
 }

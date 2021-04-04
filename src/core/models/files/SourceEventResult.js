@@ -1,6 +1,6 @@
 class SourceEventResult {
 
-    constructor () {
+    constructor() {
         this.sourceEventDates = [];
         this.dataLines = [];
         this.commonTasks = [];

@@ -1,2 +1,67 @@
 Completed + canceled tasks:
 ===========================
+-Move all complete tasks from here to complete_tasks.txt. *
+-Upload to GitHub. *
+-Backup to iOmega. *
+-Fix TXT files spell mistakes via Gmail. *
+-Format all documents. *
+-Verify all works well. *
+-Check 'let' needs to be converted to 'const'. *
+-Check places to change from simple parameters with dynamic objects to classes. *
+-Make sure all comments '//' have: 1. space 2. ends with a dot. *
+-Make sure 'id' => 'Id', 'url' => 'URL', 'api' => 'API'. *
+-Make sure spaces in all files between bottom, need to fix cases like this: *
+} *
+module.exports *
+} *
+export default *
+-Remove duplicate import/require (convert to index.js if possible). *
+-Sort alphabetically all the imports/requires by https://alphabetizer.flap.tv/. *
+-Sort alphabetically all the imports/requires: external packages, settings, (containers, components, store, assert) data, models, enums, services, utils. *
+-File extensions should be upper case: JSON, TXT, etc. *
+-Remove duplicate empty lines: \n\s*\n\s*\n *
+-Remove last empty line: \n\s*$(?!\n) *
+-Detect all comments without a dot at the end: ^// .*(?<!\.)$ *
+-Do all the 'ToDo' tasks. *
+-Change weekend tasks to a specific day by a number - canceled. *
+-Add saturday task to the example - canceled. *
+-Update the README.MD file - canceled. *
+-Remove code comments to a backup TXT file - canceled. *
+-Convert " to ' in the relevant places - canceled. *
+-Remove all 'debugger' keywords - canceled. *
+-Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory - canceled. *
+-Edit the following files: README.md, INSTRUCTIONS.md, package.json - canceled. *
+-Add example TXT file to the 'misc/examples' directory - canceled. *
+-Update packages + Recreate package-lock.json - canceled. *
+-Recheck error numbers in error_index.txt - canceled. *
+-Remove code comments to a backup TXT file. *
+-Convert " to ' in the relevant places. *
+-Remove all 'debugger' keywords. *
+-Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory. *
+-Edit the following files: README.md, INSTRUCTIONS.md, package.json. *
+-Add example TXT file to the 'misc/examples' directory. *
+-Update packages + Recreate package-lock.json. *
+-Add script to validate and mark a TXT file - Each task must start with a '-' character and ends with a * character. *
+-The script will log to the console the tasks that failed to be validated. *
+-Convert the daily tasks to a model with a toggle option and task type (DAILY/WEEKEND) fields. *
+-Add weekend tasks + toggle option. *
+-Add functions for '\n' and '\r' keywords. *
+-Move all separator characters to a separate service. *
+-Rename the file 'EventsDates-2021.txt' to 'event-dates-2021.txt'. *
+-Backup and rearrange the original document. *
+-Edit the 'event-dates-2021.txt' TXT file to have symbols of start and end of *
+contracts, birthdays, and all other texts up to the start of the event dates. *
+-Take the structure from the 'file-spell-checker' project. *
+-Clear the unneeded code. *
+-Generate all the days in the year. *
+-Go to the website and get all the holidays. *
+-Based on an existing TXT file, do a copy of the event dates TXT file to the sources directory. *
+-Clear the dist directory each run. *
+-Validates the sources directory (not included in all git and backup settings). *
+-Validate the given year, the source to copy, that the internet is working, and that the site is working. *
+-Add all events by getting html content of 'https://calendar.2net.co.il/annual-calendar.aspx?year=2021'. *
+-Add for each day of expiration date, or birthday, if year of birth is included. *
+-Create a new file based on a given year with all days. *
+-Log each day with static lines that repeat itself every day. *
+-Add validation of the holidays calendar website. *
+-Add static events from OSR calendar. *

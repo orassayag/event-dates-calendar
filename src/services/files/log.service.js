@@ -63,8 +63,7 @@ class LogService {
 
 	createConfirmSettingsTemplate(settings) {
 		const parameters = ['YEAR', 'DIST_FILE_NAME'];
-		let settingsText = '';
-		settingsText += Object.keys(settings).filter(s => parameters.indexOf(s) > -1)
+		let settingsText = Object.keys(settings).filter(s => parameters.indexOf(s) > -1)
 			.map(k => this.createLineTemplate(k, settings[k])).join('');
 		settingsText = textUtils.removeLastCharacter(settingsText);
 		return `${textUtils.setLogStatus('IMPORTANT SETTINGS')}

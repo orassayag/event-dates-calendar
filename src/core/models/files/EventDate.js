@@ -1,6 +1,6 @@
 class EventDate {
 
-	constructor(data) {
+    constructor(data) {
         const { id, day, month, year, eventType, text } = data;
         this.id = id;
         this.day = day;

@@ -1,6 +1,6 @@
 class MissingEventDate {
 
-    constructor (data) {
+    constructor(data) {
         const { id, includeText, excludeText, displayText, isDayBefore } = data;
         this.id = id;
         this.includeText = includeText;

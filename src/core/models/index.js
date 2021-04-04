@@ -9,8 +9,10 @@ const LogData = require('./files/LogData');
 const MissingEventDate = require('./files/MissingEventDate');
 const PathData = require('./files/PathData');
 const SourceEventResult = require('./files/SourceEventResult');
+const ValidateSourceEventTypeResult = require('./files/ValidateSourceEventTypeResult');
 
 module.exports = {
     ApplicationData, BackupData, BackupDirectory, CalendarDay, CommonTask, CountLimitData,
-    EventDate, LogData, MissingEventDate, PathData, SourceEventResult
+    EventDate, LogData, MissingEventDate, PathData, SourceEventResult,
+    ValidateSourceEventTypeResult
 };

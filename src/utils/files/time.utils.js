@@ -4,10 +4,10 @@ const validationUtils = require('./validation.utils');
 
 class TimeUtils {
 
-    constructor() { 
+    constructor() {
         this.daysInYear = 365;
     }
-    
+
     getDisplayDate(date) {
         if (!validationUtils.isValidDate(date)) {
             return null;

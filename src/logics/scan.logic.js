@@ -1,8 +1,8 @@
 const settings = require('../settings/settings');
 const { Status } = require('../core/enums');
 const { applicationService, countLimitService, eventService, logService, pathService } = require('../services');
-const { logUtils } = require('../utils');
 const globalUtils = require('../utils/files/global.utils');
+const { logUtils } = require('../utils');
 
 class ScanLogic {
 

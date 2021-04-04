@@ -1,5 +1,5 @@
 const { dictionaryCulture, eventCulture } = require('../../culture');
-const { CalendarDay, CommonTask, EventDate, SourceEventResult } = require('../../core/models');
+const { CalendarDay, CommonTask, EventDate, SourceEventResult, ValidateSourceEventTypeResult } = require('../../core/models');
 const { EventType } = require('../../core/enums');
 const applicationService = require('./application.service');
 const logService = require('./log.service');
@@ -21,7 +21,7 @@ class EventService {
         const calendarEventDates = await this.createCalendarEventDates();
         // Second, complete the missing events from the calendar website.
         const missingCalendarEventDates = this.createMissingCalendarEventDates(calendarEventDates);
-        // Third, get all the static events from a event culture file.
+        // Third, get all the static events from an event culture file.
         const staticEventDates = this.createStaticEventDates();
         // Next, get all the events from the source event dates TXT file.
         const { sourceEventDates, dataLines, dailyTasks, weekendTasks,
@@ -55,7 +55,7 @@ class EventService {
 
     async createCalendarEventDates() {
         const calendarEventDates = [];
-        const dom = await domUtils.getDOMfromURL(applicationService.applicationData.calendarLink);
+        const dom = await domUtils.getDOMFromURL(applicationService.applicationData.calendarLink);
         const daysList = dom.window.document.getElementsByClassName(separatorService.dayInMonthDOM);
         for (let i = 0; i < daysList.length; i++) {
             const dayDOM = daysList[i];
@@ -126,7 +126,7 @@ class EventService {
         let lineReader = null;
         let eventType = EventType.INITIATE;
         return await new Promise(async (resolve, reject) => {
-            let sourceEventResult = new SourceEventResult();
+            const sourceEventResult = new SourceEventResult();
             if (reject) { }
             // Validate the source event dates TXT file and get the stream.
             await this.validateSourceFile({
@@ -182,6 +182,7 @@ class EventService {
     }
 
     finalizeSourceEventResult(sourceEventResult) {
+        // Convert all the common tasks to different days.
         sourceEventResult.commonTasks.splice(-2);
         sourceEventResult.dailyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventType.DAILY_TASK);
         sourceEventResult.weekendTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventType.WEEKEND_TASK);
@@ -199,46 +200,39 @@ class EventService {
     validateSourceEventType(data) {
         const { line } = data;
         let { eventType } = data;
-        let isBreakLine, isSeparator = false;
+        const validateSourceEventTypeResult = new ValidateSourceEventTypeResult(eventType);
         if (!line) {
-            isBreakLine = true;
-            return {
-                eventType: eventType,
-                isBreakLine: isBreakLine,
-                isSeparator: isSeparator
-            };
+            validateSourceEventTypeResult.isBreakLine = true;
+            return validateSourceEventTypeResult;
         }
         if (eventType === EventType.END) {
             return null;
         }
         if (line[0] === separatorService.eventTypeSeparator) {
-            isBreakLine = true;
+            validateSourceEventTypeResult.isBreakLine = true;
             switch (eventType) {
                 case EventType.INITIATE: eventType = EventType.SERVICE; break;
                 case EventType.SERVICE: eventType = EventType.BIRTHDAY; break;
                 case EventType.BIRTHDAY: eventType = EventType.DATA; break;
-                case EventType.WEEKEND_TOGGLE_TASK: eventType = EventType.END; isSeparator = true; break;
+                case EventType.WEEKEND_TOGGLE_TASK: eventType = EventType.END; validateSourceEventTypeResult.isSeparator = true; break;
             }
         }
         else {
-            isBreakLine = true;
-            isSeparator = true;
+            validateSourceEventTypeResult.isBreakLine = true;
+            validateSourceEventTypeResult.isSeparator = true;
             switch (line) {
                 case separatorService.completeCancelTasksSeparator: eventType = EventType.COMPLETE_CANCEL_TASK; break;
                 case separatorService.dailyTasksSeparator: eventType = EventType.DAILY_TASK; break;
                 case separatorService.weekendTasksSeparator: eventType = EventType.WEEKEND_TASK; break;
                 case separatorService.weekendToggleTasksSeparator: eventType = EventType.WEEKEND_TOGGLE_TASK; break;
                 default:
-                    isBreakLine = false;
-                    isSeparator = false;
+                    validateSourceEventTypeResult.isBreakLine = false;
+                    validateSourceEventTypeResult.isSeparator = false;
                     break;
             }
         }
-        return {
-            eventType: eventType,
-            isBreakLine: isBreakLine,
-            isSeparator: isSeparator
-        };
+        validateSourceEventTypeResult.eventType = eventType;
+        return validateSourceEventTypeResult;
     }
 
     handleLine(data) {
@@ -287,7 +281,7 @@ class EventService {
 
     createSourceEvent(data) {
         const { line, eventType } = data;
-        // Check if the line include a date. If so, it's a service / birthday event.
+        // Check if the line includes a date. If so, it's a service / birthday event.
         const date = timeUtils.getDatePartsFromText(line);
         if (!date) {
             return;
@@ -394,7 +388,7 @@ class EventService {
                 }
                 if (line[0] !== separatorService.startLineCharacter ||
                     line[line.length - 1] !== separatorService.endLineCharacter) {
-                        logUtils.log(line);
+                    logUtils.log(line);
                 }
             });
         });

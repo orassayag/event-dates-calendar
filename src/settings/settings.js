@@ -8,7 +8,7 @@ const settings = {
     CALENDAR_LINK: 'https://calendar.2net.co.il/annual-calendar.aspx?year=',
 
     // ===LOG=== //
-    // Determine the name of the resulted event dates new TXT file in the 'dist' directory.
+    // Determine the name of the resulting `event dates` new TXT file in the 'dist' directory.
     DIST_FILE_NAME: 'event-dates',
 
     // ===COUNT & LIMIT=== //
