@@ -1,4 +1,4 @@
-const pathUtils = require('../utils/files/path.utils');
+const { pathUtils } = require('../utils');
 
 const settings = {
     // ===GENERAL=== //
@@ -19,7 +19,7 @@ const settings = {
     // Determine the milliseconds count timeout to wait between URL validation retry.
     MILLISECONDS_TIMEOUT_URL_VALIDATION: 1000,
 
-    // ===SOURCE === //
+    // ===SOURCE=== //
     // Determine the path of the event dates source. This file contain all the birthdays, expiration services dates,
     // and other data to be included in the new TXT file.
     SOURCE_PATH: pathUtils.getJoinPath({

@@ -1,5 +1,8 @@
 Completed + canceled tasks:
 ===========================
+-Comments: Change 'validateEnumData' to 'data'. *
+-Remove the 'await' from 'await fileUtils.createDirectory(value);'. *
+-In settings.js convert utils path to index, and check if it still works. *
 -Move all complete tasks from here to complete_tasks.txt. *
 -Upload to GitHub. *
 -Backup to iOmega. *

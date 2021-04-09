@@ -18,6 +18,14 @@ class EventCulture {
             }),
             new EventDate({
                 id: null,
+                day: 27,
+                month: 1,
+                year: null,
+                eventType: EventType.STATIC,
+                text: 'יום השואה הבינלאומי'
+            }),
+            new EventDate({
+                id: null,
                 day: 14,
                 month: 2,
                 year: null,
@@ -31,6 +39,54 @@ class EventCulture {
                 year: null,
                 eventType: EventType.STATIC,
                 text: 'יום האישה הבינלאומי'
+            }),
+            new EventDate({
+                id: null,
+                day: 1,
+                month: 4,
+                year: null,
+                eventType: EventType.STATIC,
+                text: 'אחד באפריל - יום השוטים הבינלאומי'
+            }),
+            new EventDate({
+                id: null,
+                day: 1,
+                month: 5,
+                year: null,
+                eventType: EventType.STATIC,
+                text: 'חג הפועלים הבינלאומי'
+            }),
+            new EventDate({
+                id: null,
+                day: 8,
+                month: 5,
+                year: null,
+                eventType: EventType.STATIC,
+                text: 'יום הניצחון באירופה במלחמת העולם השנייה'
+            }),
+            new EventDate({
+                id: null,
+                day: 14,
+                month: 5,
+                year: null,
+                eventType: EventType.STATIC,
+                text: 'יום הקמת מדינת ישראל'
+            }),
+            new EventDate({
+                id: null,
+                day: 1,
+                month: 9,
+                year: null,
+                eventType: EventType.STATIC,
+                text: 'יום התחלת מלחמת העולם השנייה'
+            }),
+            new EventDate({
+                id: null,
+                day: 1,
+                month: 9,
+                year: null,
+                eventType: EventType.STATIC,
+                text: 'יום תחילת שנת הלימודים בבתי הספר'
             }),
             new EventDate({
                 id: null,
