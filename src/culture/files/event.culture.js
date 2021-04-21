@@ -1,5 +1,5 @@
 /* cSpell:disable */
-const { EventDate, MissingEventDate } = require('../../core/models');
+const { DynamicEventDate, EventDate, MissingEventDate, RepeatEventDate } = require('../../core/models');
 const { EventType } = require('../../core/enums');
 
 class EventCulture {
@@ -71,6 +71,22 @@ class EventCulture {
                 year: null,
                 eventType: EventType.STATIC,
                 text: 'יום הקמת מדינת ישראל'
+            }),
+            new EventDate({
+                id: null,
+                day: 6,
+                month: 6,
+                year: null,
+                eventType: EventType.STATIC,
+                text: 'יום הפלישה לנורמנדי - D-Day'
+            }),
+            new EventDate({
+                id: null,
+                day: 4,
+                month: 7,
+                year: null,
+                eventType: EventType.STATIC,
+                text: 'יום העצמאות של ארה"ב'
             }),
             new EventDate({
                 id: null,
@@ -158,6 +174,32 @@ class EventCulture {
                 excludeText: null,
                 displayText: null,
                 isDayBefore: true
+            })
+        ];
+    }
+
+    createDynamicEventDates() {
+        return [
+            new DynamicEventDate({
+                id: 1,
+                includeText: 'Black Friday',
+                displayText: 'יום שישי השחור - בלאק פריידיי'
+            }),
+            new DynamicEventDate({
+                id: 2,
+                includeText: 'Cyber Monday',
+                displayText: 'שני הסייבר - סייבר מאנדיי'
+            })
+        ];
+    }
+
+    createRepeatEventDates() {
+        return [
+            new RepeatEventDate({
+                id: 1,
+                day: 13,
+                dayInWeek: 5,
+                displayText: 'יום שישי ה-13'
             })
         ];
     }

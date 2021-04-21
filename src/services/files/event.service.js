@@ -5,8 +5,7 @@ const applicationService = require('./application.service');
 const logService = require('./log.service');
 const pathService = require('./path.service');
 const separatorService = require('./separator.service');
-const { domUtils, eventUtils, fileUtils, logUtils, pathUtils,
-    timeUtils, validationUtils } = require('../../utils');
+const { domUtils, eventUtils, fileUtils, logUtils, pathUtils, timeUtils, validationUtils } = require('../../utils');
 
 class EventService {
 
@@ -17,18 +16,20 @@ class EventService {
     }
 
     async createEventDates() {
-        // First, get all the events from the online calendar website.
-        const calendarEventDates = await this.createCalendarEventDates();
-        // Second, complete the missing events from the calendar website.
-        const missingCalendarEventDates = this.createMissingCalendarEventDates(calendarEventDates);
-        // Third, get all the static events from an event culture file.
+        // First, get all the events from the Hebrew online calendar website.
+        const calendarILEventDates = await this.createILCalendarEventDates();
+        // Second, get all the events from the United States online calendar website.
+        const calendarUSEventDates = await this.createUSCalendarEventDates();
+        // Third, complete the missing events from the calendar website.
+        const missingCalendarEventDates = this.createMissingCalendarEventDates(calendarILEventDates);
+        // In the next step, get all the static events from an event culture file.
         const staticEventDates = this.createStaticEventDates();
         // Next, get all the events from the source event dates TXT file.
         const { sourceEventDates, dataLines, dailyTasks, weekendTasks,
             weekendOnToggleTasks, weekendOffToggleTasks } = await this.createSourceEventDates();
         // Next, create the calendar days to log.
-        const calendarDaysList = this.createCalendarDays([...calendarEventDates, ...missingCalendarEventDates,
-        ...staticEventDates, ...sourceEventDates]);
+        const calendarDaysList = this.createCalendarDays([...calendarILEventDates, ...missingCalendarEventDates,
+        ...calendarUSEventDates, ...staticEventDates, ...sourceEventDates]);
         // Finally, log all the days into a new TXT file in the 'dist' directory.
         await logService.logEventDates({
             calendarDaysList: calendarDaysList,
@@ -53,9 +54,9 @@ class EventService {
         });
     }
 
-    async createCalendarEventDates() {
-        const calendarEventDates = [];
-        const dom = await domUtils.getDOMFromURL(applicationService.applicationData.calendarLink);
+    async createILCalendarEventDates() {
+        const calendarILEventDates = [];
+        const dom = await domUtils.getDOMFromURL(applicationService.applicationData.calendarILLink);
         const daysList = dom.window.document.getElementsByClassName(separatorService.dayInMonthDOM);
         for (let i = 0; i < daysList.length; i++) {
             const dayDOM = daysList[i];
@@ -70,7 +71,7 @@ class EventService {
                 const month = parseInt(`${dayIdDOM[6]}${dayIdDOM[7]}`);
                 const year = parseInt(`${dayIdDOM[2]}${dayIdDOM[3]}${dayIdDOM[4]}${dayIdDOM[5]}`);
                 for (let y = 1; y < spansDOMList.length; y++) {
-                    calendarEventDates.push(this.createEventDate({
+                    calendarILEventDates.push(this.createEventDate({
                         day: day,
                         month: month,
                         year: year,
@@ -80,7 +81,35 @@ class EventService {
                 }
             }
         }
-        return calendarEventDates;
+        return calendarILEventDates;
+    }
+
+    async createUSCalendarEventDates() {
+        const calendarUSEventDates = [];
+        const dynamicEventDates = eventCulture.createDynamicEventDates();
+        const dom = await domUtils.getDOMFromURL(applicationService.applicationData.calendarUSLink);
+        const holidaysList = dom.window.document.getElementsByTagName(separatorService.rowDOM);
+        for (let i = 0; i < holidaysList.length; i++) {
+            const holidayDOM = holidaysList[i];
+            const cell = holidayDOM.getElementsByTagName(separatorService.cellDOM)[1];
+            if (cell && cell.textContent) {
+                const holidayName = cell.textContent.trim();
+                const event = dynamicEventDates.find(e => e.includeText === holidayName);
+                if (event) {
+                    const dateUnix = holidayDOM.getAttribute(separatorService.unixDataDOM);
+                    const date = timeUtils.getCurrentDate(parseInt(dateUnix));
+                    const { dateDay, dateMonth, dateYear } = timeUtils.getDateParts(date);
+                    calendarUSEventDates.push(this.createEventDate({
+                        day: dateDay,
+                        month: dateMonth,
+                        year: dateYear,
+                        eventType: EventType.DYNAMIC,
+                        text: eventUtils.createEventTemplate(event.displayText)
+                    }));
+                }
+            }
+        }
+        return calendarUSEventDates;
     }
 
     createMissingCalendarEventDates(calendarEventDates) {
@@ -147,12 +176,13 @@ class EventService {
                 if (handleLineResult.returnValue) {
                     switch (handleLineResult.eventType) {
                         case EventType.SERVICE:
-                        case EventType.BIRTHDAY:
+                        case EventType.BIRTHDAY: {
                             sourceEventResult.sourceEventDates.push(handleLineResult.returnValue);
                             break;
+                        }
                         case EventType.DAILY_TASK:
                         case EventType.WEEKEND_TASK:
-                        case EventType.WEEKEND_TOGGLE_TASK:
+                        case EventType.WEEKEND_TOGGLE_TASK: {
                             if (!handleLineResult.isSeparator) {
                                 this.lastCommonTaskId++;
                                 sourceEventResult.commonTasks.push(new CommonTask({
@@ -162,6 +192,7 @@ class EventService {
                                 }));
                             }
                             break;
+                        }
                     }
                 }
                 eventType = handleLineResult.eventType;
@@ -211,24 +242,25 @@ class EventService {
         if (line[0] === separatorService.eventTypeSeparator) {
             validateSourceEventTypeResult.isBreakLine = true;
             switch (eventType) {
-                case EventType.INITIATE: eventType = EventType.SERVICE; break;
-                case EventType.SERVICE: eventType = EventType.BIRTHDAY; break;
-                case EventType.BIRTHDAY: eventType = EventType.DATA; break;
-                case EventType.WEEKEND_TOGGLE_TASK: eventType = EventType.END; validateSourceEventTypeResult.isSeparator = true; break;
+                case EventType.INITIATE: { eventType = EventType.SERVICE; break; }
+                case EventType.SERVICE: { eventType = EventType.BIRTHDAY; break; }
+                case EventType.BIRTHDAY: { eventType = EventType.DATA; break; }
+                case EventType.WEEKEND_TOGGLE_TASK: { eventType = EventType.END; validateSourceEventTypeResult.isSeparator = true; break; }
             }
         }
         else {
             validateSourceEventTypeResult.isBreakLine = true;
             validateSourceEventTypeResult.isSeparator = true;
             switch (line) {
-                case separatorService.completeCancelTasksSeparator: eventType = EventType.COMPLETE_CANCEL_TASK; break;
-                case separatorService.dailyTasksSeparator: eventType = EventType.DAILY_TASK; break;
-                case separatorService.weekendTasksSeparator: eventType = EventType.WEEKEND_TASK; break;
-                case separatorService.weekendToggleTasksSeparator: eventType = EventType.WEEKEND_TOGGLE_TASK; break;
-                default:
+                case separatorService.completeCancelTasksSeparator: { eventType = EventType.COMPLETE_CANCEL_TASK; break; }
+                case separatorService.dailyTasksSeparator: { eventType = EventType.DAILY_TASK; break; }
+                case separatorService.weekendTasksSeparator: { eventType = EventType.WEEKEND_TASK; break; }
+                case separatorService.weekendToggleTasksSeparator: { eventType = EventType.WEEKEND_TOGGLE_TASK; break; }
+                default: {
                     validateSourceEventTypeResult.isBreakLine = false;
                     validateSourceEventTypeResult.isSeparator = false;
                     break;
+                }
             }
         }
         validateSourceEventTypeResult.eventType = eventType;
@@ -250,25 +282,29 @@ class EventService {
         line = isBreakLine ? eventUtils.warpBreakRLines(line) : line;
         switch (eventType) {
             case EventType.SERVICE:
-            case EventType.BIRTHDAY:
+            case EventType.BIRTHDAY: {
                 returnValue = this.createSourceEvent({
                     line: line,
                     eventType: eventType
                 });
                 break;
-            case EventType.COMPLETE_CANCEL_TASK:
+            }
+            case EventType.COMPLETE_CANCEL_TASK: {
                 line = isSeparator ? eventUtils.warpBreakLine(line) : line;
                 break;
+            }
             case EventType.DAILY_TASK:
             case EventType.WEEKEND_TASK:
-            case EventType.WEEKEND_TOGGLE_TASK:
+            case EventType.WEEKEND_TOGGLE_TASK: {
                 returnValue = line;
                 break;
-            case EventType.END:
+            }
+            case EventType.END: {
                 if (!isSeparator) {
                     line = null;
                 }
                 break;
+            }
         }
         return {
             eventType: eventType,
@@ -324,7 +360,7 @@ class EventService {
     async validateSourceFile(data) {
         const { filePath, parameterName } = data;
         if (!await fileUtils.isPathExists(filePath)) {
-            throw new Error(`Invalid or no ${parameterName} parameter was found: Expected a number but received: ${filePath} (1000003)`);
+            throw new Error(`Path not exists: ${filePath} (1000003)`);
         }
         if (!fileUtils.isFilePath(filePath)) {
             throw new Error(`The parameter path ${parameterName} marked as file but it's a path of a directory: ${filePath} (1000004)`);
@@ -338,26 +374,53 @@ class EventService {
     createCalendarDays(allEvents) {
         const calendarDaysList = [];
         // Create the calendar days list array.
-        const date = new Date(applicationService.applicationData.year, 0, 1);
-        const end = new Date(date);
-        end.setFullYear(end.getFullYear() + 1);
-        while (date < end || calendarDaysList.length < timeUtils.daysInYear) {
-            const { englishDay, hebrewDay } = this.getDayInWeek(date);
+        const dateStart = timeUtils.getCurrentDate([applicationService.applicationData.year, 0, 1]);
+        const dateEnd = timeUtils.getCurrentDate(dateStart);
+        dateEnd.setFullYear(dateEnd.getFullYear() + 1);
+        while (dateStart < dateEnd || calendarDaysList.length < timeUtils.daysInYear) {
+            const { dateDay, dateMonth, dateYear } = timeUtils.getDateParts(dateStart);
+            const { englishDay, hebrewDay } = this.getDayInWeek(dateStart);
             this.lastCalendarDayId++;
-            calendarDaysList.push(new CalendarDay({
+            let calendarDay = new CalendarDay({
                 id: this.lastCalendarDayId,
-                date: date,
-                displayDate: timeUtils.getDisplayDate(date),
+                date: dateStart,
+                displayDate: timeUtils.getDisplayDate(dateStart),
                 dayInWeek: englishDay,
                 displayDayInWeek: hebrewDay,
                 eventDatesList: allEvents.filter(e => {
-                    return e.day === date.getDate() && e.month === date.getMonth() + 1;
+                    return e.day === dateDay && e.month === dateMonth;
                 })
-            }));
-            date.setDate(date.getDate() + 1);
+            });
+            calendarDay = this.createRepeatEventDate({
+                calendarDay: calendarDay,
+                dateDay: dateDay,
+                dateMonth: dateMonth,
+                dateYear: dateYear
+            });
+            calendarDaysList.push(calendarDay);
+            dateStart.setDate(dateDay + 1);
         }
         calendarDaysList.reverse();
         return calendarDaysList;
+    }
+
+    createRepeatEventDate(data) {
+        const { calendarDay, dateDay, dateMonth, dateYear } = data;
+        // Get repeat logic events (like friday the 13th).
+        const repeatEventDates = eventCulture.createRepeatEventDates();
+        for (let i = 0; i < repeatEventDates.length; i++) {
+            const { day, dayInWeek, displayText } = repeatEventDates[i];
+            if (day === dateDay && calendarDay.dayInWeek === dictionaryCulture.englishDaysList[dayInWeek]) {
+                calendarDay.eventDatesList.push(this.createEventDate({
+                    day: dateDay,
+                    month: dateMonth,
+                    year: dateYear,
+                    eventType: EventType.REPEAT,
+                    text: eventUtils.createEventTemplate(displayText)
+                }));
+            }
+        }
+        return calendarDay;
     }
 
     getDayInWeek(date) {
@@ -373,24 +436,21 @@ class EventService {
 
     async scanSourceFile() {
         let lineReader = null;
-        return await new Promise(async (resolve, reject) => {
-            if (reject) { }
-            // Validate the source event dates TXT file and get the stream.
-            await this.validateSourceFile({
-                filePath: pathService.pathData.sourcePath,
-                parameterName: 'SOURCE_PATH'
-            });
-            // Scan the source event dates TXT file.
-            lineReader = fileUtils.getFileLinesFromStream(pathService.pathData.sourcePath);
-            lineReader.on('line', (line) => {
-                if (!line) {
-                    return;
-                }
-                if (line[0] !== separatorService.startLineCharacter ||
-                    line[line.length - 1] !== separatorService.endLineCharacter) {
-                    logUtils.log(line);
-                }
-            });
+        // Validate the source event dates TXT file and get the stream.
+        await this.validateSourceFile({
+            filePath: pathService.pathData.sourcePath,
+            parameterName: 'SOURCE_PATH'
+        });
+        // Scan the source event dates TXT file.
+        lineReader = fileUtils.getFileLinesFromStream(pathService.pathData.sourcePath);
+        lineReader.on('line', (line) => {
+            if (!line) {
+                return;
+            }
+            if (line[0] !== separatorService.startLineCharacter ||
+                line[line.length - 1] !== separatorService.endLineCharacter) {
+                logUtils.log(line);
+            }
         });
     }
 }

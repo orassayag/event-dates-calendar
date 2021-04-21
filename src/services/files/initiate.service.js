@@ -99,7 +99,7 @@ class InitiateService {
 		[
 			...keys,
 			// ===GENERAL=== //
-			'CALENDAR_LINK',
+			'CALENDAR_IL_LINK', 'CALENDAR_US_LINK',
 			// ===LOG=== //
 			'DIST_FILE_NAME',
 			// ===SOURCE=== //
@@ -150,7 +150,7 @@ class InitiateService {
 		}
 		[
 			// === GENERAL === //
-			'CALENDAR_LINK',
+			'CALENDAR_IL_LINK', 'CALENDAR_US_LINK',
 			// ===VALIDATION=== //
 			'VALIDATION_CONNECTION_LINK'
 		].map(key => {

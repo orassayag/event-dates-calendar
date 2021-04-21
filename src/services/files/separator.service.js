@@ -12,11 +12,15 @@ class SeparatorService {
         this.dailyTasksSeparator = '!@';
         this.weekendTasksSeparator = '&@';
         this.weekendToggleTasksSeparator = '*@';
-        // ===CALENDAR DOM=== //
+        // ===CALENDAR IL DOM=== //
         this.dayInMonthDOM = 'dayInMonth';
         this.spanDOM = 'span';
         this.personalDOM = 'personal';
         this.idDOM = 'id';
+        // ===CALENDAR US DOM=== //
+        this.rowDOM = 'tr';
+        this.cellDOM = 'td';
+        this.unixDataDOM = 'data-date';
     }
 }
 

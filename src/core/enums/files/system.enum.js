@@ -12,8 +12,8 @@ const Status = enumUtils.createEnum([
     ['VALIDATE', 'VALIDATE'],
     ['CREATE', 'CREATE'],
     ['SCAN', 'SCAN'],
-    ['FINISH', 'FINISH'],
-    ['ABORT_BY_THE_USER', 'ABORT BY THE USER']
+    ['ABORT_BY_THE_USER', 'ABORT BY THE USER'],
+    ['FINISH', 'FINISH']
 ]);
 
 module.exports = { ScriptType, Status };

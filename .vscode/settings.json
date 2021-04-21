@@ -1,30 +1,46 @@
 {
     "cSpell.words": [
         "Assayag",
-        "backuped",
-        "cpell",
-        "dirents",
         "jsbeautifyrc",
         "orassayag"
     ],
+    "cSpell.ignorePaths": [
+        "**/.git",
+        ".git/**",
+        "**/.git/**",
+        "**/node_modules",
+        "node_modules/**",
+        "**/node_modules/**",
+        "**/dist",
+        "dist/**",
+        "**/dist/**",
+        "**/sources",
+        "sources/**",
+        "**/sources/**",
+        "**/misc",
+        "misc/**",
+        "**/misc/**",
+        "package-lock.json"
+    ],
     "search.exclude": {
+        "**/.git": true,
+        ".git/**": true,
+        "**/.git/**": true,
         "**/.vscode": true,
         "**/dist": true,
         "**/misc": true,
-        "**/dictionaries": true,
         "**/misc/documents": true,
-        "**/misc/backup": true,
         "**/misc/": true,
-        "**/dictionaries/": true,
         "/misc/": true,
-        "/dictionaries/": true,
         "misc/**": true,
-        "dictionaries/**": true,
         "**/misc/**": true,
-        "**/dictionaries/**": true,
         "**/misc/documents/**": true,
-        "**/misc/backup/**": true,
-        "**/node_modules": true
+        "**/node_modules": true,
+        "node_modules/**": true,
+        "**/node_modules/**": true,
+        "**/sources": true,
+        "sources/**": true,
+        "**/sources/**": true
     },
     "eslint.validate": [
         "javascript"
@@ -33,5 +49,5 @@
     "http.proxyAuthorization": null,
     "http.proxyStrictSSL": false,
     "editor.renderWhitespace": "none",
-    "formatFiles.excludePattern": "**/node_modules,**/.vscode,**/dist,**/dist/**,**/.chrome,**/misc,**/misc/**,**/sources,**/sources/**,**/dictionaries,**/dictionaries/**"
+    "formatFiles.excludePattern": "**/node_modules,**/node_modules/**,**/.vscode,**/.vscode/**,**/dist,**/dist/**,**/.chrome,**/misc,**/misc/**,**/sources,**/sources/**"
 }

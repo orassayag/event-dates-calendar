@@ -47,11 +47,12 @@ class TextUtils {
         return `${text}/`;
     }
 
-    removeLastCharacter(text) {
-        if (!text) {
+    removeLastCharacters(data) {
+        const { value, charactersCount } = data;
+        if (!value || !validationUtils.isValidNumber(charactersCount)) {
             return '';
         }
-        return text.substring(0, text.length - 1);
+        return value.substring(0, value.length - charactersCount);
     }
 
     addBreakLine(text) {

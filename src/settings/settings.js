@@ -5,7 +5,9 @@ const settings = {
     // Determine the year to create the event dates calendar for.
     YEAR: 2021,
     // Determine the URL of which to take the calendar Hebrew events and holidays.
-    CALENDAR_LINK: 'https://calendar.2net.co.il/annual-calendar.aspx?year=',
+    CALENDAR_IL_LINK: 'https://calendar.2net.co.il/annual-calendar.aspx?year=',
+    // Determine the URL of which to take the calendar United States events and holidays.
+    CALENDAR_US_LINK: 'https://www.timeanddate.com/holidays/us/',
 
     // ===LOG=== //
     // Determine the name of the resulting `event dates` new TXT file in the 'dist' directory.

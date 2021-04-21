@@ -2,8 +2,8 @@ const settings = require('../settings/settings');
 const { Status } = require('../core/enums');
 const { applicationService, confirmationService, countLimitService, eventService, logService,
     pathService, validationService } = require('../services');
-const { logUtils, systemUtils } = require('../utils');
 const globalUtils = require('../utils/files/global.utils');
+const { logUtils, systemUtils, timeUtils } = require('../utils');
 
 class CreateLogic {
 
@@ -37,7 +37,7 @@ class CreateLogic {
 
     async startSession() {
         this.updateStatus('CREATE TEXT FILE', Status.CREATE);
-        applicationService.applicationData.startDateTime = new Date();
+        applicationService.applicationData.startDateTime = timeUtils.getCurrentDate();
         await eventService.createEventDates();
         await this.exit(Status.FINISH);
     }
@@ -66,7 +66,6 @@ class CreateLogic {
             await this.sleep();
         }
         systemUtils.exit(status);
-
     }
 }
 

@@ -8,6 +8,10 @@ class TimeUtils {
         this.daysInYear = 365;
     }
 
+    getCurrentDate(value) {
+        return value ? validationUtils.isValidArray(value) ? new Date(...value) : new Date(value) : new Date();
+    }
+
     getDisplayDate(date) {
         if (!validationUtils.isValidDate(date)) {
             return null;
@@ -16,13 +20,24 @@ class TimeUtils {
     }
 
     getFullDateNoSpaces() {
-        const date = new Date();
+        const date = this.getCurrentDate();
         return `${[this.getDay(date), this.getMonth(date), this.getYear(date)].join('')}_${[this.getHours(date), this.getMinutes(date), this.getSeconds(date)].join('')}`;
     }
 
     getDateNoSpaces() {
-        const date = new Date();
+        const date = this.getCurrentDate();
         return [this.getDay(date), this.getMonth(date), this.getYear(date)].join('');
+    }
+
+    getDateParts(date) {
+        if (!validationUtils.isValidDate(date)) {
+            return null;
+        }
+        return {
+            dateDay: date.getDate(),
+            dateMonth: date.getMonth() + 1,
+            dateYear: date.getFullYear()
+        };
     }
 
     getSeconds(date) {

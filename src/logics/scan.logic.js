@@ -2,7 +2,7 @@ const settings = require('../settings/settings');
 const { Status } = require('../core/enums');
 const { applicationService, countLimitService, eventService, logService, pathService } = require('../services');
 const globalUtils = require('../utils/files/global.utils');
-const { logUtils } = require('../utils');
+const { logUtils, timeUtils } = require('../utils');
 
 class ScanLogic {
 
@@ -32,7 +32,7 @@ class ScanLogic {
 
     async startSession() {
         this.updateStatus('SCAN TEXT FILE', Status.SCAN);
-        applicationService.applicationData.startDateTime = new Date();
+        applicationService.applicationData.startDateTime = timeUtils.getCurrentDate();
         await eventService.scanSourceFile();
         await this.exit(Status.FINISH);
     }

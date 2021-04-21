@@ -6,6 +6,8 @@ const EventType = enumUtils.createEnum([
     ['BIRTHDAY', 'birthday'],
     ['CALENDAR', 'calendar'],
     ['STATIC', 'static'],
+    ['DYNAMIC', 'dynamic'],
+    ['REPEAT', 'repeat'],
     ['DAILY_TASK', 'dailyTask'],
     ['WEEKEND_TASK', 'weekendTask'],
     ['WEEKEND_TOGGLE_TASK', 'weekendToggleTask'],

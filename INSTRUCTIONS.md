@@ -8,9 +8,9 @@ FAST & BASIC START.
 3. Search for the first setting - 'YEAR' - And enter the relevant year for the new TXT file.
 4. Search for setting 'SOURCE_PATH' - Select the path you want to scan.
 5. Search for setting 'DIST_FILE_NAME' - Enter the name of the new TXT file.
-6. If you want to scan for unmarked tasks - Run on terminal: 'npm run scan'.
-7. Next - Time to install the NPM packages. On the terminal run 'npm i'. It will install automatically all the required NPM packages.
-8. On terminal run 'npm start'. If everything goes well, you will start to see the console status line appear.
+6. If you want to scan for unmarked tasks - Run in the terminal: 'npm run scan'.
+7. Next - Time to install the NPM packages. In the terminal run 'npm i'. It will install automatically all the required NPM packages.
+8. In the terminal run 'npm start'. If everything goes well, you will start to see the console status line appear.
 9. If you see any error - Need to check what's changed. Current to 18/02/2021, it works fine.
 10. If you see the console status line but the 'Total' not progressing - Need to check what's wrong.
 11. If no errors and the progress works OK, make sure to check on dist directory
