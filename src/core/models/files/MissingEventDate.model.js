@@ -1,4 +1,4 @@
-class MissingEventDate {
+class MissingEventDateModel {
 
     constructor(data) {
         const { id, includeText, excludeText, displayText, isDayBefore } = data;
@@ -10,4 +10,4 @@ class MissingEventDate {
     }
 }
 
-module.exports = MissingEventDate;
+module.exports = MissingEventDateModel;

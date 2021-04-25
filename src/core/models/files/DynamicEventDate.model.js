@@ -1,4 +1,4 @@
-class DynamicEventDate {
+class DynamicEventDateModel {
 
     constructor(data) {
         const { id, includeText, displayText } = data;
@@ -8,4 +8,4 @@ class DynamicEventDate {
     }
 }
 
-module.exports = DynamicEventDate;
+module.exports = DynamicEventDateModel;

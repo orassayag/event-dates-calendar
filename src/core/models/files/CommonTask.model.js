@@ -1,4 +1,4 @@
-class CommonTask {
+class CommonTaskModel {
 
     constructor(data) {
         const { id, text, type } = data;
@@ -8,4 +8,4 @@ class CommonTask {
     }
 }
 
-module.exports = CommonTask;
+module.exports = CommonTaskModel;

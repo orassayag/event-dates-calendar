@@ -1,6 +1,6 @@
 const enumUtils = require('../enum.utils');
 
-const EventType = enumUtils.createEnum([
+const EventTypeEnum = enumUtils.createEnum([
     ['INITIATE', 'initiate'],
     ['SERVICE', 'service'],
     ['BIRTHDAY', 'birthday'],
@@ -16,4 +16,4 @@ const EventType = enumUtils.createEnum([
     ['END', 'end']
 ]);
 
-module.exports = { EventType };
+module.exports = { EventTypeEnum };

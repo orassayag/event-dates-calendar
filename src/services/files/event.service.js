@@ -1,6 +1,6 @@
 const { dictionaryCulture, eventCulture } = require('../../culture');
-const { CalendarDay, CommonTask, EventDate, SourceEventResult, ValidateSourceEventTypeResult } = require('../../core/models');
-const { EventType } = require('../../core/enums');
+const { CalendarDayModel, CommonTaskModel, EventDateModel, SourceEventResultModel, ValidateSourceEventTypeResultModel } = require('../../core/models');
+const { EventTypeEnum } = require('../../core/enums');
 const applicationService = require('./application.service');
 const logService = require('./log.service');
 const pathService = require('./path.service');
@@ -44,7 +44,7 @@ class EventService {
     createEventDate(data) {
         const { day, month, year, eventType, text } = data;
         this.lastEventDateId++;
-        return new EventDate({
+        return new EventDateModel({
             id: this.lastEventDateId,
             day: day,
             month: month,
@@ -56,7 +56,7 @@ class EventService {
 
     async createILCalendarEventDates() {
         const calendarILEventDates = [];
-        const dom = await domUtils.getDOMFromURL(applicationService.applicationData.calendarILLink);
+        const dom = await domUtils.getDOMFromURL(applicationService.applicationDataModel.calendarILLink);
         const daysList = dom.window.document.getElementsByClassName(separatorService.dayInMonthDOM);
         for (let i = 0; i < daysList.length; i++) {
             const dayDOM = daysList[i];
@@ -75,7 +75,7 @@ class EventService {
                         day: day,
                         month: month,
                         year: year,
-                        eventType: EventType.CALENDAR,
+                        eventType: EventTypeEnum.CALENDAR,
                         text: eventUtils.createEventTemplate(spansDOMList[y].textContent)
                     }));
                 }
@@ -87,7 +87,7 @@ class EventService {
     async createUSCalendarEventDates() {
         const calendarUSEventDates = [];
         const dynamicEventDates = eventCulture.createDynamicEventDates();
-        const dom = await domUtils.getDOMFromURL(applicationService.applicationData.calendarUSLink);
+        const dom = await domUtils.getDOMFromURL(applicationService.applicationDataModel.calendarUSLink);
         const holidaysList = dom.window.document.getElementsByTagName(separatorService.rowDOM);
         for (let i = 0; i < holidaysList.length; i++) {
             const holidayDOM = holidaysList[i];
@@ -103,7 +103,7 @@ class EventService {
                         day: dateDay,
                         month: dateMonth,
                         year: dateYear,
-                        eventType: EventType.DYNAMIC,
+                        eventType: EventTypeEnum.DYNAMIC,
                         text: eventUtils.createEventTemplate(event.displayText)
                     }));
                 }
@@ -126,7 +126,7 @@ class EventService {
                     day: isDayBefore ? day - 1 : day,
                     month: month,
                     year: year,
-                    eventType: EventType.CALENDAR,
+                    eventType: EventTypeEnum.CALENDAR,
                     text: displayText ? eventUtils.createEventTemplate(displayText) :
                         eventUtils.completeEventTemplate(dictionaryCulture.eveNight, text)
                 }));
@@ -153,17 +153,17 @@ class EventService {
 
     async createSourceEventDates() {
         let lineReader = null;
-        let eventType = EventType.INITIATE;
+        let eventType = EventTypeEnum.INITIATE;
         return await new Promise(async (resolve, reject) => {
-            const sourceEventResult = new SourceEventResult();
+            const sourceEventResult = new SourceEventResultModel();
             if (reject) { }
             // Validate the source event dates TXT file and get the stream.
             await this.validateSourceFile({
-                filePath: pathService.pathData.sourcePath,
+                filePath: pathService.pathDataModel.sourcePath,
                 parameterName: 'SOURCE_PATH'
             });
             // Scan the source event dates TXT file.
-            lineReader = fileUtils.getFileLinesFromStream(pathService.pathData.sourcePath);
+            lineReader = fileUtils.getFileLinesFromStream(pathService.pathDataModel.sourcePath);
             lineReader.on('line', (line) => {
                 const handleLineResult = this.handleLine({
                     lineReader: lineReader,
@@ -175,17 +175,17 @@ class EventService {
                 }
                 if (handleLineResult.returnValue) {
                     switch (handleLineResult.eventType) {
-                        case EventType.SERVICE:
-                        case EventType.BIRTHDAY: {
+                        case EventTypeEnum.SERVICE:
+                        case EventTypeEnum.BIRTHDAY: {
                             sourceEventResult.sourceEventDates.push(handleLineResult.returnValue);
                             break;
                         }
-                        case EventType.DAILY_TASK:
-                        case EventType.WEEKEND_TASK:
-                        case EventType.WEEKEND_TOGGLE_TASK: {
+                        case EventTypeEnum.DAILY_TASK:
+                        case EventTypeEnum.WEEKEND_TASK:
+                        case EventTypeEnum.WEEKEND_TOGGLE_TASK: {
                             if (!handleLineResult.isSeparator) {
                                 this.lastCommonTaskId++;
-                                sourceEventResult.commonTasks.push(new CommonTask({
+                                sourceEventResult.commonTasks.push(new CommonTaskModel({
                                     id: this.lastCommonTaskId,
                                     text: handleLineResult.returnValue,
                                     type: handleLineResult.eventType
@@ -197,7 +197,7 @@ class EventService {
                 }
                 eventType = handleLineResult.eventType;
                 if (handleLineResult.line && eventType && (handleLineResult.isSeparator ||
-                    eventType !== EventType.COMPLETE_CANCEL_TASK)) {
+                    eventType !== EventTypeEnum.COMPLETE_CANCEL_TASK)) {
                     sourceEventResult.dataLines.push(handleLineResult.line);
                 }
             });
@@ -215,9 +215,9 @@ class EventService {
     finalizeSourceEventResult(sourceEventResult) {
         // Convert all the common tasks to different days.
         sourceEventResult.commonTasks.splice(-2);
-        sourceEventResult.dailyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventType.DAILY_TASK);
-        sourceEventResult.weekendTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventType.WEEKEND_TASK);
-        const weekendToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventType.WEEKEND_TOGGLE_TASK);
+        sourceEventResult.dailyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.DAILY_TASK);
+        sourceEventResult.weekendTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TASK);
+        const weekendToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TOGGLE_TASK);
         for (let i = 0; i < weekendToggleTasks.length; i++) {
             const task = weekendToggleTasks[i];
             const splitToggle = task.split(separatorService.toggleSeparator);
@@ -231,31 +231,31 @@ class EventService {
     validateSourceEventType(data) {
         const { line } = data;
         let { eventType } = data;
-        const validateSourceEventTypeResult = new ValidateSourceEventTypeResult(eventType);
+        const validateSourceEventTypeResult = new ValidateSourceEventTypeResultModel(eventType);
         if (!line) {
             validateSourceEventTypeResult.isBreakLine = true;
             return validateSourceEventTypeResult;
         }
-        if (eventType === EventType.END) {
+        if (eventType === EventTypeEnum.END) {
             return null;
         }
         if (line[0] === separatorService.eventTypeSeparator) {
             validateSourceEventTypeResult.isBreakLine = true;
             switch (eventType) {
-                case EventType.INITIATE: { eventType = EventType.SERVICE; break; }
-                case EventType.SERVICE: { eventType = EventType.BIRTHDAY; break; }
-                case EventType.BIRTHDAY: { eventType = EventType.DATA; break; }
-                case EventType.WEEKEND_TOGGLE_TASK: { eventType = EventType.END; validateSourceEventTypeResult.isSeparator = true; break; }
+                case EventTypeEnum.INITIATE: { eventType = EventTypeEnum.SERVICE; break; }
+                case EventTypeEnum.SERVICE: { eventType = EventTypeEnum.BIRTHDAY; break; }
+                case EventTypeEnum.BIRTHDAY: { eventType = EventTypeEnum.DATA; break; }
+                case EventTypeEnum.WEEKEND_TOGGLE_TASK: { eventType = EventTypeEnum.END; validateSourceEventTypeResult.isSeparator = true; break; }
             }
         }
         else {
             validateSourceEventTypeResult.isBreakLine = true;
             validateSourceEventTypeResult.isSeparator = true;
             switch (line) {
-                case separatorService.completeCancelTasksSeparator: { eventType = EventType.COMPLETE_CANCEL_TASK; break; }
-                case separatorService.dailyTasksSeparator: { eventType = EventType.DAILY_TASK; break; }
-                case separatorService.weekendTasksSeparator: { eventType = EventType.WEEKEND_TASK; break; }
-                case separatorService.weekendToggleTasksSeparator: { eventType = EventType.WEEKEND_TOGGLE_TASK; break; }
+                case separatorService.completeCancelTasksSeparator: { eventType = EventTypeEnum.COMPLETE_CANCEL_TASK; break; }
+                case separatorService.dailyTasksSeparator: { eventType = EventTypeEnum.DAILY_TASK; break; }
+                case separatorService.weekendTasksSeparator: { eventType = EventTypeEnum.WEEKEND_TASK; break; }
+                case separatorService.weekendToggleTasksSeparator: { eventType = EventTypeEnum.WEEKEND_TOGGLE_TASK; break; }
                 default: {
                     validateSourceEventTypeResult.isBreakLine = false;
                     validateSourceEventTypeResult.isSeparator = false;
@@ -281,25 +281,25 @@ class EventService {
         const { eventType, isBreakLine, isSeparator } = validateEventResult;
         line = isBreakLine ? eventUtils.warpBreakRLines(line) : line;
         switch (eventType) {
-            case EventType.SERVICE:
-            case EventType.BIRTHDAY: {
+            case EventTypeEnum.SERVICE:
+            case EventTypeEnum.BIRTHDAY: {
                 returnValue = this.createSourceEvent({
                     line: line,
                     eventType: eventType
                 });
                 break;
             }
-            case EventType.COMPLETE_CANCEL_TASK: {
+            case EventTypeEnum.COMPLETE_CANCEL_TASK: {
                 line = isSeparator ? eventUtils.warpBreakLine(line) : line;
                 break;
             }
-            case EventType.DAILY_TASK:
-            case EventType.WEEKEND_TASK:
-            case EventType.WEEKEND_TOGGLE_TASK: {
+            case EventTypeEnum.DAILY_TASK:
+            case EventTypeEnum.WEEKEND_TASK:
+            case EventTypeEnum.WEEKEND_TOGGLE_TASK: {
                 returnValue = line;
                 break;
             }
-            case EventType.END: {
+            case EventTypeEnum.END: {
                 if (!isSeparator) {
                     line = null;
                 }
@@ -326,7 +326,7 @@ class EventService {
         const day = parseInt(dateParts[0]);
         const month = parseInt(dateParts[1]);
         const year = validationUtils.isIndexExists(dateParts, 2) ? parseInt(dateParts[2]) : null;
-        if (eventType === EventType.SERVICE && year !== applicationService.applicationData.year) {
+        if (eventType === EventTypeEnum.SERVICE && year !== applicationService.applicationDataModel.year) {
             return;
         }
         return this.createEventDate({
@@ -347,9 +347,9 @@ class EventService {
     createSourceEventText(data) {
         const { date, birthYear, line, eventType } = data;
         let result = line;
-        if (eventType === EventType.BIRTHDAY) {
+        if (eventType === EventTypeEnum.BIRTHDAY) {
             const age = result.replace(date, `(${timeUtils.getAge({
-                year: applicationService.applicationData.year,
+                year: applicationService.applicationDataModel.year,
                 birthYear: birthYear
             })})`);
             result = eventUtils.birthDayEventTemplate(dictionaryCulture.hebrewBirthDay, age);
@@ -374,14 +374,14 @@ class EventService {
     createCalendarDays(allEvents) {
         const calendarDaysList = [];
         // Create the calendar days list array.
-        const dateStart = timeUtils.getCurrentDate([applicationService.applicationData.year, 0, 1]);
+        const dateStart = timeUtils.getCurrentDate([applicationService.applicationDataModel.year, 0, 1]);
         const dateEnd = timeUtils.getCurrentDate(dateStart);
         dateEnd.setFullYear(dateEnd.getFullYear() + 1);
         while (dateStart < dateEnd || calendarDaysList.length < timeUtils.daysInYear) {
             const { dateDay, dateMonth, dateYear } = timeUtils.getDateParts(dateStart);
             const { englishDay, hebrewDay } = this.getDayInWeek(dateStart);
             this.lastCalendarDayId++;
-            let calendarDay = new CalendarDay({
+            let calendarDayModel = new CalendarDayModel({
                 id: this.lastCalendarDayId,
                 date: dateStart,
                 displayDate: timeUtils.getDisplayDate(dateStart),
@@ -391,13 +391,13 @@ class EventService {
                     return e.day === dateDay && e.month === dateMonth;
                 })
             });
-            calendarDay = this.createRepeatEventDate({
-                calendarDay: calendarDay,
+            calendarDayModel = this.createRepeatEventDate({
+                calendarDayModel: calendarDayModel,
                 dateDay: dateDay,
                 dateMonth: dateMonth,
                 dateYear: dateYear
             });
-            calendarDaysList.push(calendarDay);
+            calendarDaysList.push(calendarDayModel);
             dateStart.setDate(dateDay + 1);
         }
         calendarDaysList.reverse();
@@ -405,22 +405,22 @@ class EventService {
     }
 
     createRepeatEventDate(data) {
-        const { calendarDay, dateDay, dateMonth, dateYear } = data;
+        const { calendarDayModel, dateDay, dateMonth, dateYear } = data;
         // Get repeat logic events (like friday the 13th).
         const repeatEventDates = eventCulture.createRepeatEventDates();
         for (let i = 0; i < repeatEventDates.length; i++) {
             const { day, dayInWeek, displayText } = repeatEventDates[i];
-            if (day === dateDay && calendarDay.dayInWeek === dictionaryCulture.englishDaysList[dayInWeek]) {
-                calendarDay.eventDatesList.push(this.createEventDate({
+            if (day === dateDay && calendarDayModel.dayInWeek === dictionaryCulture.englishDaysList[dayInWeek]) {
+                calendarDayModel.eventDatesList.push(this.createEventDate({
                     day: dateDay,
                     month: dateMonth,
                     year: dateYear,
-                    eventType: EventType.REPEAT,
+                    eventType: EventTypeEnum.REPEAT,
                     text: eventUtils.createEventTemplate(displayText)
                 }));
             }
         }
-        return calendarDay;
+        return calendarDayModel;
     }
 
     getDayInWeek(date) {
@@ -438,11 +438,11 @@ class EventService {
         let lineReader = null;
         // Validate the source event dates TXT file and get the stream.
         await this.validateSourceFile({
-            filePath: pathService.pathData.sourcePath,
+            filePath: pathService.pathDataModel.sourcePath,
             parameterName: 'SOURCE_PATH'
         });
         // Scan the source event dates TXT file.
-        lineReader = fileUtils.getFileLinesFromStream(pathService.pathData.sourcePath);
+        lineReader = fileUtils.getFileLinesFromStream(pathService.pathDataModel.sourcePath);
         lineReader.on('line', (line) => {
             if (!line) {
                 return;

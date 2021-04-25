@@ -1,15 +1,32 @@
 Completed + canceled tasks:
 ===========================
+-Convert in all places from all versions of canceled keyword to 'Canceled' keyword. *
+-Add in all places 'name.model' to all models. *
+-Check that in all places the name of the file includes the name of tha parent directory. For example: name.model inside 'models' directory. *
+-Don't forget to do the same rename logic for all the enums in the project. *
+-Change in all places the config from 'misc/backup' to 'misc/backups' directory. *
+-Recheck the service expiration logic - Verify it works. *
+-Change all (where it's possible) from 'console.log' to 'logUtils.log'. *
+-Take the latest settings from '.vscode/settings.json' and implement them. *
+-Change in all places that globalUtils will be on top. *
+-Replace the 'getCurrentDate' method with the updated one from the 'udemy-courses' project. *
+-Copy the '.eslintignore' file from the 'udemy-courses' project. *
+-Add to the 'package.json' file (below the 'description' field) the 'repository' field: *
+"repository": { *
+  "type": "git", *
+  "url": "git://github.com/username/repository.git" *
+} *
+-Add the following keywords to the 'package.json' file: 'nodejs javascript events calendar days'. *
 -Update packages + Recreate package-lock.json. *
 -Clear unused enums and make sure all in used really exists. *
 -Remove the 'destination' parameter in the 'filterDirectories' method + Verify that backup still works. *
--Rename and check: countLimitService.countLimitData.millisecondsSendEmailDelayCount. *
+-Rename and check: countLimitService.countLimitDataModel.millisecondsSendEmailDelayCount. *
 -Check and reset the '.vscode/settings.json' by 'C:/Or/Web/auto-packages-updater/auto-packages-updater/.vscode/settings.json' + *
  Format all documents and re-add 'cSpell.words' all the words + add the 'cSpell.ignorePaths'. *
 -In validation file path (probably a JSON file) there is a 'Expected a number' comment, *
 need to fix it (take the comment from the auto-packages-updater project). *
 -Add more static events: 4 july United States independence day, black friday, 6/6 normandy. *
--Add dynamic logic to calculate black friday - canceled. *
+-Add dynamic logic to calculate black friday - Canceled. *
 -Add logic to get US events from different URLs. *
 -Add friday the 13th logic. *
 -Convert 'removeLastCharacter' to use 'removeLastCharacters'. *
@@ -20,7 +37,7 @@ need to fix it (take the comment from the auto-packages-updater project). *
 -Make sure that all places 'this.exit' function - Need to be 'await this.exit'. *
 -Search for 'async ' and create a list of functions/methods, and make sure that all calls have await. *
 -Scan all files for spell mistakes with the 'files-spell-checker' project. *
--In both the 'package.json' and 'package-lock.json' files change to 'private: false'. *
+-In the 'package.json' file change to 'private: false'.
 -Make sure all switch-case have curly braces. *
 -Remove code comments to a backup TXT file. *
 -Remove the duplicate empty lines: \n\s*\n\s*\n *
@@ -59,17 +76,17 @@ export default *
 -Remove last empty line: \n\s*$(?!\n) *
 -Detect all comments without a dot at the end: ^// .*(?<!\.)$ *
 -Do all the 'ToDo' tasks. *
--Change weekend tasks to a specific day by a number - canceled. *
--Add saturday task to the example - canceled. *
--Update the README.MD file - canceled. *
--Remove code comments to a backup TXT file - canceled. *
--Convert " to ' in the relevant places - canceled. *
--Remove all 'debugger' keywords - canceled. *
--Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory - canceled. *
--Edit the following files: README.md, INSTRUCTIONS.md, package.json - canceled. *
--Add example TXT file to the 'misc/examples' directory - canceled. *
--Update packages + Recreate package-lock.json - canceled. *
--Recheck error numbers in error_index.txt - canceled. *
+-Change weekend tasks to a specific day by a number - Canceled. *
+-Add saturday task to the example - Canceled. *
+-Update the README.MD file - Canceled. *
+-Remove code comments to a backup TXT file - Canceled. *
+-Convert " to ' in the relevant places - Canceled. *
+-Remove all 'debugger' keywords - Canceled. *
+-Place an example of structure 'event-dates-2021.txt' file in the misc/examples directory - Canceled. *
+-Edit the following files: README.md, INSTRUCTIONS.md, package.json - Canceled. *
+-Add example TXT file to the 'misc/examples' directory - Canceled. *
+-Update packages + Recreate package-lock.json - Canceled. *
+-Recheck error numbers in error_index.txt - Canceled. *
 -Remove code comments to a backup TXT file. *
 -Convert " to ' in the relevant places. *
 -Remove all 'debugger' keywords. *

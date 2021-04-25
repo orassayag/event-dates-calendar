@@ -1,4 +1,4 @@
-class ValidateSourceEventTypeResult {
+class ValidateSourceEventTypeResultModel {
 
     constructor(eventType) {
         this.eventType = eventType;
@@ -7,4 +7,4 @@ class ValidateSourceEventTypeResult {
     }
 }
 
-module.exports = ValidateSourceEventTypeResult;
+module.exports = ValidateSourceEventTypeResultModel;

@@ -1,5 +1,5 @@
 const settings = require('../settings/settings');
-const { Status } = require('../core/enums');
+const { StatusEnum } = require('../core/enums');
 const { applicationService, countLimitService, eventService, logService, pathService } = require('../services');
 const globalUtils = require('../utils/files/global.utils');
 const { logUtils, timeUtils } = require('../utils');
@@ -18,39 +18,39 @@ class ScanLogic {
     }
 
     async initiate() {
-        this.updateStatus('INITIATE THE SERVICES', Status.INITIATE);
+        this.updateStatus('INITIATE THE SERVICES', StatusEnum.INITIATE);
         pathService.initiate(settings);
         await logService.initiate(settings);
     }
 
     validateGeneralSettings() {
-        this.updateStatus('VALIDATE GENERAL SETTINGS', Status.VALIDATE);
+        this.updateStatus('VALIDATE GENERAL SETTINGS', StatusEnum.VALIDATE);
         // Validate that the internet connection works.
         countLimitService.initiate(settings);
-        applicationService.initiate(settings, Status.INITIATE);
+        applicationService.initiate(settings, StatusEnum.INITIATE);
     }
 
     async startSession() {
-        this.updateStatus('SCAN TEXT FILE', Status.SCAN);
-        applicationService.applicationData.startDateTime = timeUtils.getCurrentDate();
+        this.updateStatus('SCAN TEXT FILE', StatusEnum.SCAN);
+        applicationService.applicationDataModel.startDateTime = timeUtils.getCurrentDate();
         await eventService.scanSourceFile();
-        await this.exit(Status.FINISH);
+        await this.exit(StatusEnum.FINISH);
     }
 
     async sleep() {
-        await globalUtils.sleep(countLimitService.countLimitData.millisecondsEndDelayCount);
+        await globalUtils.sleep(countLimitService.countLimitDataModel.millisecondsEndDelayCount);
     }
 
     updateStatus(text, status) {
         logUtils.logStatus(text);
-        if (applicationService.applicationData) {
-            applicationService.applicationData.status = status;
+        if (applicationService.applicationDataModel) {
+            applicationService.applicationDataModel.status = status;
         }
     }
 
     async exit(status) {
-        if (applicationService.applicationData) {
-            applicationService.applicationData.status = status;
+        if (applicationService.applicationDataModel) {
+            applicationService.applicationDataModel.status = status;
             await this.sleep();
         }
         logUtils.logStatus(status);

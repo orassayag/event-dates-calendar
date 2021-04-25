@@ -1,4 +1,4 @@
-class SourceEventResult {
+class SourceEventResultModel {
 
     constructor() {
         this.sourceEventDates = [];
@@ -11,4 +11,4 @@ class SourceEventResult {
     }
 }
 
-module.exports = SourceEventResult;
+module.exports = SourceEventResultModel;

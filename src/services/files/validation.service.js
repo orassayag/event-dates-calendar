@@ -8,8 +8,8 @@ class ValidationService {
     constructor() { }
 
     async validateURLs() {
-        const urls = [applicationService.applicationData.validationConnectionLink, applicationService.applicationData.calendarILLink,
-        applicationService.applicationData.calendarUSLink];
+        const urls = [applicationService.applicationDataModel.validationConnectionLink, applicationService.applicationDataModel.calendarILLink,
+        applicationService.applicationDataModel.calendarUSLink];
         for (let i = 0; i < urls.length; i++) {
             await this.validateURL(urls[i]);
         }
@@ -17,7 +17,7 @@ class ValidationService {
 
     async validateURL(url) {
         let isConnected = true;
-        for (let i = 0; i < countLimitService.countLimitData.maximumURLValidationCount; i++) {
+        for (let i = 0; i < countLimitService.countLimitDataModel.maximumURLValidationCount; i++) {
             try {
                 isConnected = await isReachable(url);
             } catch (error) {
@@ -27,7 +27,7 @@ class ValidationService {
                 break;
             }
             else {
-                await globalUtils.sleep(countLimitService.countLimitData.millisecondsTimeoutURLValidation);
+                await globalUtils.sleep(countLimitService.countLimitDataModel.millisecondsTimeoutURLValidation);
             }
         }
         if (!isConnected) {

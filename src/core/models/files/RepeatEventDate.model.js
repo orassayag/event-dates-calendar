@@ -1,4 +1,4 @@
-class RepeatEventDate {
+class RepeatEventDateModel {
 
     constructor(data) {
         const { id, day, dayInWeek, displayText } = data;
@@ -9,4 +9,4 @@ class RepeatEventDate {
     }
 }
 
-module.exports = RepeatEventDate;
+module.exports = RepeatEventDateModel;

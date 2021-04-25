@@ -1,20 +1,20 @@
-const ApplicationData = require('./files/ApplicationData');
-const BackupData = require('./files/BackupData');
-const BackupDirectory = require('./files/BackupDirectory');
-const CalendarDay = require('./files/CalendarDay');
-const CommonTask = require('./files/CommonTask');
-const CountLimitData = require('./files/CountLimitData');
-const DynamicEventDate = require('./files/DynamicEventDate');
-const EventDate = require('./files/EventDate');
-const LogData = require('./files/LogData');
-const MissingEventDate = require('./files/MissingEventDate');
-const PathData = require('./files/PathData');
-const RepeatEventDate = require('./files/RepeatEventDate');
-const SourceEventResult = require('./files/SourceEventResult');
-const ValidateSourceEventTypeResult = require('./files/ValidateSourceEventTypeResult');
+const ApplicationDataModel = require('./files/ApplicationData.model');
+const BackupDataModel = require('./files/BackupData.model');
+const BackupDirectoryModel = require('./files/BackupDirectory.model');
+const CalendarDayModel = require('./files/CalendarDay.model');
+const CommonTaskModel = require('./files/CommonTask.model');
+const CountLimitDataModel = require('./files/countLimitData.model');
+const DynamicEventDateModel = require('./files/DynamicEventDate.model');
+const EventDateModel = require('./files/EventDate.model');
+const LogDataModel = require('./files/LogData.model');
+const MissingEventDateModel = require('./files/MissingEventDate.model');
+const PathDataModel = require('./files/PathData.model');
+const RepeatEventDateModel = require('./files/RepeatEventDate.model');
+const SourceEventResultModel = require('./files/SourceEventResult.model');
+const ValidateSourceEventTypeResultModel = require('./files/ValidateSourceEventTypeResult.model');
 
 module.exports = {
-    ApplicationData, BackupData, BackupDirectory, CalendarDay, CommonTask, CountLimitData,
-    DynamicEventDate, EventDate, LogData, MissingEventDate, PathData, RepeatEventDate,
-    SourceEventResult, ValidateSourceEventTypeResult
+    ApplicationDataModel, BackupDataModel, BackupDirectoryModel, CalendarDayModel, CommonTaskModel, CountLimitDataModel,
+    DynamicEventDateModel, EventDateModel, LogDataModel, MissingEventDateModel, PathDataModel, RepeatEventDateModel,
+    SourceEventResultModel, ValidateSourceEventTypeResultModel
 };

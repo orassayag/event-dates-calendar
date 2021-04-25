@@ -1,6 +1,6 @@
 const { timeUtils } = require('../../../utils');
 
-class ApplicationData {
+class ApplicationDataModel {
 
 	constructor(data) {
 		// Set the parameters from the settings file.
@@ -17,4 +17,4 @@ class ApplicationData {
 	}
 }
 
-module.exports = ApplicationData;
+module.exports = ApplicationDataModel;

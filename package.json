@@ -3,7 +3,17 @@
   "version": "1.0.0",
   "private": false,
   "description": "A Node.js application to create a notepad TXT file calendar by combining a few elements.",
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/orassayag/event-dates-calendar.git"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "events",
+    "calendar",
+    "days"
+  ],
   "license": "UNLICENSED",
   "author": "Or Assayag <orassayag@gmail.com>",
   "contributors": [

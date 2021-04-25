@@ -1,4 +1,4 @@
-class EventDate {
+class EventDateModel {
 
     constructor(data) {
         const { id, day, month, year, eventType, text } = data;
@@ -11,4 +11,4 @@ class EventDate {
     }
 }
 
-module.exports = EventDate;
+module.exports = EventDateModel;

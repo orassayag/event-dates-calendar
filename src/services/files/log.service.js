@@ -1,5 +1,5 @@
 const { dictionaryCulture } = require('../../culture');
-const { LogData } = require('../../core/models');
+const { LogDataModel } = require('../../core/models');
 const applicationService = require('./application.service');
 const pathService = require('./path.service');
 const { eventUtils, fileUtils, textUtils, validationUtils } = require('../../utils');
@@ -8,23 +8,23 @@ class LogService {
 
 	constructor() {
 		// ===PATH=== //
-		this.logData = null;
+		this.logDataModel = null;
 		this.baseSessionPath = null;
 		this.distFileName = null;
 		this.logSeparator = '==========';
 	}
 
 	async initiate(settings) {
-		this.logData = new LogData(settings);
+		this.logDataModel = new LogDataModel(settings);
 		await this.initiateDirectories();
 	}
 
 	async initiateDirectories() {
 		// ===PATH=== //
-		this.baseSessionPath = pathService.pathData.distPath;
+		this.baseSessionPath = pathService.pathDataModel.distPath;
 		fileUtils.createDirectory(this.baseSessionPath);
 		await fileUtils.emptyDirectory(this.baseSessionPath);
-		this.distFileName = `${this.baseSessionPath}\\${this.logData.distFileName}-${applicationService.applicationData.year}.txt`;
+		this.distFileName = `${this.baseSessionPath}\\${this.logDataModel.distFileName}-${applicationService.applicationDataModel.year}.txt`;
 	}
 
 	async logEventDates(data) {

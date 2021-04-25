@@ -1,4 +1,4 @@
-class CalendarDay {
+class CalendarDayModel {
 
     constructor(data) {
         const { id, date, displayDate, dayInWeek, displayDayInWeek, eventDatesList } = data;
@@ -11,4 +11,4 @@ class CalendarDay {
     }
 }
 
-module.exports = CalendarDay;
+module.exports = CalendarDayModel;
