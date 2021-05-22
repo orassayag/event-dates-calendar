@@ -7,18 +7,19 @@ Built in March 2021. A Node.js application to create a notepad TXT file calendar
 Clone the application to your computer.
 Steps to view the solution:
 1. Open server application on IDE (I use VSCode).
-2. In the terminal: npm i
-3. In the terminal: npm start
+2. In the terminal: 'npm i'.
+3. In the terminal: 'npm start'.
 
 Happy testing! :)
 
 ### Prerequisites
 
-You'll need to install VSCode, Node, and clone the application, and in the terminal run npm i.
+You'll need to install VSCode, Node, and clone the application, and in the terminal run: 'npm i'.
 
 ## Built With
 
 * [Node.js](https://nodejs.org/en/) - The web framework used - Server side.
+* [Git](https://git-scm.com/) - Source management.
 
 ## Contributing
 
