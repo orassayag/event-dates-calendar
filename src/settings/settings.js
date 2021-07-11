@@ -22,8 +22,8 @@ const settings = {
     MILLISECONDS_TIMEOUT_URL_VALIDATION: 1000,
 
     // ===SOURCE=== //
-    // Determine the path of the event dates source. This file contain all the birthdays, expiration services dates,
-    // and other data to be included in the new TXT file.
+    // Determine the path of the event dates source. This file contain all the birthdays, deathdays, expiration services
+    // dates, and other data to be included in the new TXT file.
     SOURCE_PATH: pathUtils.getJoinPath({
         targetPath: __dirname,
         targetName: '../../sources/event-dates-2021.txt'

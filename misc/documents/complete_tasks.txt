@@ -1,5 +1,6 @@
 Completed + canceled tasks:
 ===========================
+-Add death dates. *
 -Convert in all places from all versions of canceled keyword to 'Canceled' keyword. *
 -Add in all places 'name.model' to all models. *
 -Check that in all places the name of the file includes the name of tha parent directory. For example: name.model inside 'models' directory. *

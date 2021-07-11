@@ -11,7 +11,6 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
--Add death dates.
 
 Completed + canceled tasks:
 ===========================

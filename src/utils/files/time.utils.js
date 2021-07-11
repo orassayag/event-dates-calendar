@@ -78,11 +78,11 @@ class TimeUtils {
     }
 
     getAge(data) {
-        const { year, birthYear } = data;
-        if (!year || !birthYear) {
+        const { year, targetYear } = data;
+        if (!year || !targetYear) {
             return '?';
         }
-        return Math.abs(year - birthYear);
+        return Math.abs(year - targetYear);
     }
 }
 

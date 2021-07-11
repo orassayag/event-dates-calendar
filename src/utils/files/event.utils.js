@@ -23,7 +23,7 @@ class EventUtils {
         return this.createEventTemplate(`${text1} ${text2.substring(1).slice(0, -1)}`);
     }
 
-    birthDayEventTemplate(text1, text2) {
+    getDayEventTemplate(text1, text2) {
         if (!text1 || !text2) {
             return '';
         }

@@ -176,7 +176,8 @@ class EventService {
                 if (handleLineResult.returnValue) {
                     switch (handleLineResult.eventType) {
                         case EventTypeEnum.SERVICE:
-                        case EventTypeEnum.BIRTHDAY: {
+                        case EventTypeEnum.BIRTHDAY:
+                        case EventTypeEnum.DEATHDAY: {
                             sourceEventResult.sourceEventDates.push(handleLineResult.returnValue);
                             break;
                         }
@@ -244,7 +245,8 @@ class EventService {
             switch (eventType) {
                 case EventTypeEnum.INITIATE: { eventType = EventTypeEnum.SERVICE; break; }
                 case EventTypeEnum.SERVICE: { eventType = EventTypeEnum.BIRTHDAY; break; }
-                case EventTypeEnum.BIRTHDAY: { eventType = EventTypeEnum.DATA; break; }
+                case EventTypeEnum.BIRTHDAY: { eventType = EventTypeEnum.DEATHDAY; break; }
+                case EventTypeEnum.DEATHDAY: { eventType = EventTypeEnum.DATA; break; }
                 case EventTypeEnum.WEEKEND_TOGGLE_TASK: { eventType = EventTypeEnum.END; validateSourceEventTypeResult.isSeparator = true; break; }
             }
         }
@@ -282,7 +284,8 @@ class EventService {
         line = isBreakLine ? eventUtils.warpBreakRLines(line) : line;
         switch (eventType) {
             case EventTypeEnum.SERVICE:
-            case EventTypeEnum.BIRTHDAY: {
+            case EventTypeEnum.BIRTHDAY:
+            case EventTypeEnum.DEATHDAY: {
                 returnValue = this.createSourceEvent({
                     line: line,
                     eventType: eventType
@@ -317,7 +320,7 @@ class EventService {
 
     createSourceEvent(data) {
         const { line, eventType } = data;
-        // Check if the line includes a date. If so, it's a service / birthday event.
+        // Check if the line includes a date. If so, it's a service / birthday / deathday event.
         const date = timeUtils.getDatePartsFromText(line);
         if (!date) {
             return;
@@ -336,23 +339,34 @@ class EventService {
             eventType: eventType,
             text: this.createSourceEventText({
                 date: date,
-                birthYear: year,
+                year: year,
                 line: line,
                 eventType: eventType
             })
         });
     }
 
-    // If the event is of 'birthday' type, replace the birthdate with the future age.
+    // If the event is of 'birthday' or 'deathday' types, replace the birthdate or the deathday with the future age.
     createSourceEventText(data) {
-        const { date, birthYear, line, eventType } = data;
+        const { date, year, line, eventType } = data;
         let result = line;
-        if (eventType === EventTypeEnum.BIRTHDAY) {
+        let eventTemplate = null;
+        switch (eventType) {
+            case EventTypeEnum.BIRTHDAY: {
+                eventTemplate = 'Birth';
+                break;
+            }
+            case EventTypeEnum.DEATHDAY: {
+                eventTemplate = 'Death';
+                break;
+            }
+        }
+        if (eventTemplate) {
             const age = result.replace(date, `(${timeUtils.getAge({
-                year: applicationService.applicationDataModel.year,
-                birthYear: birthYear
+                targetYear: applicationService.applicationDataModel.year,
+                year: year
             })})`);
-            result = eventUtils.birthDayEventTemplate(dictionaryCulture.hebrewBirthDay, age);
+            result = eventUtils.getDayEventTemplate(dictionaryCulture[`hebrew${eventTemplate}Day`], age);
         }
         return result;
     }
