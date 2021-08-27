@@ -11,6 +11,9 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
+-Fix bug with missing line space between tasks.
+-If contains "הושענא רבה" change to "ערב חג סוכות שני".
+-Replace all "א דחוה"מ." to "א' דחוה"מ."
 
 Completed + canceled tasks:
 ===========================
