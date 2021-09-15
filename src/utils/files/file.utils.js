@@ -20,7 +20,7 @@ class FileUtils {
     }
 
     async removeDirectoryIfExists(targetPath) {
-        if (!await this.isPathExists(targetPath)) {
+        if (await this.isPathExists(targetPath)) {
             await fs.remove(targetPath);
         }
     }
@@ -65,6 +65,9 @@ class FileUtils {
     }
 
     getFileLinesFromStream(path) {
+        if (!this.getFilesizeInBytes(path)) {
+            throw new Error(`path is empty: ${path} (1000017)`);
+        }
         const fileStream = fs.createReadStream(path);
         return readline.createInterface({
             input: fileStream,
@@ -72,13 +75,19 @@ class FileUtils {
         });
     }
 
+    getFilesizeInBytes(path) {
+        const stats = fs.statSync(path);
+        const fileSizeInBytes = stats.size;
+        return fileSizeInBytes;
+    }
+
     async appendFile(data) {
         const { targetPath, message } = data;
         if (!targetPath) {
-            throw new Error(`targetPath not found: ${targetPath} (1000017)`);
+            throw new Error(`targetPath not found: ${targetPath} (1000018)`);
         }
         if (!message) {
-            throw new Error(`message not found: ${message} (1000018)`);
+            throw new Error(`message not found: ${message} (1000019)`);
         }
         if (!await this.isPathExists(targetPath)) {
             await fs.promises.mkdir(pathUtils.getDirectoryPath(targetPath), { recursive: true }).catch(console.error);

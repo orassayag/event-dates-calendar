@@ -1,5 +1,6 @@
 /* cSpell:disable */
-const { DynamicEventDateModel, EventDateModel, MissingEventDateModel, RepeatEventDateModel } = require('../../core/models');
+const { DynamicEventDateModel, EventDateModel, MissingEventDateModel,
+    RepeatEventDateModel, ReplaceEventDateModel } = require('../../core/models');
 const { EventTypeEnum } = require('../../core/enums');
 
 class EventCulture {
@@ -131,6 +132,36 @@ class EventCulture {
         ];
     }
 
+    createReplaceEventDates() {
+        return [
+            new ReplaceEventDateModel({
+                id: 1,
+                include: `א דחוה'מ`,
+                replace: `א' דחוה"מ`
+            }),
+            new ReplaceEventDateModel({
+                id: 2,
+                include: `ב דחוה'מ`,
+                replace: `ב' דחוה"מ`
+            }),
+            new ReplaceEventDateModel({
+                id: 3,
+                include: `ג דחוה'מ`,
+                replace: `ג' דחוה"מ`
+            }),
+            new ReplaceEventDateModel({
+                id: 4,
+                include: `ד דחוה'מ`,
+                replace: `ד' דחוה"מ`
+            }),
+            new ReplaceEventDateModel({
+                id: 5,
+                include: `ה דחוה'מ`,
+                replace: `ה' דחוה"מ`
+            })
+        ];
+    }
+
     createMissingEventDates() {
         return [
             new MissingEventDateModel({
@@ -149,27 +180,34 @@ class EventCulture {
             }),
             new MissingEventDateModel({
                 id: 3,
+                includeText: 'הושענא רבה',
+                excludeText: null,
+                displayText: 'ערב חג סוכות שני',
+                isDayBefore: false
+            }),
+            new MissingEventDateModel({
+                id: 4,
                 includeText: 'שואה',
                 excludeText: null,
                 displayText: null,
                 isDayBefore: true
             }),
             new MissingEventDateModel({
-                id: 4,
+                id: 5,
                 includeText: 'זכרון',
                 excludeText: 'שואה',
                 displayText: null,
                 isDayBefore: true
             }),
             new MissingEventDateModel({
-                id: 5,
+                id: 6,
                 includeText: 'עצמאות',
                 excludeText: null,
                 displayText: null,
                 isDayBefore: true
             }),
             new MissingEventDateModel({
-                id: 6,
+                id: 7,
                 includeText: 'ט"ו באב',
                 excludeText: null,
                 displayText: null,

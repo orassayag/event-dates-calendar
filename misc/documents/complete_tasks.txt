@@ -1,5 +1,10 @@
 Completed + canceled tasks:
 ===========================
+-Fix bug with missing line space between tasks. *
+-Add validation that if source file is empty - Throw error. *
+-If contains "הושענא רבה" change to "ערב חג סוכות שני". *
+-Replace all "א דחוה"מ." to "א' דחוה"מ." *
+-Re-number errors. *
 -Add death dates. *
 -Convert in all places from all versions of canceled keyword to 'Canceled' keyword. *
 -Add in all places 'name.model' to all models. *

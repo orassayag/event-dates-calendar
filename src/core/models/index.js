@@ -10,11 +10,12 @@ const LogDataModel = require('./files/LogData.model');
 const MissingEventDateModel = require('./files/MissingEventDate.model');
 const PathDataModel = require('./files/PathData.model');
 const RepeatEventDateModel = require('./files/RepeatEventDate.model');
+const ReplaceEventDateModel = require('./files/ReplaceEventDate.model');
 const SourceEventResultModel = require('./files/SourceEventResult.model');
 const ValidateSourceEventTypeResultModel = require('./files/ValidateSourceEventTypeResult.model');
 
 module.exports = {
     ApplicationDataModel, BackupDataModel, BackupDirectoryModel, CalendarDayModel, CommonTaskModel, CountLimitDataModel,
     DynamicEventDateModel, EventDateModel, LogDataModel, MissingEventDateModel, PathDataModel, RepeatEventDateModel,
-    SourceEventResultModel, ValidateSourceEventTypeResultModel
+    ReplaceEventDateModel, SourceEventResultModel, ValidateSourceEventTypeResultModel
 };

@@ -54,10 +54,22 @@ class EventService {
         });
     }
 
+    replaceEvents(replaceEventsDates, text) {
+        for (let i = 0; i < replaceEventsDates.length; i++) {
+            const { include, replace } = replaceEventsDates[i];
+            if (include.includes(text)) {
+                text = replace;
+                break;
+            }
+        }
+        return text;
+    }
+
     async createILCalendarEventDates() {
         const calendarILEventDates = [];
         const dom = await domUtils.getDOMFromURL(applicationService.applicationDataModel.calendarILLink);
         const daysList = dom.window.document.getElementsByClassName(separatorService.dayInMonthDOM);
+        const replaceEventsDates = eventCulture.createReplaceEventDates();
         for (let i = 0; i < daysList.length; i++) {
             const dayDOM = daysList[i];
             if (!dayDOM.textContent.trim()) {
@@ -76,7 +88,7 @@ class EventService {
                         month: month,
                         year: year,
                         eventType: EventTypeEnum.CALENDAR,
-                        text: eventUtils.createEventTemplate(spansDOMList[y].textContent)
+                        text: eventUtils.createEventTemplate(this.replaceEvents(replaceEventsDates, spansDOMList[y].textContent))
                     }));
                 }
             }
@@ -155,8 +167,8 @@ class EventService {
         let lineReader = null;
         let eventType = EventTypeEnum.INITIATE;
         return await new Promise(async (resolve, reject) => {
-            const sourceEventResult = new SourceEventResultModel();
             if (reject) { }
+            const sourceEventResult = new SourceEventResultModel();
             // Validate the source event dates TXT file and get the stream.
             await this.validateSourceFile({
                 filePath: pathService.pathDataModel.sourcePath,
