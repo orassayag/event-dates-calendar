@@ -1,4 +1,4 @@
-const textUtils = require('./text.utils');
+import textUtils from './text.utils';
 
 class LogUtils {
 
@@ -16,4 +16,4 @@ class LogUtils {
     }
 }
 
-module.exports = new LogUtils();
+export default new LogUtils();

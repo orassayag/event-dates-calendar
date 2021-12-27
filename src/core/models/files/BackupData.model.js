@@ -1,4 +1,4 @@
-const BackupDirectoryModel = require('./BackupDirectory.model');
+import BackupDirectoryModel from './BackupDirectory.model';
 
 class BackupDataModelModel {
 
@@ -17,4 +17,4 @@ class BackupDataModelModel {
 	}
 }
 
-module.exports = BackupDataModelModel;
+export default BackupDataModelModel;

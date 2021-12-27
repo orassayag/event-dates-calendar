@@ -1,4 +1,4 @@
-const { EventTypeEnum } = require('./files/event.enum');
-const { ScriptTypeEnum, StatusEnum } = require('./files/system.enum');
+import { EventTypeEnum } from './files/event.enum';
+import { ScriptTypeEnum, StatusEnum } from './files/system.enum';
 
-module.exports = { EventTypeEnum, ScriptTypeEnum, StatusEnum };
+export { EventTypeEnum, ScriptTypeEnum, StatusEnum };

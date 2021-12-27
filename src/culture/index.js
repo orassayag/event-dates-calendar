@@ -1,4 +1,4 @@
-const dictionaryCulture = require('./files/dictionary.culture');
-const eventCulture = require('./files/event.culture');
+import dictionaryCulture from './files/dictionary.culture';
+import eventCulture from './files/event.culture';
 
-module.exports = { dictionaryCulture, eventCulture };
+export { dictionaryCulture, eventCulture };

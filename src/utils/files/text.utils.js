@@ -1,4 +1,4 @@
-const validationUtils = require('./validation.utils');
+import validationUtils from './validation.utils';
 
 class TextUtils {
 
@@ -60,4 +60,4 @@ class TextUtils {
     }
 }
 
-module.exports = new TextUtils();
+export default new TextUtils();

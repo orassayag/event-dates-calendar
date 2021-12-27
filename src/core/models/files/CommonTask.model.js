@@ -8,4 +8,4 @@ class CommonTaskModel {
     }
 }
 
-module.exports = CommonTaskModel;
+export default CommonTaskModel;

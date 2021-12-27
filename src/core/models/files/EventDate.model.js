@@ -11,4 +11,4 @@ class EventDateModel {
     }
 }
 
-module.exports = EventDateModel;
+export default EventDateModel;

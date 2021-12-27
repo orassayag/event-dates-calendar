@@ -1,6 +1,7 @@
-const errorScript = require('./error.script');
-require('../services/files/initiate.service').initiate('scan');
-const ScanLogic = require('../logics/scan.logic');
+import errorScript from './error.script';
+import initiateService from '../services/files/initiate.service';
+import ScanLogic from '../logics/scan.logic';
+initiateService.initiate('scan');
 
 (async () => {
     await new ScanLogic().run();

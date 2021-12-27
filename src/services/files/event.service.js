@@ -1,11 +1,11 @@
-const { dictionaryCulture, eventCulture } = require('../../culture');
-const { CalendarDayModel, CommonTaskModel, EventDateModel, SourceEventResultModel, ValidateSourceEventTypeResultModel } = require('../../core/models');
-const { EventTypeEnum } = require('../../core/enums');
-const applicationService = require('./application.service');
-const logService = require('./log.service');
-const pathService = require('./path.service');
-const separatorService = require('./separator.service');
-const { domUtils, eventUtils, fileUtils, logUtils, pathUtils, timeUtils, validationUtils } = require('../../utils');
+import { dictionaryCulture, eventCulture } from '../../culture';
+import { CalendarDayModel, CommonTaskModel, EventDateModel, SourceEventResultModel, ValidateSourceEventTypeResultModel } from '../../core/models';
+import { EventTypeEnum } from '../../core/enums';
+import applicationService from './application.service';
+import logService from './log.service';
+import pathService from './path.service';
+import separatorService from './separator.service';
+import { domUtils, eventUtils, fileUtils, logUtils, pathUtils, timeUtils, validationUtils } from '../../utils';
 
 class EventService {
 
@@ -481,4 +481,4 @@ class EventService {
     }
 }
 
-module.exports = new EventService();
+export default new EventService();

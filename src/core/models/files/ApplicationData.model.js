@@ -1,4 +1,4 @@
-const { timeUtils } = require('../../../utils');
+import { timeUtils } from '../../../utils';
 
 class ApplicationDataModel {
 
@@ -17,4 +17,4 @@ class ApplicationDataModel {
 	}
 }
 
-module.exports = ApplicationDataModel;
+export default ApplicationDataModel;

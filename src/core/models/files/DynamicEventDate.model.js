@@ -8,4 +8,4 @@ class DynamicEventDateModel {
     }
 }
 
-module.exports = DynamicEventDateModel;
+export default DynamicEventDateModel;

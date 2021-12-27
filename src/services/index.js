@@ -1,13 +1,13 @@
-const applicationService = require('./files/application.service');
-const confirmationService = require('./files/confirmation.service');
-const countLimitService = require('./files/countLimit.service');
-const eventService = require('./files/event.service');
-const logService = require('./files/log.service');
-const pathService = require('./files/path.service');
-const separatorService = require('./files/separator.service');
-const validationService = require('./files/validation.service');
+import applicationService from './files/application.service';
+import confirmationService from './files/confirmation.service';
+import countLimitService from './files/countLimit.service';
+import eventService from './files/event.service';
+import logService from './files/log.service';
+import pathService from './files/path.service';
+import separatorService from './files/separator.service';
+import validationService from './files/validation.service';
 
-module.exports = {
+export {
     applicationService, confirmationService, countLimitService, eventService,
     logService, pathService, separatorService, validationService
 };

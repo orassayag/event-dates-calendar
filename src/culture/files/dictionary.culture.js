@@ -11,4 +11,4 @@ class DictionaryCulture {
     }
 }
 
-module.exports = new DictionaryCulture();
+export default new DictionaryCulture();

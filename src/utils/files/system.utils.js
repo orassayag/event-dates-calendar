@@ -1,4 +1,4 @@
-const logUtils = require('./log.utils');
+import logUtils from './log.utils';
 
 class SystemUtils {
 
@@ -17,4 +17,4 @@ class SystemUtils {
     }
 }
 
-module.exports = new SystemUtils();
+export default new SystemUtils();

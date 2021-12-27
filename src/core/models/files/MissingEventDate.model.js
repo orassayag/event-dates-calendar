@@ -10,4 +10,4 @@ class MissingEventDateModel {
     }
 }
 
-module.exports = MissingEventDateModel;
+export default MissingEventDateModel;

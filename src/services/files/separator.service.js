@@ -24,4 +24,4 @@ class SeparatorService {
     }
 }
 
-module.exports = new SeparatorService();
+export default new SeparatorService();

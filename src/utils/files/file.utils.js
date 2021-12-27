@@ -1,7 +1,7 @@
-const fs = require('fs-extra');
-const readline = require('readline');
-const globalUtils = require('./global.utils');
-const pathUtils = require('./path.utils');
+import fs from 'fs-extra';
+import readline from 'readline';
+import globalUtils from './global.utils';
+import pathUtils from './path.utils';
 
 class FileUtils {
 
@@ -97,4 +97,4 @@ class FileUtils {
     }
 }
 
-module.exports = new FileUtils();
+export default new FileUtils();

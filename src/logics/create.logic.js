@@ -1,9 +1,11 @@
-const settings = require('../settings/settings');
-const { StatusEnum } = require('../core/enums');
-const { applicationService, confirmationService, countLimitService, eventService, logService,
-    pathService, validationService } = require('../services');
-const globalUtils = require('../utils/files/global.utils');
-const { logUtils, systemUtils, timeUtils } = require('../utils');
+import settings from '../settings/settings';
+import { StatusEnum } from '../core/enums';
+import {
+    applicationService, confirmationService, countLimitService, eventService, logService,
+    pathService, validationService
+} from '../services';
+import globalUtils from '../utils/files/global.utils';
+import { logUtils, systemUtils, timeUtils } from '../utils';
 
 class CreateLogic {
 
@@ -69,4 +71,4 @@ class CreateLogic {
     }
 }
 
-module.exports = CreateLogic;
+export default CreateLogic;

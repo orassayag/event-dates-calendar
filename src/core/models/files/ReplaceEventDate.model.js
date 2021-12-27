@@ -8,4 +8,4 @@ class ReplaceEventDateModel {
     }
 }
 
-module.exports = ReplaceEventDateModel;
+export default ReplaceEventDateModel;

@@ -7,4 +7,4 @@ class ValidateSourceEventTypeResultModel {
     }
 }
 
-module.exports = ValidateSourceEventTypeResultModel;
+export default ValidateSourceEventTypeResultModel;

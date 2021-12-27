@@ -11,4 +11,4 @@ class SourceEventResultModel {
     }
 }
 
-module.exports = SourceEventResultModel;
+export default SourceEventResultModel;

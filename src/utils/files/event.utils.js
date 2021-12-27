@@ -47,4 +47,4 @@ class EventUtils {
     }
 }
 
-module.exports = new EventUtils();
+export default new EventUtils();

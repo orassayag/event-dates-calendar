@@ -1,7 +1,7 @@
-const settings = require('../settings/settings');
-const { BackupDataModel } = require('../core/models');
-const globalUtils = require('../utils/files/global.utils');
-const { fileUtils, logUtils, pathUtils, textUtils, timeUtils } = require('../utils');
+import settings from '../settings/settings';
+import { BackupDataModel } from '../core/models';
+import globalUtils from '../utils/files/global.utils';
+import { fileUtils, logUtils, pathUtils, textUtils, timeUtils } from '../utils';
 
 class BackupLogic {
 
@@ -98,4 +98,4 @@ class BackupLogic {
     }
 }
 
-module.exports = BackupLogic;
+export default BackupLogic;

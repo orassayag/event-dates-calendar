@@ -1,7 +1,7 @@
-const settings = require('../../settings/settings');
-const { ScriptTypeEnum } = require('../../core/enums');
-const globalUtils = require('../../utils/files/global.utils');
-const { fileUtils, pathUtils, validationUtils } = require('../../utils');
+import settings from '../../settings/settings';
+import { ScriptTypeEnum } from '../../core/enums';
+import globalUtils from '../../utils/files/global.utils';
+import { fileUtils, pathUtils, validationUtils } from '../../utils';
 
 class InitiateService {
 
@@ -201,4 +201,4 @@ class InitiateService {
 	}
 }
 
-module.exports = new InitiateService();
+export default new InitiateService();

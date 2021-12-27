@@ -11,4 +11,4 @@ class CalendarDayModel {
     }
 }
 
-module.exports = CalendarDayModel;
+export default CalendarDayModel;

@@ -1,4 +1,4 @@
-const jsdom = require('jsdom');
+import jsdom from 'jsdom';
 const { JSDOM } = jsdom;
 
 class DOMUtils {
@@ -16,4 +16,4 @@ class DOMUtils {
     }
 }
 
-module.exports = new DOMUtils();
+export default new DOMUtils();

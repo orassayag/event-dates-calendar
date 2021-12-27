@@ -1,8 +1,8 @@
-const { dictionaryCulture } = require('../../culture');
-const { LogDataModel } = require('../../core/models');
-const applicationService = require('./application.service');
-const pathService = require('./path.service');
-const { eventUtils, fileUtils, textUtils, validationUtils } = require('../../utils');
+import { dictionaryCulture } from '../../culture';
+import { LogDataModel } from '../../core/models';
+import applicationService from './application.service';
+import pathService from './path.service';
+import { eventUtils, fileUtils, textUtils, validationUtils } from '../../utils';
 
 class LogService {
 
@@ -76,4 +76,4 @@ OK to run? (y = yes)`;
 	}
 }
 
-module.exports = new LogService();
+export default new LogService();

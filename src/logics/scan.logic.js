@@ -1,8 +1,8 @@
-const settings = require('../settings/settings');
-const { StatusEnum } = require('../core/enums');
-const { applicationService, countLimitService, eventService, logService, pathService } = require('../services');
-const globalUtils = require('../utils/files/global.utils');
-const { logUtils, timeUtils } = require('../utils');
+import settings from '../settings/settings';
+import { StatusEnum } from '../core/enums';
+import { applicationService, countLimitService, eventService, logService, pathService } from '../services';
+import globalUtils from '../utils/files/global.utils';
+import { logUtils, timeUtils } from '../utils';
 
 class ScanLogic {
 
@@ -57,4 +57,4 @@ class ScanLogic {
     }
 }
 
-module.exports = ScanLogic;
+export default ScanLogic;

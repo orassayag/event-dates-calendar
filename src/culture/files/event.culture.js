@@ -1,7 +1,9 @@
 /* cSpell:disable */
-const { DynamicEventDateModel, EventDateModel, MissingEventDateModel,
-    RepeatEventDateModel, ReplaceEventDateModel } = require('../../core/models');
-const { EventTypeEnum } = require('../../core/enums');
+import {
+    DynamicEventDateModel, EventDateModel, MissingEventDateModel,
+    RepeatEventDateModel, ReplaceEventDateModel
+} from '../../core/models';
+import { EventTypeEnum } from '../../core/enums';
 
 class EventCulture {
 
@@ -243,4 +245,4 @@ class EventCulture {
     }
 }
 
-module.exports = new EventCulture();
+export default new EventCulture();

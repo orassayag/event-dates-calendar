@@ -1,6 +1,7 @@
-const errorScript = require('./error.script');
-require('../services/files/initiate.service').initiate('create');
-const CreateLogic = require('../logics/create.logic');
+import errorScript from './error.script';
+import initiateService from '../services/files/initiate.service';
+import CreateLogic from '../logics/create.logic';
+initiateService.initiate('create');
 
 (async () => {
     await new CreateLogic().run();

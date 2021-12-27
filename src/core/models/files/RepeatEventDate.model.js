@@ -9,4 +9,4 @@ class RepeatEventDateModel {
     }
 }
 
-module.exports = RepeatEventDateModel;
+export default RepeatEventDateModel;

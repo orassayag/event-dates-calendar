@@ -1,4 +1,4 @@
-const { ApplicationDataModel } = require('../../core/models');
+import { ApplicationDataModel } from '../../core/models';
 
 class ApplicationService {
 
@@ -14,4 +14,4 @@ class ApplicationService {
     }
 }
 
-module.exports = new ApplicationService();
+export default new ApplicationService();
