@@ -13,7 +13,7 @@ class EventUtils {
         if (!text) {
             return text;
         }
-        return `${text.trim()}.`;
+        return text.trim();
     }
 
     completeEventTemplate(text1, text2) {

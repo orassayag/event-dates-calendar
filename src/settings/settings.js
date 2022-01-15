@@ -1,4 +1,8 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { pathUtils } from '../utils';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const settings = {
     // ===GENERAL=== //
@@ -26,7 +30,7 @@ const settings = {
     // dates, and other data to be included in the new TXT file.
     SOURCE_PATH: pathUtils.getJoinPath({
         targetPath: __dirname,
-        targetName: '../../sources/event-dates-2021.txt'
+        targetName: '../../sources/event-dates-2022.txt'
     }),
 
     // ===ROOT PATH=== //

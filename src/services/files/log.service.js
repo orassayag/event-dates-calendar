@@ -28,12 +28,11 @@ class LogService {
 	}
 
 	async logEventDates(data) {
-		const { calendarDaysList, dataLines, dailyTasks, weekendTasks, weekendOnToggleTasks, weekendOffToggleTasks } = data;
+		const { calendarDaysList, dataLines, dailyTasks, weekendOnToggleTasks, weekendOffToggleTasks } = data;
 		let isToggleWeekend = true;
 		const dailyTasksLines = eventUtils.warpBreakLines(dailyTasks);
-		const weekendTasksLines = eventUtils.warpBreakLines(weekendTasks);
-		const weekendToggleOnTasksLines = eventUtils.warpEmpty(weekendOnToggleTasks);
-		const weekendToggleOffTasksLines = eventUtils.warpEmpty(weekendOffToggleTasks);
+		const weekendToggleOnTasksLines = eventUtils.warpBreakLines(weekendOnToggleTasks);
+		const weekendToggleOffTasksLines = eventUtils.warpBreakLines(weekendOffToggleTasks);
 		// Merge all the calendar days into lines array.
 		const eventsDatesLines = [];
 		for (let i = 0; i < calendarDaysList.length; i++) {
@@ -41,7 +40,6 @@ class LogService {
 			const eventDatesLines = validationUtils.isExists(eventDatesList) ? eventUtils.warpBreakLine(eventUtils.warpBreakLines(eventDatesList.map(e => e.text))) : '';
 			eventsDatesLines.push(`${displayDate} ${displayDayInWeek}\n${eventDatesLines}${dailyTasksLines}`);
 			if (dayInWeek === dictionaryCulture.englishDaysList[5]) {
-				eventsDatesLines.push(weekendTasksLines);
 				eventsDatesLines.push(eventUtils.warpBreakLine(isToggleWeekend ? weekendToggleOnTasksLines : weekendToggleOffTasksLines));
 				isToggleWeekend = !isToggleWeekend;
 			}

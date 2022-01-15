@@ -25,7 +25,7 @@ class EventService {
         // In the next step, get all the static events from an event culture file.
         const staticEventDates = this.createStaticEventDates();
         // Next, get all the events from the source event dates TXT file.
-        const { sourceEventDates, dataLines, dailyTasks, weekendTasks,
+        const { sourceEventDates, dataLines, dailyTasks,
             weekendOnToggleTasks, weekendOffToggleTasks } = await this.createSourceEventDates();
         // Next, create the calendar days to log.
         const calendarDaysList = this.createCalendarDays([...calendarILEventDates, ...missingCalendarEventDates,
@@ -35,7 +35,6 @@ class EventService {
             calendarDaysList: calendarDaysList,
             dataLines: dataLines,
             dailyTasks: dailyTasks,
-            weekendTasks: weekendTasks,
             weekendOnToggleTasks: weekendOnToggleTasks,
             weekendOffToggleTasks: weekendOffToggleTasks
         });
@@ -229,14 +228,8 @@ class EventService {
         // Convert all the common tasks to different days.
         sourceEventResult.commonTasks.splice(-2);
         sourceEventResult.dailyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.DAILY_TASK);
-        sourceEventResult.weekendTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TASK);
-        const weekendToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TOGGLE_TASK);
-        for (let i = 0; i < weekendToggleTasks.length; i++) {
-            const task = weekendToggleTasks[i];
-            const splitToggle = task.split(separatorService.toggleSeparator);
-            sourceEventResult.weekendOnToggleTasks.push(task);
-            sourceEventResult.weekendOffToggleTasks.push(eventUtils.toggleOfTaskTemplate(splitToggle[0]));
-        }
+        sourceEventResult.weekendOnToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TASK);
+        sourceEventResult.weekendOffToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TOGGLE_TASK);
         sourceEventResult.commonTasks = null;
         return sourceEventResult;
     }
