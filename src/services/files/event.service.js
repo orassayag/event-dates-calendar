@@ -25,8 +25,8 @@ class EventService {
         // In the next step, get all the static events from an event culture file.
         const staticEventDates = this.createStaticEventDates();
         // Next, get all the events from the source event dates TXT file.
-        const { sourceEventDates, dataLines, dailyTasks,
-            weekendOnToggleTasks, weekendOffToggleTasks } = await this.createSourceEventDates();
+        const { sourceEventDates, dataLines, dailyTasks, weekendOnToggleTasks,
+            weekendOffToggleTasks, monthlyTasks } = await this.createSourceEventDates();
         // Next, create the calendar days to log.
         const calendarDaysList = this.createCalendarDays([...calendarILEventDates, ...missingCalendarEventDates,
         ...calendarUSEventDates, ...staticEventDates, ...sourceEventDates]);
@@ -36,7 +36,8 @@ class EventService {
             dataLines: dataLines,
             dailyTasks: dailyTasks,
             weekendOnToggleTasks: weekendOnToggleTasks,
-            weekendOffToggleTasks: weekendOffToggleTasks
+            weekendOffToggleTasks: weekendOffToggleTasks,
+            monthlyTasks: monthlyTasks
         });
     }
 
@@ -194,7 +195,8 @@ class EventService {
                         }
                         case EventTypeEnum.DAILY_TASK:
                         case EventTypeEnum.WEEKEND_TASK:
-                        case EventTypeEnum.WEEKEND_TOGGLE_TASK: {
+                        case EventTypeEnum.WEEKEND_TOGGLE_TASK:
+                        case EventTypeEnum.MONTHLY_TASK: {
                             if (!handleLineResult.isSeparator) {
                                 this.lastCommonTaskId++;
                                 sourceEventResult.commonTasks.push(new CommonTaskModel({
@@ -230,7 +232,9 @@ class EventService {
         sourceEventResult.dailyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.DAILY_TASK);
         sourceEventResult.weekendOnToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TASK);
         sourceEventResult.weekendOffToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TOGGLE_TASK);
+        sourceEventResult.monthlyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.MONTHLY_TASK);
         sourceEventResult.commonTasks = null;
+        sourceEventResult.dataLines.push(logService.logTitleSeparator);
         return sourceEventResult;
     }
 
@@ -252,7 +256,8 @@ class EventService {
                 case EventTypeEnum.SERVICE: { eventType = EventTypeEnum.BIRTHDAY; break; }
                 case EventTypeEnum.BIRTHDAY: { eventType = EventTypeEnum.DEATHDAY; break; }
                 case EventTypeEnum.DEATHDAY: { eventType = EventTypeEnum.DATA; break; }
-                case EventTypeEnum.WEEKEND_TOGGLE_TASK: { eventType = EventTypeEnum.END; validateSourceEventTypeResult.isSeparator = true; break; }
+                case EventTypeEnum.WEEKEND_TOGGLE_TASK: { eventType = EventTypeEnum.MONTHLY_TASK; break; }
+                case EventTypeEnum.MONTHLY_TASK: { eventType = EventTypeEnum.END; break; }
             }
         }
         else {
@@ -263,6 +268,7 @@ class EventService {
                 case separatorService.dailyTasksSeparator: { eventType = EventTypeEnum.DAILY_TASK; break; }
                 case separatorService.weekendTasksSeparator: { eventType = EventTypeEnum.WEEKEND_TASK; break; }
                 case separatorService.weekendToggleTasksSeparator: { eventType = EventTypeEnum.WEEKEND_TOGGLE_TASK; break; }
+                case separatorService.monthlyTasksSeparator: { eventType = EventTypeEnum.MONTHLY_TASK; break; }
                 default: {
                     validateSourceEventTypeResult.isBreakLine = false;
                     validateSourceEventTypeResult.isSeparator = false;
@@ -303,7 +309,8 @@ class EventService {
             }
             case EventTypeEnum.DAILY_TASK:
             case EventTypeEnum.WEEKEND_TASK:
-            case EventTypeEnum.WEEKEND_TOGGLE_TASK: {
+            case EventTypeEnum.WEEKEND_TOGGLE_TASK:
+            case EventTypeEnum.MONTHLY_TASK: {
                 returnValue = line;
                 break;
             }
@@ -402,7 +409,7 @@ class EventService {
             this.lastCalendarDayId++;
             let calendarDayModel = new CalendarDayModel({
                 id: this.lastCalendarDayId,
-                date: dateStart,
+                date: new Date(dateStart),
                 displayDate: timeUtils.getDisplayDate(dateStart),
                 dayInWeek: englishDay,
                 displayDayInWeek: hebrewDay,
@@ -425,7 +432,7 @@ class EventService {
 
     createRepeatEventDate(data) {
         const { calendarDayModel, dateDay, dateMonth, dateYear } = data;
-        // Get repeat logic events (like friday the 13th).
+        // Get repeat logic events (Like friday the 13th).
         const repeatEventDates = eventCulture.createRepeatEventDates();
         for (let i = 0; i < repeatEventDates.length; i++) {
             const { day, dayInWeek, displayText } = repeatEventDates[i];

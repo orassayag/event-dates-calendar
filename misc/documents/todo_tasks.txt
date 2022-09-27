@@ -11,9 +11,8 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
--Add '.' in the end of any event.
 -Add counter event. Like birth day. Example: US independent day: 345 years.
--Add יום הזיכרון ליצחק רבין like this and other events.
+-Add scan option for more than 1 line break.
 
 Completed + canceled tasks:
 ===========================

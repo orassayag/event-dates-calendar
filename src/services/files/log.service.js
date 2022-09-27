@@ -1,6 +1,7 @@
 import { dictionaryCulture } from '../../culture';
 import { LogDataModel } from '../../core/models';
 import applicationService from './application.service';
+import separatorService from './separator.service';
 import pathService from './path.service';
 import { eventUtils, fileUtils, textUtils, validationUtils } from '../../utils';
 
@@ -11,7 +12,8 @@ class LogService {
 		this.logDataModel = null;
 		this.baseSessionPath = null;
 		this.distFileName = null;
-		this.logSeparator = '==========';
+		this.logTitleSeparator = '=====\r\r';
+		this.lineSeparator = '================\r\r';
 	}
 
 	async initiate(settings) {
@@ -27,26 +29,68 @@ class LogService {
 		this.distFileName = `${this.baseSessionPath}\\${this.logDataModel.distFileName}-${applicationService.applicationDataModel.year}.txt`;
 	}
 
+	isAddDot(eventsDatesLine) {
+		if (!eventsDatesLine.length) {
+			return false;
+		}
+		switch (eventsDatesLine) {
+			case separatorService.lineSpace:
+			case separatorService.completeCancelTasksSeparator:
+			case separatorService.dailyTasksSeparator:
+			case separatorService.weekendTasksSeparator:
+			case separatorService.weekendToggleTasksSeparator:
+			case separatorService.monthlyTasksSeparator:
+				return false;
+		}
+		const lastCharacter = eventsDatesLine[eventsDatesLine.length - 1];
+		switch (lastCharacter) {
+			case separatorService.endLineCharacter:
+			case separatorService.dotLineCharacter:
+			case separatorService.eventTypeSeparator:
+			case separatorService.titleTypeSeparator:
+				return false;
+		}
+		return true;
+	}
+
+	prepareLines(eventsDatesLines) {
+		for (let i = 0; i < eventsDatesLines.length; i++) {
+			const line = eventsDatesLines[i]?.trim();
+			if (this.isAddDot(line)) {
+				eventsDatesLines[i] = `${line}${separatorService.dotLineCharacter}`;
+			}
+		}
+		return eventsDatesLines;
+	}
+
 	async logEventDates(data) {
-		const { calendarDaysList, dataLines, dailyTasks, weekendOnToggleTasks, weekendOffToggleTasks } = data;
+		const { calendarDaysList, dailyTasks, weekendOnToggleTasks, weekendOffToggleTasks, monthlyTasks } = data;
+		let { dataLines } = data;
 		let isToggleWeekend = true;
 		const dailyTasksLines = eventUtils.warpBreakLines(dailyTasks);
 		const weekendToggleOnTasksLines = eventUtils.warpBreakLines(weekendOnToggleTasks);
 		const weekendToggleOffTasksLines = eventUtils.warpBreakLines(weekendOffToggleTasks);
+		const monthlyTasksLines = eventUtils.warpBreakLines(monthlyTasks);
 		// Merge all the calendar days into lines array.
-		const eventsDatesLines = [];
+		let eventsDatesLines = [];
 		for (let i = 0; i < calendarDaysList.length; i++) {
-			const { displayDate, dayInWeek, displayDayInWeek, eventDatesList } = calendarDaysList[i];
+			const { date, displayDate, dayInWeek, displayDayInWeek, eventDatesList } = calendarDaysList[i];
 			const eventDatesLines = validationUtils.isExists(eventDatesList) ? eventUtils.warpBreakLine(eventUtils.warpBreakLines(eventDatesList.map(e => e.text))) : '';
 			eventsDatesLines.push(`${displayDate} ${displayDayInWeek}\n${eventDatesLines}${dailyTasksLines}`);
 			if (dayInWeek === dictionaryCulture.englishDaysList[5]) {
-				eventsDatesLines.push(eventUtils.warpBreakLine(isToggleWeekend ? weekendToggleOnTasksLines : weekendToggleOffTasksLines));
+				eventsDatesLines.push(isToggleWeekend ? weekendToggleOnTasksLines : weekendToggleOffTasksLines);
 				isToggleWeekend = !isToggleWeekend;
 			}
-			else {
-				eventsDatesLines.push('\r');
+			if (date.getDate() === 1) {
+				eventsDatesLines.push(eventUtils.warpBreakLine(monthlyTasksLines));
+			} else {
+				// Add line seperators between days.
+				eventsDatesLines.push(separatorService.lineSpace);
 			}
+			eventsDatesLines.push(this.lineSeparator);
 		}
+		eventsDatesLines = this.prepareLines(eventsDatesLines);
+		dataLines = this.prepareLines(dataLines);
 		// Log all the lines into a new TXT file.
 		const eventDatesLogLines = eventUtils.warpBreakLines([...dataLines, ...eventsDatesLines]).trim();
 		await fileUtils.appendFile({

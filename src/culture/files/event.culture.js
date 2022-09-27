@@ -17,7 +17,8 @@ class EventCulture {
                 month: 1,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'ראש השנה הלועזית החדשה'
+                text: 'ראש השנה הלועזית החדשה',
+                eventYear: 0
             }),
             new EventDateModel({
                 id: null,
@@ -25,7 +26,8 @@ class EventCulture {
                 month: 1,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום השואה הבינלאומי'
+                text: 'יום השואה הבינלאומי',
+                eventYear:
             }),
             new EventDateModel({
                 id: null,
@@ -33,7 +35,8 @@ class EventCulture {
                 month: 2,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום ולנטיין'
+                text: 'יום ולנטיין',
+                eventYear:
             }),
             new EventDateModel({
                 id: null,
@@ -41,7 +44,8 @@ class EventCulture {
                 month: 3,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום האישה הבינלאומי'
+                text: 'יום האישה הבינלאומי',
+                eventYear:
             }),
             new EventDateModel({
                 id: null,
@@ -49,7 +53,8 @@ class EventCulture {
                 month: 4,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'אחד באפריל - יום השוטים הבינלאומי'
+                text: 'אחד באפריל - יום השוטים הבינלאומי',
+                eventYear:
             }),
             new EventDateModel({
                 id: null,
@@ -57,7 +62,8 @@ class EventCulture {
                 month: 5,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'חג הפועלים הבינלאומי'
+                text: 'חג הפועלים הבינלאומי',
+                eventYear:
             }),
             new EventDateModel({
                 id: null,
@@ -65,7 +71,8 @@ class EventCulture {
                 month: 5,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום הניצחון באירופה במלחמת העולם השנייה'
+                text: 'יום הניצחון באירופה במלחמת העולם השנייה',
+                eventYear: 1945
             }),
             new EventDateModel({
                 id: null,
@@ -73,7 +80,8 @@ class EventCulture {
                 month: 5,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום הקמת מדינת ישראל'
+                text: 'יום הקמת מדינת ישראל',
+                eventYear: 1948
             }),
             new EventDateModel({
                 id: null,
@@ -81,7 +89,8 @@ class EventCulture {
                 month: 6,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום הפלישה לנורמנדי - D-Day'
+                text: 'יום הפלישה לנורמנדי - D-Day',
+                eventYear: 1944
             }),
             new EventDateModel({
                 id: null,
@@ -89,7 +98,17 @@ class EventCulture {
                 month: 7,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום העצמאות של ארה"ב'
+                text: 'יום העצמאות של ארה"ב',
+                eventYear:
+            }),
+            new EventDateModel({
+                id: null,
+                day: 8,
+                month: 9,
+                year: null,
+                eventType: EventTypeEnum.STATIC,
+                text: 'יום פטירת מלכת אנגליה אליזבת\' השנייה',
+                eventYear: 2022
             }),
             new EventDateModel({
                 id: null,
@@ -97,7 +116,8 @@ class EventCulture {
                 month: 9,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום התחלת מלחמת העולם השנייה'
+                text: 'יום התחלת מלחמת העולם השנייה',
+                eventYear: 1939
             }),
             new EventDateModel({
                 id: null,
@@ -113,7 +133,8 @@ class EventCulture {
                 month: 9,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום הזיכרון לפיגוע התיאומים'
+                text: 'יום הזיכרון לפיגוע התיאומים',
+                eventYear: 2001
             }),
             new EventDateModel({
                 id: null,
@@ -121,7 +142,8 @@ class EventCulture {
                 month: 11,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום הזיכרון הרשמי לרצח רבין'
+                text: 'יום הזיכרון הרשמי לרצח רבין',
+                eventYear: 1995
             }),
             new EventDateModel({
                 id: null,
@@ -129,7 +151,8 @@ class EventCulture {
                 month: 12,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'ערב השנה החדשה - הסילבסטר'
+                text: 'ערב השנה החדשה - הסילבסטר',
+                eventYear:
             })
         ];
     }
@@ -223,12 +246,14 @@ class EventCulture {
             new DynamicEventDateModel({
                 id: 1,
                 includeText: 'Black Friday',
-                displayText: 'יום שישי השחור - בלאק פריידיי'
+                displayText: 'יום שישי השחור - בלאק פריידיי',
+                eventYear:
             }),
             new DynamicEventDateModel({
                 id: 2,
                 includeText: 'Cyber Monday',
-                displayText: 'שני הסייבר - סייבר מאנדיי'
+                displayText: 'שני הסייבר - סייבר מאנדיי',
+                eventYear:
             })
         ];
     }
@@ -239,7 +264,8 @@ class EventCulture {
                 id: 1,
                 day: 13,
                 dayInWeek: 5,
-                displayText: 'יום שישי ה-13'
+                displayText: 'יום שישי ה-13',
+                eventYear:
             })
         ];
     }

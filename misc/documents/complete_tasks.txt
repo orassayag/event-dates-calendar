@@ -1,5 +1,10 @@
 Completed + canceled tasks:
 ===========================
+-בסופ"ש: להוסיף לEvent Calander משימה להוסיף גבולות בין הימים: =================. *
+-להוסיף את האירוע פטירה של המלכה אליזבת' השנייה - 08/09/2022 לEventsCalandar. *
+-Add יום הזיכרון ליצחק רבין like this and other events. *
+-Add '.' in the end of any event. *
+-Add Monthly events (Like mom money, Entire Or folder backup, Clash Royale end season push - Add it). *
 -Fix bug with missing line space between tasks. *
 -Add validation that if source file is empty - Throw error. *
 -If contains "הושענא רבה" change to "ערב חג סוכות שני". *

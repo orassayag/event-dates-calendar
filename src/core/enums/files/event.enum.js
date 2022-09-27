@@ -12,6 +12,7 @@ const EventTypeEnum = enumUtils.createEnum([
     ['DAILY_TASK', 'dailyTask'],
     ['WEEKEND_TASK', 'weekendTask'],
     ['WEEKEND_TOGGLE_TASK', 'weekendToggleTask'],
+    ['MONTHLY_TASK', 'monthlyTask'],
     ['COMPLETE_CANCEL_TASK', 'completeCancelTask'],
     ['DATA', 'data'],
     ['END', 'end']
