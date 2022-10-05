@@ -16,6 +16,7 @@ class SeparatorService {
         this.weekendTasksSeparator = '&@';
         this.weekendToggleTasksSeparator = '*@';
         this.monthlyTasksSeparator = '^@';
+        this.halfYearlyTasksSeparator = '%@';
         // ===CALENDAR IL DOM=== //
         this.dayInMonthDOM = 'dayInMonth';
         this.spanDOM = 'span';

@@ -27,7 +27,7 @@ class EventCulture {
                 year: null,
                 eventType: EventTypeEnum.STATIC,
                 text: 'יום השואה הבינלאומי',
-                eventYear:
+                eventYear: 2005
             }),
             new EventDateModel({
                 id: null,
@@ -36,7 +36,7 @@ class EventCulture {
                 year: null,
                 eventType: EventTypeEnum.STATIC,
                 text: 'יום ולנטיין',
-                eventYear:
+                eventYear: 1797
             }),
             new EventDateModel({
                 id: null,
@@ -45,7 +45,7 @@ class EventCulture {
                 year: null,
                 eventType: EventTypeEnum.STATIC,
                 text: 'יום האישה הבינלאומי',
-                eventYear:
+                eventYear: 1909
             }),
             new EventDateModel({
                 id: null,
@@ -54,7 +54,7 @@ class EventCulture {
                 year: null,
                 eventType: EventTypeEnum.STATIC,
                 text: 'אחד באפריל - יום השוטים הבינלאומי',
-                eventYear:
+                eventYear: 1564
             }),
             new EventDateModel({
                 id: null,
@@ -63,7 +63,7 @@ class EventCulture {
                 year: null,
                 eventType: EventTypeEnum.STATIC,
                 text: 'חג הפועלים הבינלאומי',
-                eventYear:
+                eventYear: 1872
             }),
             new EventDateModel({
                 id: null,
@@ -99,7 +99,7 @@ class EventCulture {
                 year: null,
                 eventType: EventTypeEnum.STATIC,
                 text: 'יום העצמאות של ארה"ב',
-                eventYear:
+                eventYear: 1776
             }),
             new EventDateModel({
                 id: null,
@@ -125,7 +125,8 @@ class EventCulture {
                 month: 9,
                 year: null,
                 eventType: EventTypeEnum.STATIC,
-                text: 'יום תחילת שנת הלימודים בבתי הספר'
+                text: 'יום תחילת שנת הלימודים בבתי הספר',
+                eventYear: 1890
             }),
             new EventDateModel({
                 id: null,
@@ -152,7 +153,7 @@ class EventCulture {
                 year: null,
                 eventType: EventTypeEnum.STATIC,
                 text: 'ערב השנה החדשה - הסילבסטר',
-                eventYear:
+                eventYear: 1622
             })
         ];
     }
@@ -247,13 +248,13 @@ class EventCulture {
                 id: 1,
                 includeText: 'Black Friday',
                 displayText: 'יום שישי השחור - בלאק פריידיי',
-                eventYear:
+                eventYear: 1869
             }),
             new DynamicEventDateModel({
                 id: 2,
                 includeText: 'Cyber Monday',
                 displayText: 'שני הסייבר - סייבר מאנדיי',
-                eventYear:
+                eventYear: 2005
             })
         ];
     }
@@ -265,7 +266,7 @@ class EventCulture {
                 day: 13,
                 dayInWeek: 5,
                 displayText: 'יום שישי ה-13',
-                eventYear:
+                eventYear: 1307
             })
         ];
     }

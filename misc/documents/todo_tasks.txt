@@ -11,8 +11,9 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
--Add counter event. Like birth day. Example: US independent day: 345 years.
+-Add half year events: לנקות מזגן.
 -Add scan option for more than 1 line break.
+-Update the file in the examples folder.
 
 Completed + canceled tasks:
 ===========================

@@ -83,6 +83,8 @@ class LogService {
 			}
 			if (date.getDate() === 1) {
 				eventsDatesLines.push(eventUtils.warpBreakLine(monthlyTasksLines));
+			} else if () {
+				eventsDatesLines.push(eventUtils.warpBreakLine(monthlyTasksLines));
 			} else {
 				// Add line seperators between days.
 				eventsDatesLines.push(separatorService.lineSpace);

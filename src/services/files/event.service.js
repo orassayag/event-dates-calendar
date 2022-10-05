@@ -41,17 +41,25 @@ class EventService {
         });
     }
 
+    createTextEvent(event) {
+        if (!!event.eventYear) {
+            event.text = `${event.text} (${Math.abs(parseInt(new Date().getFullYear() - event.eventYear, 10))}).`;
+        }
+        return event;
+    }
+
     createEventDate(data) {
-        const { day, month, year, eventType, text } = data;
+        const { day, month, year, eventType, text, eventYear } = data;
         this.lastEventDateId++;
-        return new EventDateModel({
+        return this.createTextEvent(new EventDateModel({
             id: this.lastEventDateId,
             day: day,
             month: month,
             year: year,
             eventType: eventType,
-            text: text
-        });
+            text: text,
+            eventYear: eventYear
+        }));
     }
 
     replaceEvents(replaceEventsDates, text) {
@@ -116,7 +124,8 @@ class EventService {
                         month: dateMonth,
                         year: dateYear,
                         eventType: EventTypeEnum.DYNAMIC,
-                        text: eventUtils.createEventTemplate(event.displayText)
+                        text: eventUtils.createEventTemplate(event.displayText),
+                        eventYear: event.eventYear
                     }));
                 }
             }
@@ -151,13 +160,14 @@ class EventService {
         const staticEventDates = eventCulture.createStaticEventDates();
         const resultStaticEventDates = [];
         for (let i = 0; i < staticEventDates.length; i++) {
-            const { day, month, year, eventType, text } = staticEventDates[i];
+            const { day, month, year, eventType, text, eventYear } = staticEventDates[i];
             resultStaticEventDates.push(this.createEventDate({
                 day: day,
                 month: month,
                 year: year,
                 eventType: eventType,
-                text: eventUtils.createEventTemplate(text)
+                text: eventUtils.createEventTemplate(text),
+                eventYear: eventYear
             }));
         }
         return resultStaticEventDates;
@@ -196,7 +206,8 @@ class EventService {
                         case EventTypeEnum.DAILY_TASK:
                         case EventTypeEnum.WEEKEND_TASK:
                         case EventTypeEnum.WEEKEND_TOGGLE_TASK:
-                        case EventTypeEnum.MONTHLY_TASK: {
+                        case EventTypeEnum.MONTHLY_TASK:
+                        case EventTypeEnum.HALF_YEARLY_TASK: {
                             if (!handleLineResult.isSeparator) {
                                 this.lastCommonTaskId++;
                                 sourceEventResult.commonTasks.push(new CommonTaskModel({
@@ -233,6 +244,7 @@ class EventService {
         sourceEventResult.weekendOnToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TASK);
         sourceEventResult.weekendOffToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TOGGLE_TASK);
         sourceEventResult.monthlyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.MONTHLY_TASK);
+        sourceEventResult.halfYearlyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.HALF_YEARLY_TASK);
         sourceEventResult.commonTasks = null;
         sourceEventResult.dataLines.push(logService.logTitleSeparator);
         return sourceEventResult;
@@ -257,7 +269,8 @@ class EventService {
                 case EventTypeEnum.BIRTHDAY: { eventType = EventTypeEnum.DEATHDAY; break; }
                 case EventTypeEnum.DEATHDAY: { eventType = EventTypeEnum.DATA; break; }
                 case EventTypeEnum.WEEKEND_TOGGLE_TASK: { eventType = EventTypeEnum.MONTHLY_TASK; break; }
-                case EventTypeEnum.MONTHLY_TASK: { eventType = EventTypeEnum.END; break; }
+                case EventTypeEnum.MONTHLY_TASK: { eventType = EventTypeEnum.HALF_YEARLY_TASK; break; }
+                case EventTypeEnum.HALF_YEARLY_TASK: { eventType = EventTypeEnum.END; break; }
             }
         }
         else {
@@ -269,6 +282,7 @@ class EventService {
                 case separatorService.weekendTasksSeparator: { eventType = EventTypeEnum.WEEKEND_TASK; break; }
                 case separatorService.weekendToggleTasksSeparator: { eventType = EventTypeEnum.WEEKEND_TOGGLE_TASK; break; }
                 case separatorService.monthlyTasksSeparator: { eventType = EventTypeEnum.MONTHLY_TASK; break; }
+                case separatorService.halfYearlyTasksSeparator: { eventType = EventTypeEnum.HALF_YEARLY_TASK; break; }
                 default: {
                     validateSourceEventTypeResult.isBreakLine = false;
                     validateSourceEventTypeResult.isSeparator = false;
@@ -310,7 +324,8 @@ class EventService {
             case EventTypeEnum.DAILY_TASK:
             case EventTypeEnum.WEEKEND_TASK:
             case EventTypeEnum.WEEKEND_TOGGLE_TASK:
-            case EventTypeEnum.MONTHLY_TASK: {
+            case EventTypeEnum.MONTHLY_TASK:
+            case EventTypeEnum.HALF_YEARLY_TASK: {
                 returnValue = line;
                 break;
             }
@@ -435,14 +450,15 @@ class EventService {
         // Get repeat logic events (Like friday the 13th).
         const repeatEventDates = eventCulture.createRepeatEventDates();
         for (let i = 0; i < repeatEventDates.length; i++) {
-            const { day, dayInWeek, displayText } = repeatEventDates[i];
+            const { day, dayInWeek, displayText, eventYear } = repeatEventDates[i];
             if (day === dateDay && calendarDayModel.dayInWeek === dictionaryCulture.englishDaysList[dayInWeek]) {
                 calendarDayModel.eventDatesList.push(this.createEventDate({
                     day: dateDay,
                     month: dateMonth,
                     year: dateYear,
                     eventType: EventTypeEnum.REPEAT,
-                    text: eventUtils.createEventTemplate(displayText)
+                    text: eventUtils.createEventTemplate(displayText),
+                    eventYear: eventYear
                 }));
             }
         }
