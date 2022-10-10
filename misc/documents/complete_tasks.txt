@@ -1,5 +1,7 @@
 Completed + canceled tasks:
 ===========================
+-Add half year events: לנקות מזגן. *
+-Fix bug that not include that current day of running the script. *
 -Add counter event. Like birth day. Example: US independent day: 345 years. *
 -בסופ"ש: להוסיף לEvent Calander משימה להוסיף גבולות בין הימים: =================. *
 -להוסיף את האירוע פטירה של המלכה אליזבת' השנייה - 08/09/2022 לEventsCalandar. *

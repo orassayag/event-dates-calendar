@@ -18,6 +18,7 @@ class SeparatorService {
         this.monthlyTasksSeparator = '^@';
         this.halfYearlyTasksSeparator = '%@';
         // ===CALENDAR IL DOM=== //
+        this.todayDOM = 'today';
         this.dayInMonthDOM = 'dayInMonth';
         this.spanDOM = 'span';
         this.personalDOM = 'personal';

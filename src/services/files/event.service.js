@@ -13,6 +13,7 @@ class EventService {
         this.lastEventDateId = 0;
         this.lastCommonTaskId = 0;
         this.lastCalendarDayId = 0;
+        this.vacationDays = dictionaryCulture.getVacationDays();
     }
 
     async createEventDates() {
@@ -26,7 +27,7 @@ class EventService {
         const staticEventDates = this.createStaticEventDates();
         // Next, get all the events from the source event dates TXT file.
         const { sourceEventDates, dataLines, dailyTasks, weekendOnToggleTasks,
-            weekendOffToggleTasks, monthlyTasks } = await this.createSourceEventDates();
+            weekendOffToggleTasks, monthlyTasks, halfYearlyTasks } = await this.createSourceEventDates();
         // Next, create the calendar days to log.
         const calendarDaysList = this.createCalendarDays([...calendarILEventDates, ...missingCalendarEventDates,
         ...calendarUSEventDates, ...staticEventDates, ...sourceEventDates]);
@@ -37,15 +38,22 @@ class EventService {
             dailyTasks: dailyTasks,
             weekendOnToggleTasks: weekendOnToggleTasks,
             weekendOffToggleTasks: weekendOffToggleTasks,
-            monthlyTasks: monthlyTasks
+            monthlyTasks: monthlyTasks,
+            halfYearlyTasks: halfYearlyTasks
         });
     }
 
     createTextEvent(event) {
-        if (!!event.eventYear) {
+        if (!!event.eventYear || event.eventYear === 0) {
             event.text = `${event.text} (${Math.abs(parseInt(new Date().getFullYear() - event.eventYear, 10))}).`;
         }
         return event;
+    }
+
+    checkIfVacation(text) {
+        return !!this.vacationDays.filter(e => {
+            return e.includes(text);
+        }).length;
     }
 
     createEventDate(data) {
@@ -58,7 +66,8 @@ class EventService {
             year: year,
             eventType: eventType,
             text: text,
-            eventYear: eventYear
+            eventYear: eventYear,
+            isVacation: this.checkIfVacation(text)
         }));
     }
 
@@ -76,7 +85,8 @@ class EventService {
     async createILCalendarEventDates() {
         const calendarILEventDates = [];
         const dom = await domUtils.getDOMFromURL(applicationService.applicationDataModel.calendarILLink);
-        const daysList = dom.window.document.getElementsByClassName(separatorService.dayInMonthDOM);
+        const daysList = dom.window.document.querySelectorAll(`.${separatorService.dayInMonthDOM},.${separatorService.todayDOM}`);
+        // const today = dom.window.document.getElementsByClassName(separatorService.todayDOM);
         const replaceEventsDates = eventCulture.createReplaceEventDates();
         for (let i = 0; i < daysList.length; i++) {
             const dayDOM = daysList[i];
