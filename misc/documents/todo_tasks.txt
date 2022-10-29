@@ -18,7 +18,9 @@ ToDo tasks:
 3. The events that don't match, keep them there.
 4. Write the entire "אירועים בעתיד" section with left events.
 -Add the details of the new file after: ===CREATE TEXT FILE===:
+===TOTAL EVENTS: 3,443===
 ===FILE SIZE: 154KB | LINES COUNT: 9,330===
+-Add for my birthdate - - אני - יום הולדת לאור אסייג (38).
 -Change the scan function name to "validate document".
 -It will contains to steps:
 1. To scan for not ending with dot.
