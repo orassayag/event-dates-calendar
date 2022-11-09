@@ -12,6 +12,8 @@ Each time you change the logic / update NPM package version, do the following st
 ToDo tasks:
 ===========
 -Each day of vacation add "חופש" - Do for specific days.
+-Add yearlly events logic + "בדיקת רופא שיניים".
+-On half yearlly add "שיננית".
 -Auto sync feuture events:
 1. Search for "אירועים בעתיד".
 2. Inside, scan all events. The events that match for the target year - put them on the rest of the events.
@@ -20,7 +22,7 @@ ToDo tasks:
 -Add the details of the new file after: ===CREATE TEXT FILE===:
 ===TOTAL EVENTS: 3,443===
 ===FILE SIZE: 154KB | LINES COUNT: 9,330===
--Add for my birthdate - - אני - יום הולדת לאור אסייג (38).
+-Add for my birthdate - אני - יום הולדת לאור אסייג (38).
 -Change the scan function name to "validate document".
 -It will contains to steps:
 1. To scan for not ending with dot.
