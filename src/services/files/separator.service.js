@@ -11,12 +11,16 @@ class SeparatorService {
         this.titleTypeSeparator = ':';
         this.toggleSeparator = '+';
         this.dummySeparator = '^';
-        this.completeCancelTasksSeparator = '#@';
-        this.dailyTasksSeparator = '!@';
-        this.weekendTasksSeparator = '&@';
-        this.weekendToggleTasksSeparator = '*@';
-        this.monthlyTasksSeparator = '^@';
-        this.halfYearlyTasksSeparator = '%@';
+        this.completeCancelTasksSeparator = '#COPY-START#';
+        this.dayTasksSeparator = '#DAY#';
+        this.weekendTasksSeparator = '#WEEKEND#';
+        this.weekendToggleTasksSeparator = '#WEEKEND-ALT#';
+        this.endMonthTasksSeparator = '#END-MONTH#';
+        this.halfYearTasksSeparator = '#HALF-YEAR#';
+        this.yearTasksSeparator = '#YEAR#';
+        this.endYearTasksSeparator = '#END-YEAR#';
+        this.futureTasksSeparator = '#FUTURE#';
+        this.startEventsSeparator = '#EVENTS#';
         // ===CALENDAR IL DOM=== //
         this.todayDOM = 'today';
         this.dayInMonthDOM = 'dayInMonth';

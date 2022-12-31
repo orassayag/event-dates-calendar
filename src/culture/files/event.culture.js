@@ -18,7 +18,7 @@ class EventCulture {
                 year: null,
                 eventType: EventTypeEnum.STATIC,
                 text: 'ראש השנה הלועזית החדשה',
-                eventYear: 0
+                eventYear: -1
             }),
             new EventDateModel({
                 id: null,

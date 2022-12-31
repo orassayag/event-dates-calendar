@@ -36,11 +36,13 @@ class LogService {
 		switch (eventsDatesLine) {
 			case separatorService.lineSpace:
 			case separatorService.completeCancelTasksSeparator:
-			case separatorService.dailyTasksSeparator:
+			case separatorService.dayTasksSeparator:
 			case separatorService.weekendTasksSeparator:
 			case separatorService.weekendToggleTasksSeparator:
-			case separatorService.monthlyTasksSeparator:
-			case separatorService.halfYearlyTasksSeparator:
+			case separatorService.endMonthTasksSeparator:
+			case separatorService.halfYearTasksSeparator:
+			case separatorService.yearTasksSeparator:
+			case separatorService.endYearTasksSeparator:
 				return false;
 		}
 		const lastCharacter = eventsDatesLine[eventsDatesLine.length - 1];
@@ -65,38 +67,59 @@ class LogService {
 	}
 
 	async logEventDates(data) {
-		const { calendarDaysList, dailyTasks, weekendOnToggleTasks, weekendOffToggleTasks,
-			monthlyTasks, halfYearlyTasks } = data;
+		const { calendarDaysList, dayTasks, weekendOnToggleTasks, weekendOffToggleTasks,
+			endMonthTasks, halfYearTasks, yearTasks, endYearTasks } = data;
 		let { dataLines } = data;
 		let isToggleWeekend = true;
-		const dailyTasksLines = eventUtils.warpBreakLines(dailyTasks);
+		const dayTasksLines = eventUtils.warpBreakLines(dayTasks);
 		const weekendToggleOnTasksLines = eventUtils.warpBreakLines(weekendOnToggleTasks);
 		const weekendToggleOffTasksLines = eventUtils.warpBreakLines(weekendOffToggleTasks);
-		const monthlyTasksLines = eventUtils.warpBreakLines(monthlyTasks);
-		const halfYearlyTasksLines = eventUtils.warpBreakLines(halfYearlyTasks);
+		const endMonthTasksLines = eventUtils.warpBreakLines(endMonthTasks);
+		const halfYearTasksLines = eventUtils.warpBreakLines(halfYearTasks);
+		const yearTasksLines = eventUtils.warpBreakLines(yearTasks);
+		const endYearTasksLines = eventUtils.warpBreakLines(endYearTasks);
 		// Merge all the calendar days into lines array.
 		let eventsDatesLines = [];
 		for (let i = 0; i < calendarDaysList.length; i++) {
-			const { date, displayDate, dayInWeek, displayDayInWeek, eventDatesList } = calendarDaysList[i];
+			const { date, displayDate, dayInWeek, displayDayInWeek, eventDatesList, futureEventDatesList } = calendarDaysList[i];
 			const month = date.getMonth() + 1; // Months from 1-12.
 			const day = date.getDate();
+			const lastDayOfMonth = new Date(applicationService.applicationDataModel.year, month, 0).getDate();
 			const eventDatesLines = validationUtils.isExists(eventDatesList) ? eventUtils.warpBreakLine(eventUtils.warpBreakLines(eventDatesList.map(e => e.text))) : '';
-			eventsDatesLines.push(`${displayDate} ${displayDayInWeek}\n${eventDatesLines}${dailyTasksLines}`);
+			const futureEventDatesLines = validationUtils.isExists(futureEventDatesList) ? [...futureEventDatesList.map(e => eventUtils.warpBreakLine(eventUtils.warpBreakLines(e.eventsLines)))] : '';
+			// Day title + Day tasks.
+			eventsDatesLines.push(`${displayDate} ${displayDayInWeek}.\n${eventDatesLines}${dayTasksLines}`);
+			// Future day tasks.
+			if (futureEventDatesLines.length) {
+				eventsDatesLines = [...eventsDatesLines, ...futureEventDatesLines];
+			}
+			// Weekend + Weekend toggle Tasks.
 			if (dayInWeek === dictionaryCulture.englishDaysList[5]) {
 				eventsDatesLines.push(isToggleWeekend ? weekendToggleOnTasksLines : weekendToggleOffTasksLines);
 				isToggleWeekend = !isToggleWeekend;
 			}
 			if (day === 1) {
-				if (month === 2 || month === 11) {
-					eventsDatesLines.push(monthlyTasksLines);
-					eventsDatesLines.push(eventUtils.warpBreakLine(halfYearlyTasksLines));
-				} else {
-					eventsDatesLines.push(eventUtils.warpBreakLine(monthlyTasksLines));
+				if (month === 1) {
+					// Year tasks.
+					eventsDatesLines.push(eventUtils.warpBreakLine(yearTasksLines));
 				}
+				else if (month === 2 || month === 11) {
+					// Half year tasks.
+					eventsDatesLines.push(eventUtils.warpBreakLine(halfYearTasksLines));
+				} else {
+					eventsDatesLines.push(separatorService.lineSpace);
+				}
+			} else if (day === lastDayOfMonth) {
+				// End month tasks.
+				eventsDatesLines.push(eventUtils.warpBreakLine(endMonthTasksLines));
+			}
+			else if (day === 31 && month === 12) {
+				// End year tasks.
+				eventsDatesLines.push(eventUtils.warpBreakLine(endYearTasksLines));
 			} else {
-				// Add line seperators between days.
 				eventsDatesLines.push(separatorService.lineSpace);
 			}
+			// Add line seperators between days.
 			eventsDatesLines.push(this.lineSeparator);
 		}
 		eventsDatesLines = this.prepareLines(eventsDatesLines);

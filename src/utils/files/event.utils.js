@@ -2,11 +2,11 @@ class EventUtils {
 
     constructor() { }
 
-    createEventTemplate(text) {
+    createEventTemplate(text, addDot = true) {
         if (!text) {
             return text;
         }
-        return `-${text.trim()}.`;
+        return `-${text.trim()}${addDot ? '.' : ''}`;
     }
 
     toggleOfTaskTemplate(text) {

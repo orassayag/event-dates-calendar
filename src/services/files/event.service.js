@@ -1,5 +1,5 @@
 import { dictionaryCulture, eventCulture } from '../../culture';
-import { CalendarDayModel, CommonTaskModel, EventDateModel, SourceEventResultModel, ValidateSourceEventTypeResultModel } from '../../core/models';
+import { CalendarDayModel, CommonTaskModel, EventDateModel, FutureTasksModel, SourceEventResultModel, ValidateSourceEventTypeResultModel } from '../../core/models';
 import { EventTypeEnum } from '../../core/enums';
 import applicationService from './application.service';
 import logService from './log.service';
@@ -13,6 +13,7 @@ class EventService {
         this.lastEventDateId = 0;
         this.lastCommonTaskId = 0;
         this.lastCalendarDayId = 0;
+        this.lastFutureDayId = 0;
         this.vacationDays = dictionaryCulture.getVacationDays();
     }
 
@@ -26,20 +27,23 @@ class EventService {
         // In the next step, get all the static events from an event culture file.
         const staticEventDates = this.createStaticEventDates();
         // Next, get all the events from the source event dates TXT file.
-        const { sourceEventDates, dataLines, dailyTasks, weekendOnToggleTasks,
-            weekendOffToggleTasks, monthlyTasks, halfYearlyTasks } = await this.createSourceEventDates();
+        const { sourceEventDates, dataLines, dayTasks, weekendOnToggleTasks,
+            weekendOffToggleTasks, endMonthTasks, halfYearTasks, yearTasks,
+            endYearTasks, futureTasks } = await this.createSourceEventDates();
         // Next, create the calendar days to log.
         const calendarDaysList = this.createCalendarDays([...calendarILEventDates, ...missingCalendarEventDates,
-        ...calendarUSEventDates, ...staticEventDates, ...sourceEventDates]);
+        ...calendarUSEventDates, ...staticEventDates, ...sourceEventDates], futureTasks);
         // Finally, log all the days into a new TXT file in the 'dist' directory.
         await logService.logEventDates({
             calendarDaysList: calendarDaysList,
             dataLines: dataLines,
-            dailyTasks: dailyTasks,
+            dayTasks: dayTasks,
             weekendOnToggleTasks: weekendOnToggleTasks,
             weekendOffToggleTasks: weekendOffToggleTasks,
-            monthlyTasks: monthlyTasks,
-            halfYearlyTasks: halfYearlyTasks
+            endMonthTasks: endMonthTasks,
+            halfYearTasks: halfYearTasks,
+            yearTasks: yearTasks,
+            endYearTasks: endYearTasks
         });
     }
 
@@ -51,9 +55,7 @@ class EventService {
     }
 
     checkIfVacation(text) {
-        return !!this.vacationDays.filter(e => {
-            return e.includes(text);
-        }).length;
+        return !!this.vacationDays.filter(e => text.indexOf(e) > -1).length;
     }
 
     createEventDate(data) {
@@ -86,7 +88,6 @@ class EventService {
         const calendarILEventDates = [];
         const dom = await domUtils.getDOMFromURL(applicationService.applicationDataModel.calendarILLink);
         const daysList = dom.window.document.querySelectorAll(`.${separatorService.dayInMonthDOM},.${separatorService.todayDOM}`);
-        // const today = dom.window.document.getElementsByClassName(separatorService.todayDOM);
         const replaceEventsDates = eventCulture.createReplaceEventDates();
         for (let i = 0; i < daysList.length; i++) {
             const dayDOM = daysList[i];
@@ -101,13 +102,23 @@ class EventService {
                 const month = parseInt(`${dayIdDOM[6]}${dayIdDOM[7]}`);
                 const year = parseInt(`${dayIdDOM[2]}${dayIdDOM[3]}${dayIdDOM[4]}${dayIdDOM[5]}`);
                 for (let y = 1; y < spansDOMList.length; y++) {
-                    calendarILEventDates.push(this.createEventDate({
+                    const event = this.createEventDate({
                         day: day,
                         month: month,
                         year: year,
                         eventType: EventTypeEnum.CALENDAR,
                         text: eventUtils.createEventTemplate(this.replaceEvents(replaceEventsDates, spansDOMList[y].textContent))
-                    }));
+                    });
+                    calendarILEventDates.push(event);
+                    if (event.isVacation) {
+                        calendarILEventDates.push(this.createEventDate({
+                            day: day,
+                            month: month,
+                            year: year,
+                            eventType: EventTypeEnum.CALENDAR,
+                            text: eventUtils.createEventTemplate(dictionaryCulture.vacation)
+                        }));
+                    }
                 }
             }
         }
@@ -134,7 +145,7 @@ class EventService {
                         month: dateMonth,
                         year: dateYear,
                         eventType: EventTypeEnum.DYNAMIC,
-                        text: eventUtils.createEventTemplate(event.displayText),
+                        text: eventUtils.createEventTemplate(event.displayText, false),
                         eventYear: event.eventYear
                     }));
                 }
@@ -176,11 +187,15 @@ class EventService {
                 month: month,
                 year: year,
                 eventType: eventType,
-                text: eventUtils.createEventTemplate(text),
+                text: eventUtils.createEventTemplate(text, false),
                 eventYear: eventYear
             }));
         }
         return resultStaticEventDates;
+    }
+
+    createFutureEventsDates() {
+
     }
 
     async createSourceEventDates() {
@@ -213,11 +228,13 @@ class EventService {
                             sourceEventResult.sourceEventDates.push(handleLineResult.returnValue);
                             break;
                         }
-                        case EventTypeEnum.DAILY_TASK:
+                        case EventTypeEnum.DAY_TASK:
                         case EventTypeEnum.WEEKEND_TASK:
                         case EventTypeEnum.WEEKEND_TOGGLE_TASK:
-                        case EventTypeEnum.MONTHLY_TASK:
-                        case EventTypeEnum.HALF_YEARLY_TASK: {
+                        case EventTypeEnum.END_MONTH_TASK:
+                        case EventTypeEnum.HALF_YEAR_TASK:
+                        case EventTypeEnum.YEAR_TASK:
+                        case EventTypeEnum.END_YEAR_TASK: {
                             if (!handleLineResult.isSeparator) {
                                 this.lastCommonTaskId++;
                                 sourceEventResult.commonTasks.push(new CommonTaskModel({
@@ -228,11 +245,40 @@ class EventService {
                             }
                             break;
                         }
+                        case EventTypeEnum.FUTURE_TASK: {
+                            if (!handleLineResult.isSeparator && handleLineResult.returnValue.indexOf('=') === -1
+                                && handleLineResult.returnValue !== separatorService.lineSpace) {
+                                // Check if it's the title's date or an event that part of this date.
+                                // It's the date of the event - Create the event date instance without the events texts.
+                                const isDateTitle = +handleLineResult.returnValue.replace(/\D/g, '') && /^\d/.test(handleLineResult.returnValue);
+                                if (isDateTitle) {
+                                    let dateSplit = handleLineResult.returnValue.split('/');
+                                    if (!dateSplit.length) {
+                                        dateSplit = handleLineResult.returnValue.split('\\');
+                                    }
+                                    this.lastFutureDayId++;
+                                    sourceEventResult.futureTasks.push(new FutureTasksModel({
+                                        id: this.lastFutureDayId,
+                                        day: +dateSplit[0],
+                                        month: +dateSplit[1],
+                                        year: +dateSplit[2]
+                                    }));
+                                } else {
+                                    // It's the event's text - Fill the missing texts events data.
+                                    const futureTasksIndex = sourceEventResult.futureTasks.findIndex(({ id }) => id === this.lastFutureDayId);
+                                    if (futureTasksIndex > -1) {
+                                        sourceEventResult.futureTasks[futureTasksIndex].addEvent(handleLineResult.returnValue);
+                                    }
+                                }
+                            }
+                            break;
+                        }
                     }
                 }
                 eventType = handleLineResult.eventType;
-                if (handleLineResult.line && eventType && (handleLineResult.isSeparator ||
-                    eventType !== EventTypeEnum.COMPLETE_CANCEL_TASK)) {
+                // Determine if to copy the line of data from the source or not.
+                if (handleLineResult.line && eventType && ((handleLineResult.isSeparator
+                    || eventType !== EventTypeEnum.COMPLETE_CANCEL_TASK && eventType !== EventTypeEnum.FUTURE_TASK))) {
                     sourceEventResult.dataLines.push(handleLineResult.line);
                 }
             });
@@ -250,11 +296,14 @@ class EventService {
     finalizeSourceEventResult(sourceEventResult) {
         // Convert all the common tasks to different days.
         sourceEventResult.commonTasks.splice(-2);
-        sourceEventResult.dailyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.DAILY_TASK);
+        sourceEventResult.dayTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.DAY_TASK);
         sourceEventResult.weekendOnToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TASK);
         sourceEventResult.weekendOffToggleTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.WEEKEND_TOGGLE_TASK);
-        sourceEventResult.monthlyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.MONTHLY_TASK);
-        sourceEventResult.halfYearlyTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.HALF_YEARLY_TASK);
+        sourceEventResult.endMonthTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.END_MONTH_TASK);
+        sourceEventResult.halfYearTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.HALF_YEAR_TASK);
+        sourceEventResult.yearTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.YEAR_TASK);
+        sourceEventResult.endYearTasks = this.filterSortTasks(sourceEventResult.commonTasks, EventTypeEnum.END_YEAR_TASK);
+        // No need for future tasks to be re-ordered.
         sourceEventResult.commonTasks = null;
         sourceEventResult.dataLines.push(logService.logTitleSeparator);
         return sourceEventResult;
@@ -278,9 +327,13 @@ class EventService {
                 case EventTypeEnum.SERVICE: { eventType = EventTypeEnum.BIRTHDAY; break; }
                 case EventTypeEnum.BIRTHDAY: { eventType = EventTypeEnum.DEATHDAY; break; }
                 case EventTypeEnum.DEATHDAY: { eventType = EventTypeEnum.DATA; break; }
-                case EventTypeEnum.WEEKEND_TOGGLE_TASK: { eventType = EventTypeEnum.MONTHLY_TASK; break; }
-                case EventTypeEnum.MONTHLY_TASK: { eventType = EventTypeEnum.HALF_YEARLY_TASK; break; }
-                case EventTypeEnum.HALF_YEARLY_TASK: { eventType = EventTypeEnum.END; break; }
+                case EventTypeEnum.WEEKEND_TOGGLE_TASK: { eventType = EventTypeEnum.END_MONTH_TASK; break; }
+                case EventTypeEnum.END_MONTH_TASK: { eventType = EventTypeEnum.HALF_YEAR_TASK; break; }
+                case EventTypeEnum.HALF_YEAR_TASK: { eventType = EventTypeEnum.YEAR_TASK; break; }
+                case EventTypeEnum.YEAR_TASK: { eventType = EventTypeEnum.END_YEAR_TASK; break; }
+                case EventTypeEnum.END_YEAR_TASK: { eventType = EventTypeEnum.FUTURE_TASK; break; }
+                case EventTypeEnum.FUTURE_TASK: { eventType = EventTypeEnum.START_EVENTS; break; }
+                case EventTypeEnum.START_EVENTS: { eventType = EventTypeEnum.END; break; }
             }
         }
         else {
@@ -288,11 +341,15 @@ class EventService {
             validateSourceEventTypeResult.isSeparator = true;
             switch (line) {
                 case separatorService.completeCancelTasksSeparator: { eventType = EventTypeEnum.COMPLETE_CANCEL_TASK; break; }
-                case separatorService.dailyTasksSeparator: { eventType = EventTypeEnum.DAILY_TASK; break; }
+                case separatorService.dayTasksSeparator: { eventType = EventTypeEnum.DAY_TASK; break; }
                 case separatorService.weekendTasksSeparator: { eventType = EventTypeEnum.WEEKEND_TASK; break; }
                 case separatorService.weekendToggleTasksSeparator: { eventType = EventTypeEnum.WEEKEND_TOGGLE_TASK; break; }
-                case separatorService.monthlyTasksSeparator: { eventType = EventTypeEnum.MONTHLY_TASK; break; }
-                case separatorService.halfYearlyTasksSeparator: { eventType = EventTypeEnum.HALF_YEARLY_TASK; break; }
+                case separatorService.endMonthTasksSeparator: { eventType = EventTypeEnum.END_MONTH_TASK; break; }
+                case separatorService.halfYearTasksSeparator: { eventType = EventTypeEnum.HALF_YEAR_TASK; break; }
+                case separatorService.yearTasksSeparator: { eventType = EventTypeEnum.YEAR_TASK; break; }
+                case separatorService.endYearTasksSeparator: { eventType = EventTypeEnum.END_YEAR_TASK; break; }
+                case separatorService.futureTasksSeparator: { eventType = EventTypeEnum.FUTURE_TASK; break; }
+                case separatorService.startEventsSeparator: { eventType = EventTypeEnum.START_EVENTS; break; }
                 default: {
                     validateSourceEventTypeResult.isBreakLine = false;
                     validateSourceEventTypeResult.isSeparator = false;
@@ -331,11 +388,14 @@ class EventService {
                 line = isSeparator ? eventUtils.warpBreakLine(line) : line;
                 break;
             }
-            case EventTypeEnum.DAILY_TASK:
+            case EventTypeEnum.DAY_TASK:
             case EventTypeEnum.WEEKEND_TASK:
             case EventTypeEnum.WEEKEND_TOGGLE_TASK:
-            case EventTypeEnum.MONTHLY_TASK:
-            case EventTypeEnum.HALF_YEARLY_TASK: {
+            case EventTypeEnum.END_MONTH_TASK:
+            case EventTypeEnum.HALF_YEAR_TASK:
+            case EventTypeEnum.YEAR_TASK:
+            case EventTypeEnum.END_YEAR_TASK:
+            case EventTypeEnum.FUTURE_TASK: {
                 returnValue = line;
                 break;
             }
@@ -422,7 +482,15 @@ class EventService {
         }
     }
 
-    createCalendarDays(allEvents) {
+    addFutureEvents(data) {
+        const { calendarDayModel, futureEvents, dateDay, dateMonth } = data;
+        calendarDayModel.futureEventDatesList = futureEvents.filter(e => {
+            return e.day === dateDay && e.month === dateMonth;
+        });
+        return calendarDayModel;
+    }
+
+    createCalendarDays(allEvents, futureEvents) {
         const calendarDaysList = [];
         // Create the calendar days list array.
         const dateStart = timeUtils.getCurrentDate([applicationService.applicationDataModel.year, 0, 1]);
@@ -432,16 +500,23 @@ class EventService {
             const { dateDay, dateMonth, dateYear } = timeUtils.getDateParts(dateStart);
             const { englishDay, hebrewDay } = this.getDayInWeek(dateStart);
             this.lastCalendarDayId++;
+            // Create the event day calender.
             let calendarDayModel = new CalendarDayModel({
                 id: this.lastCalendarDayId,
                 date: new Date(dateStart),
                 displayDate: timeUtils.getDisplayDate(dateStart),
                 dayInWeek: englishDay,
                 displayDayInWeek: hebrewDay,
-                eventDatesList: allEvents.filter(e => {
-                    return e.day === dateDay && e.month === dateMonth;
-                })
+                eventDatesList: allEvents.filter(e => e.day === dateDay && e.month === dateMonth)
             });
+            // Add the future event dates (If any exists).
+            calendarDayModel = this.addFutureEvents({
+                calendarDayModel,
+                futureEvents,
+                dateDay: dateDay,
+                dateMonth: dateMonth
+            });
+            // Add the repeat event date.
             calendarDayModel = this.createRepeatEventDate({
                 calendarDayModel: calendarDayModel,
                 dateDay: dateDay,
@@ -451,8 +526,7 @@ class EventService {
             calendarDaysList.push(calendarDayModel);
             dateStart.setDate(dateDay + 1);
         }
-        calendarDaysList.reverse();
-        return calendarDaysList;
+        return [...calendarDaysList.sort((a, b) => b.id - a.id)];
     }
 
     createRepeatEventDate(data) {
@@ -467,7 +541,7 @@ class EventService {
                     month: dateMonth,
                     year: dateYear,
                     eventType: EventTypeEnum.REPEAT,
-                    text: eventUtils.createEventTemplate(displayText),
+                    text: eventUtils.createEventTemplate(displayText, false),
                     eventYear: eventYear
                 }));
             }

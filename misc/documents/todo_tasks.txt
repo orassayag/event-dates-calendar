@@ -11,23 +11,48 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
--Each day of vacation add "חופש" - Do for specific days.
--Add yearlly events logic + "בדיקת רופא שיניים".
--On half yearlly add "שיננית".
--Auto sync feuture events:
-1. Search for "אירועים בעתיד".
-2. Inside, scan all events. The events that match for the target year - put them on the rest of the events.
+-משימה לevents calander - להוסיף מספרי נרות בחנוכה.
+-Add for my birthdate - אני - יום הולדת לאור אסייג (38).
+
+============
+Fix:
+אירועים בעתיד:
+#FUTURE#.
+#EVENTS#.
+
+אירועים:
+=====
+
+Suppose to be:
+אירועים בעתיד:
+==========
+#FUTURE#
+
+#EVENTS#
+
+אירועים:
+=====
+
+-Also remove empty breakline space on the first day of the year:
+
+-לבדוק שנקבעה להשנה בדיקת רופא שיניים.
+-לבדוק שנקבעה להשנה שיננית.
++ For each future event there is an empty break line space in the end.
+-Auto sync feuture events - Part 2:
+1. All event that not equal to the target year.
 3. The events that don't match, keep them there.
 4. Write the entire "אירועים בעתיד" section with left events.
+
 -Add the details of the new file after: ===CREATE TEXT FILE===:
 ===TOTAL EVENTS: 3,443===
 ===FILE SIZE: 154KB | LINES COUNT: 9,330===
--Add for my birthdate - אני - יום הולדת לאור אסייג (38).
+-After ===EXIT: FINISH=== add ===DIST: event-dates-2023 (102KB)===.
 -Change the scan function name to "validate document".
 -It will contains to steps:
 1. To scan for not ending with dot.
 2. Add scan option for more than 1 line break.
 3. Scan for duplicate days counts or missing days counts from special file.
+-Solve the empty line space after ===EXIT: FINISH===.
 -Update the file in the examples folder.
 
 Completed + canceled tasks:

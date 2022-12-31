@@ -4,10 +4,11 @@ class SourceEventResultModel {
         this.sourceEventDates = [];
         this.dataLines = [];
         this.commonTasks = [];
-        this.dailyTasks = [];
+        this.dayTasks = [];
         this.weekendTasks = [];
         this.weekendOnToggleTasks = [];
         this.weekendOffToggleTasks = [];
+        this.futureTasks = [];
     }
 }
 

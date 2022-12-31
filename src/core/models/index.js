@@ -6,6 +6,7 @@ import CommonTaskModel from './files/CommonTask.model';
 import CountLimitDataModel from './files/countLimitData.model';
 import DynamicEventDateModel from './files/DynamicEventDate.model';
 import EventDateModel from './files/EventDate.model';
+import FutureTasksModel from './files/FutureTasks.model';
 import LogDataModel from './files/LogData.model';
 import MissingEventDateModel from './files/MissingEventDate.model';
 import PathDataModel from './files/PathData.model';
@@ -16,6 +17,6 @@ import ValidateSourceEventTypeResultModel from './files/ValidateSourceEventTypeR
 
 export {
     ApplicationDataModel, BackupDataModel, BackupDirectoryModel, CalendarDayModel, CommonTaskModel, CountLimitDataModel,
-    DynamicEventDateModel, EventDateModel, LogDataModel, MissingEventDateModel, PathDataModel, RepeatEventDateModel,
-    ReplaceEventDateModel, SourceEventResultModel, ValidateSourceEventTypeResultModel
+    DynamicEventDateModel, EventDateModel, FutureTasksModel, LogDataModel, MissingEventDateModel, PathDataModel,
+    RepeatEventDateModel, ReplaceEventDateModel, SourceEventResultModel, ValidateSourceEventTypeResultModel
 };

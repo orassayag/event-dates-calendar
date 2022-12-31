@@ -1,5 +1,16 @@
 Completed + canceled tasks:
 ===========================
+-Each day of vacation add "חופש" - Do for specific days. *
+-Change all symbboles of to '#DAY#', '#MONTH#', and so on. *
+-Add dot end in all dates titles. *
+-Add logic of ט. *
+-Add yearlly events logic + "בדיקת רופא שיניים" + "שיננית".
+-להוסיף event של סוף שנה - של כל האירועים האלה שקשורים בהפקת מסמך חדש. *
+-להוסיף Event של כל סופ"ש: לסנכרן מיילים של העבודה. *
+-להכניס משימה חדשה לevents-calander - משימה בסוף כל חודש (ביום האחרון של החודש - בדיקת Cibus + להוציא כסף לאמא). *
+-Auto sync feuture events - Part 1: *
+1. Search for "אירועים בעתיד". *
+2. Inside, scan all events. The events that match for the target year - put them on the rest of the events. *
 -Add half year events: לנקות מזגן. *
 -Fix bug that not include that current day of running the script. *
 -Add counter event. Like birth day. Example: US independent day: 345 years. *

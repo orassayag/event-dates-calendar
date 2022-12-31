@@ -8,6 +8,7 @@ class CalendarDayModel {
         this.dayInWeek = dayInWeek;
         this.displayDayInWeek = displayDayInWeek;
         this.eventDatesList = eventDatesList;
+        this.futureEventDatesList = null;
     }
 }
 
