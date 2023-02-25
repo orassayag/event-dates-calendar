@@ -560,6 +560,8 @@ class EventService {
         };
     }
 
+    line_counter = ((i = 0) => () => ++i)();
+
     async scanSourceFile() {
         let lineReader = null;
         // Validate the source event dates TXT file and get the stream.
@@ -569,13 +571,13 @@ class EventService {
         });
         // Scan the source event dates TXT file.
         lineReader = fileUtils.getFileLinesFromStream(pathService.pathDataModel.sourcePath);
-        lineReader.on('line', (line) => {
+        lineReader.on('line', (line, lineNum = this.line_counter()) => {
             if (!line) {
                 return;
             }
             if (line[0] !== separatorService.startLineCharacter ||
                 line[line.length - 1] !== separatorService.endLineCharacter) {
-                logUtils.log(line);
+                logUtils.log(`${lineNum}: ${line}`);
             }
         });
     }

@@ -11,8 +11,20 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
+-End year tasks not working.
+-To Fix the weekend and alter weekend - The alt weekend need to add only additional tasks.
+-לתקן איוונטים שחייב להיות להם מספר גדול מאפס, לא יכול להיות דבר כזה: -יום פטירת מלכת אנגליה אליזבת' השנייה (0).
+-בסופ"ש אין את כל המשימות, למשל:
+-לבצע גיבוי של Web לiOmega.
+-ניקוי Data מהפלאפון.
+-לעדכן תוכנות בפלאפון.
+-יש המון מקומות של רווחים של שורות שלא ברור למה קיימים.
 -משימה לevents calander - להוסיף מספרי נרות בחנוכה.
 -Add for my birthdate - אני - יום הולדת לאור אסייג (38).
+-בסופ"ש: להוסיף בEvent Calander שצריך להחליף מברשת שיניים כל 3 חודשים.
+-להוסיף בEvent Dates לבדוק ממתי יום המשפחה. + להשלים ממתי יום המשפחה.
+-להוסיף בEvent Dates כל 1 לחודש להוריד חשבוניות האתר של בנק הפועלים / Hot Mobile / כללית.
+-להוסיף לEvents Dates כל סוף שנה לבקש גיבוי של Google.
 
 ============
 Fix:
@@ -54,6 +66,13 @@ Suppose to be:
 3. Scan for duplicate days counts or missing days counts from special file.
 -Solve the empty line space after ===EXIT: FINISH===.
 -Update the file in the examples folder.
+
+-בסופ"ש: להכניס עבודה על events calander dates - חיפוש על ידי סריקה של כל המסמכים.
+1. Insert the path of the event calander dates files.
+2. Scan in all files for a search key entered by, for example "npm run search ישיבה".
+3. It will display all the files and number lines of this, for example:
+event-dates-2021.txt | Line 324 | ישיבה עם X.
+event-dates-2022.txt | Line 325 | ישיבה עם X.
 
 Completed + canceled tasks:
 ===========================
