@@ -12,6 +12,7 @@ Each time you change the logic / update NPM package version, do the following st
 ToDo tasks:
 ===========
 -Rebuild this project - More simpler.
+-לשים פה במסמך + בEvents Calander שפעם בחודש מעדכנים תוכנות במחשב הנייח.
 -להוסיף למשימות הקבועות פה במסמך הזה שפעם בחצי שנה להעתיק את תיקיית Or מהכונן iOmega למחשב הנייח + Events Calander dates.
 -להוסיף לרשימת המשימות היומית שפעם בשבוע לבדוק שהמחשב עובד, פה במסמך + להוסיף את זה בEvents Calander dates.
 -End year tasks not working.
