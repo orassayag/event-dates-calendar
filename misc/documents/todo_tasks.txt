@@ -11,6 +11,9 @@ Each time you change the logic / update NPM package version, do the following st
 
 ToDo tasks:
 ===========
+-Rebuild this project - More simpler.
+-להוסיף למשימות הקבועות פה במסמך הזה שפעם בחצי שנה להעתיק את תיקיית Or מהכונן iOmega למחשב הנייח + Events Calander dates.
+-להוסיף לרשימת המשימות היומית שפעם בשבוע לבדוק שהמחשב עובד, פה במסמך + להוסיף את זה בEvents Calander dates.
 -End year tasks not working.
 -To Fix the weekend and alter weekend - The alt weekend need to add only additional tasks.
 -לתקן איוונטים שחייב להיות להם מספר גדול מאפס, לא יכול להיות דבר כזה: -יום פטירת מלכת אנגליה אליזבת' השנייה (0).
@@ -23,7 +26,7 @@ ToDo tasks:
 -Add for my birthdate - אני - יום הולדת לאור אסייג (38).
 -בסופ"ש: להוסיף בEvent Calander שצריך להחליף מברשת שיניים כל 3 חודשים.
 -להוסיף בEvent Dates לבדוק ממתי יום המשפחה. + להשלים ממתי יום המשפחה.
--להוסיף בEvent Dates כל 1 לחודש להוריד חשבוניות האתר של בנק הפועלים / Hot Mobile / כללית.
+-להוסיף בEvent Dates כל יום אחרון לחודש להוריד חשבוניות האתר של בנק הפועלים / Hot Mobile / כללית.
 -להוסיף לEvents Dates כל סוף שנה לבקש גיבוי של Google.
 
 ============
