@@ -65,7 +65,7 @@ class FileUtils {
     }
 
     getFileLinesFromStream(path) {
-        if (!this.getFilesizeInBytes(path)) {
+        if (!this.getFileSizeInBytes(path)) {
             throw new Error(`path is empty: ${path} (1000017)`);
         }
         const fileStream = fs.createReadStream(path);
@@ -75,7 +75,7 @@ class FileUtils {
         });
     }
 
-    getFilesizeInBytes(path) {
+    getFileSizeInBytes(path) {
         const stats = fs.statSync(path);
         const fileSizeInBytes = stats.size;
         return fileSizeInBytes;

@@ -22,6 +22,7 @@ ToDo tasks:
 -לבצע גיבוי של Web לiOmega.
 -ניקוי Data מהפלאפון.
 -לעדכן תוכנות בפלאפון.
+-When it right on the specific day the reminder like "-תוקף אחריות מקלדת ועכבר מKSP עד: 23/04/2023" it missing dot in the end.
 -יש המון מקומות של רווחים של שורות שלא ברור למה קיימים.
 -משימה לevents calander - להוסיף מספרי נרות בחנוכה.
 -Add for my birthdate - אני - יום הולדת לאור אסייג (38).

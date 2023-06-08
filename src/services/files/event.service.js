@@ -443,7 +443,7 @@ class EventService {
         });
     }
 
-    // If the event is of 'birthday' or 'deathday' types, replace the birthdate or the deathday with the future age.
+    // If the event is of 'birthday' or 'deathday' types, replace the birth date or the deathday with the future age.
     createSourceEventText(data) {
         const { date, year, line, eventType } = data;
         let result = line;

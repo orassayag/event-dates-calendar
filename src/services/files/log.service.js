@@ -119,7 +119,7 @@ class LogService {
 			} else {
 				eventsDatesLines.push(separatorService.lineSpace);
 			}
-			// Add line seperators between days.
+			// Add line separators between days.
 			eventsDatesLines.push(this.lineSeparator);
 		}
 		eventsDatesLines = this.prepareLines(eventsDatesLines);
