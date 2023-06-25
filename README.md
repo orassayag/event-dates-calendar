@@ -6,6 +6,7 @@ Built in March 2021. A Node.js application to create a notepad TXT file calendar
 
 Clone the application to your computer.
 Steps to view the solution:
+
 1. Open server application on IDE (I use VSCode).
 2. In the terminal run: 'npm i'.
 3. In the terminal run: 'npm start'.
@@ -18,8 +19,8 @@ You'll need to install VSCode, Node, and clone the application, and in the termi
 
 ## Built With
 
-* [Node.js](https://nodejs.org/en) - The web framework used - Server side.
-* [Git](https://git-scm.com) - Source management.
+- [Node.js](https://nodejs.org/en) - The web framework used - Server side.
+- [Git](https://git-scm.com) - Source management.
 
 ## Contributing
 
@@ -31,12 +32,12 @@ We use [SemVer](http://semver.org) for versioning. For the versions available, s
 
 ## Author
 
-* **Or Assayag** - *Initial work* - [orassayag](https://github.com/orassayag)
-* Or Assayag <orassayag@gmail.com>
-* GitHub: https://github.com/orassayag
-* StackOverFlow: https://stackoverflow.com/users/4442606/or-assayag?tab=profile
-* LinkedIn: https://linkedin.com/in/orassayag
+- **Or Assayag** - _Initial work_ - [orassayag](https://github.com/orassayag)
+- Or Assayag <orassayag@gmail.com>
+- GitHub: https://github.com/orassayag
+- StackOverFlow: https://stackoverflow.com/users/4442606/or-assayag?tab=profile
+- LinkedIn: https://linkedin.com/in/orassayag
 
 ## License
 
-This application has an UNLICENSED license.
+This application has an MIT license.
