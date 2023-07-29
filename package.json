@@ -57,6 +57,6 @@
     "@babel/eslint-parser": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
     "@types/node": "^20.4.5",
-    "eslint": "^8.45.0"
+    "eslint": "^8.46.0"
   }
 }
