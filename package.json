@@ -54,9 +54,9 @@
     "readline": "^1.3.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.22.9",
-    "@babel/preset-env": "^7.22.9",
-    "@types/node": "^20.4.8",
+    "@babel/eslint-parser": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@types/node": "^20.4.9",
     "eslint": "^8.46.0"
   }
 }
