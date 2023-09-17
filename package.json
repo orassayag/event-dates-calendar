@@ -55,8 +55,8 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.22.15",
-    "@babel/preset-env": "^7.22.15",
-    "@types/node": "^20.6.1",
+    "@babel/preset-env": "^7.22.20",
+    "@types/node": "^20.6.2",
     "eslint": "^8.49.0"
   }
 }
