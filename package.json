@@ -1,6 +1,6 @@
 {
   "name": "event-dates-calendar",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": false,
   "description": "A Node.js application to create a notepad TXT file calendar by combining a few elements.",
   "repository": {
@@ -25,7 +25,7 @@
   ],
   "type": "module",
   "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+    "node": "^>=20.0.0"
   },
   "main": "src/scripts/create.script.js",
   "files": [
@@ -41,10 +41,10 @@
     "README.md"
   ],
   "scripts": {
-    "backup": "node --es-module-specifier-resolution=node src/scripts/backup.script.js",
-    "sand": "node --es-module-specifier-resolution=node src/tests/sandbox.test.js",
-    "scan": "node --es-module-specifier-resolution=node src/scripts/scan.script.js",
-    "start": "node --es-module-specifier-resolution=node src/scripts/create.script.js",
+    "backup": "node src/scripts/backup.script.js",
+    "sand": "node src/tests/sandbox.test.js",
+    "scan": "node src/scripts/scan.script.js",
+    "start": "node src/scripts/create.script.js",
     "stop": "taskkill -f -im node.exe"
   },
   "dependencies": {

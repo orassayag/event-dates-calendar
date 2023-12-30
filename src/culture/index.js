@@ -1,4 +1,4 @@
-import dictionaryCulture from './files/dictionary.culture';
-import eventCulture from './files/event.culture';
+import dictionaryCulture from './files/dictionary.culture.js';
+import eventCulture from './files/event.culture.js';
 
 export { dictionaryCulture, eventCulture };

@@ -1,19 +1,18 @@
-import textUtils from './text.utils';
+import textUtils from './text.utils.js';
 
 class LogUtils {
+  constructor() {}
 
-    constructor() { }
+  log(message) {
+    console.log(message);
+  }
 
-    log(message) {
-        console.log(message);
+  logStatus(status) {
+    if (!status) {
+      return '';
     }
-
-    logStatus(status) {
-        if (!status) {
-            return '';
-        }
-        this.log(textUtils.setLogStatus(status));
-    }
+    this.log(textUtils.setLogStatus(status));
+  }
 }
 
 export default new LogUtils();

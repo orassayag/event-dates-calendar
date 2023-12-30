@@ -3,6 +3,7 @@
 ===================
 FAST & BASIC START.
 ===================
+
 1. Open the project in IDE (Current to 18/02/2021 I'm using VSCode).
 2. Open the following file in the 'src/settings/settings.js' directory.
 3. Search for the first setting - 'YEAR' - And enter the relevant year for the new TXT file.
@@ -17,7 +18,7 @@ FAST & BASIC START.
     (Example: 'event-dates-2021.txt') that the TXT file was created successfully.
 12. Successful running application on production should look like this:
 
-/* cSpell:disable */
+/_ cSpell:disable _/
 ===IMPORTANT SETTINGS===
 YEAR: 2021
 DIST_FILE_NAME: event-dates
@@ -31,8 +32,8 @@ y
 
 ## Author
 
-* **Or Assayag** - *Initial work* - [orassayag](https://github.com/orassayag)
-* Or Assayag <orassayag@gmail.com>
-* GitHub: https://github.com/orassayag
-* StackOverFlow: https://stackoverflow.com/users/4442606/or-assayag?tab=profile
-* LinkedIn: https://linkedin.com/in/orassayag
+- **Or Assayag** - _Initial work_ - [orassayag](https://github.com/orassayag)
+- Or Assayag <orassayag@gmail.com>
+- GitHub: https://github.com/orassayag
+- StackOverFlow: https://stackoverflow.com/users/4442606/or-assayag?tab=profile
+- LinkedIn: https://linkedin.com/in/orassayag

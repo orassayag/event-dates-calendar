@@ -1,5 +1,6 @@
 Completed + canceled tasks:
 ===========================
+-In the scan mode - Search for ending with ". *". *
 -Each day of vacation add "חופש" - Do for specific days. *
 -Change all symbboles of to '#DAY#', '#MONTH#', and so on. *
 -Add dot end in all dates titles. *
@@ -9,8 +10,8 @@ Completed + canceled tasks:
 -להוסיף Event של כל סופ"ש: לסנכרן מיילים של העבודה. *
 -להכניס משימה חדשה לevents-calander - משימה בסוף כל חודש (ביום האחרון של החודש - בדיקת Cibus + להוציא כסף לאמא). *
 -Auto sync feuture events - Part 1: *
-1. Search for "אירועים בעתיד". *
-2. Inside, scan all events. The events that match for the target year - put them on the rest of the events. *
+-1. Search for "אירועים בעתיד". *
+-2. Inside, scan all events. The events that match for the target year - put them on the rest of the events. *
 -Add half year events: לנקות מזגן. *
 -Fix bug that not include that current day of running the script. *
 -Add counter event. Like birth day. Example: US independent day: 345 years. *
@@ -37,10 +38,10 @@ Completed + canceled tasks:
 -Replace the 'getCurrentDate' method with the updated one from the 'udemy-courses' project. *
 -Copy the '.eslintignore' file from the 'udemy-courses' project. *
 -Add to the 'package.json' file (below the 'description' field) the 'repository' field: *
-"repository": { *
-  "type": "git", *
-  "url": "git://github.com/username/repository.git" *
-} *
+-"repository": {. *
+-  "type": "git",. *
+-  "url": "git://github.com/username/repository.git". *
+-}. *
 -Add the following keywords to the 'package.json' file: 'nodejs javascript events calendar days'. *
 -Update packages + Recreate package-lock.json. *
 -Clear unused enums and make sure all in used really exists. *
@@ -88,11 +89,11 @@ need to fix it (take the comment from the auto-packages-updater project). *
 -Check places to change from simple parameters with dynamic objects to classes. *
 -Make sure all comments '//' have: 1. space 2. ends with a dot. *
 -Make sure 'id' => 'Id', 'url' => 'URL', 'api' => 'API'. *
--Make sure spaces in all files between bottom, need to fix cases like this: *
-} *
-module.exports *
-} *
-export default *
+-Make sure spaces in all files between bottom, need to fix cases like this:. *
+-}. *
+-module.exports. *
+-}. *
+-export default. *
 -Remove duplicate import/require (convert to index.js if possible). *
 -Sort alphabetically all the imports/requires by https://alphabetizer.flap.tv/. *
 -Sort alphabetically all the imports/requires: external packages, settings, (containers, components, store, assert) data, models, enums, services, utils. *

@@ -1,20 +1,19 @@
-import logUtils from './log.utils';
+import logUtils from './log.utils.js';
 
 class SystemUtils {
+  constructor() {}
 
-    constructor() { }
+  exit(exitReason) {
+    logUtils.logStatus(this.getExitReason(exitReason));
+    process.exit(0);
+  }
 
-    exit(exitReason) {
-        logUtils.logStatus(this.getExitReason(exitReason));
-        process.exit(0);
+  getExitReason(exitReason) {
+    if (!exitReason) {
+      return '';
     }
-
-    getExitReason(exitReason) {
-        if (!exitReason) {
-            return '';
-        }
-        return `EXIT: ${exitReason}`;
-    }
+    return `EXIT: ${exitReason}`;
+  }
 }
 
 export default new SystemUtils();
