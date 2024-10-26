@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 const settings = {
   // ===GENERAL=== //
   // Determine the year to create the event dates calendar for.
-  YEAR: 2024,
+  YEAR: 2025,
   // Determine the URL of which to take the calendar Hebrew events and holidays.
   CALENDAR_IL_LINK: 'https://calendar.2net.co.il/annual-calendar.aspx?year=',
   // Determine the URL of which to take the calendar United States events and holidays.
@@ -30,7 +30,7 @@ const settings = {
   // dates, and other data to be included in the new TXT file.
   SOURCE_PATH: pathUtils.getJoinPath({
     targetPath: __dirname,
-    targetName: '../../sources/event-dates-2023.txt',
+    targetName: '../../sources/event-dates-2024.txt',
   }),
 
   // ===ROOT PATH=== //
