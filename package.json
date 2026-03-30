@@ -2,7 +2,7 @@
   "name": "event-dates-calendar",
   "version": "2.0.0",
   "private": false,
-  "description": "A Node.js application to create a notepad TXT file calendar by combining a few elements.",
+  "description": "A Node.js application to create and manage personalized calendar TXT files by combining events from multiple sources including Israeli holidays, US holidays, birthdays, anniversaries, and recurring tasks with web scraping and automated processing.",
   "repository": {
     "type": "git",
     "url": "git://github.com/orassayag/event-dates-calendar.git"
@@ -10,9 +10,19 @@
   "keywords": [
     "nodejs",
     "javascript",
-    "events",
     "calendar",
-    "days"
+    "events",
+    "scheduler",
+    "tasks",
+    "holidays",
+    "israeli-calendar",
+    "us-holidays",
+    "automation",
+    "web-scraping",
+    "jsdom",
+    "birthdays",
+    "anniversaries",
+    "event-management"
   ],
   "license": "MIT",
   "author": "Or Assayag <orassayag@gmail.com>",
@@ -50,10 +60,10 @@
   "dependencies": {
     "fs-extra": "^11.3.4",
     "is-reachable": "^6.1.0",
-    "jsdom": "^29.0.1",
+    "jsdom": "^28.1.0",
     "readline": "^1.3.0"
   },
   "devDependencies": {
-    "eslint": "^10.1.0"
+    "eslint": "^10.0.2"
   }
 }
